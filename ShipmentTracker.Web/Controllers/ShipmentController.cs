@@ -9,7 +9,7 @@ namespace ShipmentTracker.Web.Controllers
     /// <summary>
     /// Controlador encargado de gestionar las operaciones relacionadas con los envíos.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/shipment")]
     [ApiController]
     [Produces("application/json")]
     public class ShipmentController : ControllerBase
