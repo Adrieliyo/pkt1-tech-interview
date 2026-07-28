@@ -10,10 +10,10 @@ namespace ShipmentTracker.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // Envio recién creado
+            // Envio recolectado
             migrationBuilder.Sql(
                 "INSERT INTO Shipments(TrackingNumber, Recipient, Status, CreatedAt, DeliveredAt) " +
-                "VALUES('TRK-90001', 'Angel', 'Created', '2026-07-28T08:30:00', NULL);"
+                "VALUES('TRK-90001', 'Angel', 'Collected', '2026-07-28T08:30:00', NULL);"
             );
 
             // Envío en transito
@@ -28,10 +28,10 @@ namespace ShipmentTracker.Infrastructure.Migrations
                 "VALUES('TRK-90003', 'Carlos Lopez', 'Delivered', '2026-07-20T09:00:00', '2026-07-22T16:45:00');"
             );
 
-            // Envio recien creado
+            // Envio cancelado
             migrationBuilder.Sql(
                 "INSERT INTO Shipments(TrackingNumber, Recipient, Status, CreatedAt, DeliveredAt) " +
-                "VALUES('TRK-90004', 'Ana Martinez', 'Created', '2026-07-28T10:20:00', NULL);"
+                "VALUES('TRK-90004', 'Ana Martinez', 'Cancelled', '2026-07-28T10:20:00', NULL);"
             );
 
             // Envio en transito

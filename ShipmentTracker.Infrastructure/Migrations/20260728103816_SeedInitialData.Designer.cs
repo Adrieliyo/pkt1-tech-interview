@@ -12,7 +12,7 @@ using ShipmentTracker.Infrastructure.Data;
 namespace ShipmentTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260728095526_SeedInitialData")]
+    [Migration("20260728103816_SeedInitialData")]
     partial class SeedInitialData
     {
         /// <inheritdoc />
