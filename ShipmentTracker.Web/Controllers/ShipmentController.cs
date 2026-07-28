@@ -6,8 +6,12 @@ using ShipmentTracker.Core.Interfaces.Services;
 
 namespace ShipmentTracker.Web.Controllers
 {
+    /// <summary>
+    /// Controlador encargado de gestionar las operaciones relacionadas con los envíos.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class ShipmentController : ControllerBase
     {
         private readonly IShipmentService _shipmentService;
@@ -19,8 +23,11 @@ namespace ShipmentTracker.Web.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/shipments
-        // GET: api/shipments?status=Collected
+        /// <summary>
+        /// Obtiene la lista de envíos. Opcionalmente filtra por estado.
+        /// </summary>
+        /// <param name="status">Estado opcional para filtrar los envíos.</param>
+        /// <returns>Una lista de envíos.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ShipmentDto>>> GetShipments([FromQuery] ShipmentStatus? status)
         {
@@ -28,7 +35,11 @@ namespace ShipmentTracker.Web.Controllers
             return Ok(shipments); // Devuelve HTTP 200
         }
 
-        // GET: api/shipments/TRK-A1B2C3D4
+        /// <summary>
+        /// Obtiene los detalles de un envío buscando por número de guía.
+        /// </summary>
+        /// <param name="trackingNumber">El número de guía único del envío.</param>
+        /// <returns>Los detalles del envío encontrado.</returns>
         [HttpGet("{trackingNumber}")]
         public async Task<ActionResult<ShipmentDto>> GetShipmentByTrackingNumber(string trackingNumber)
         {
@@ -42,7 +53,11 @@ namespace ShipmentTracker.Web.Controllers
             return Ok(shipment); // HTTP 200
         }
 
-        // POST: api/shipments
+        /// <summary>
+        /// Crea un nuevo registro de envío.
+        /// </summary>
+        /// <param name="createShipmentDto">Modelo con la información necesaria para crear el envío.</param>
+        /// <returns>El envío recién creado.</returns>
         [HttpPost]
         public async Task<ActionResult<ShipmentDto>> CreateShipment([FromBody] CreateShipmentDto createShipmentDto)
         {
@@ -57,7 +72,12 @@ namespace ShipmentTracker.Web.Controllers
             );
         }
 
-        // PATCH: api/shipments/TRK-A1B2C3D4/status
+        /// <summary>
+        /// Actualiza el estado de un envío específico.
+        /// </summary>
+        /// <param name="trackingNumber">El número de guía del envío.</param>
+        /// <param name="newStatus">El nuevo estado a asignar.</param>
+        /// <returns>Un código de estado HTTP 204 sin contenido en caso de éxito.</returns>
         [HttpPatch("{trackingNumber}/status")]
         public async Task<IActionResult> UpdateStatus(string trackingNumber, [FromBody] ShipmentStatus newStatus)
         {
