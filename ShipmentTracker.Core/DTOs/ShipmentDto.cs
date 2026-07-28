@@ -1,29 +1,18 @@
-﻿using ShipmentTracker.Core.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShipmentTracker.Core.Entities
+namespace ShipmentTracker.Core.DTOs
 {
-    public class Shipment
+    public class ShipmentDto
     {
         public int Id { get; set; }
-
-        // Numero de guia
         public string TrackingNumber { get; set; } = null!;
-
-        // Destinatario
         public string Recipient { get; set; } = null!;
-
-        // Estado del envio
-        public ShipmentStatus Status { get; set; }
-
-        // Fecha de creacion del envio
+        public string Status { get; set; } = null!;
         public DateTime CreatedAt { get; set; }
-
-        // Fecha de entrega del envio
         public DateTime? DeliveredAt { get; set; }
     }
 }
