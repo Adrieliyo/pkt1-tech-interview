@@ -1,0 +1,6 @@
+@ShipmentTracker.Web_HostAddress = http://localhost:5195
+
+GET {{ShipmentTracker.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
