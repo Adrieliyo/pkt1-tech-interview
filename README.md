@@ -21,6 +21,8 @@ Asegúrate de tener instalado:
 - **SQL Server Management Studio**
 
 ## Configuración Inicial del Proyecto
+
+### 1. Clonar el repositorio
 ```bash
 git clone <repositorio-url>
 cd pkt1-tech-interview
