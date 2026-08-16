@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShipmentTracker.Core.DTOs;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces.Services;
@@ -15,12 +14,10 @@ namespace ShipmentTracker.Web.Controllers
     public class ShipmentController : ControllerBase
     {
         private readonly IShipmentService _shipmentService;
-        private readonly IMapper _mapper;
-        
-        public ShipmentController(IShipmentService shipmentService, IMapper mapper)
+
+        public ShipmentController(IShipmentService shipmentService)
         {
             _shipmentService = shipmentService;
-            _mapper = mapper;
         }
 
         /// <summary>

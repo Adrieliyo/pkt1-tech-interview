@@ -1,4 +1,6 @@
-﻿using ShipmentTracker.Core.DTOs;
+﻿using AutoMapper;
+using FluentValidation;
+using ShipmentTracker.Core.DTOs;
 using ShipmentTracker.Core.Entities;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces;
@@ -15,9 +17,14 @@ namespace ShipmentTracker.Services
     public class ShipmentService: IShipmentService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ShipmentService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        private readonly IValidator<StatusTransitionContext> _transitionValidator;
+
+        public ShipmentService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<StatusTransitionContext> transitionValidator)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _transitionValidator = transitionValidator;
         }
 
         public async Task<IEnumerable<ShipmentDto>> GetShipmentsAsync(ShipmentStatus? status = null)
@@ -33,15 +40,7 @@ namespace ShipmentTracker.Services
                 shipments = await _unitOfWork.ShipmentRepository.GetAllAsync();
             }
 
-            return shipments.Select(s => new ShipmentDto
-            {
-                Id = s.Id,
-                TrackingNumber = s.TrackingNumber,
-                Recipient = s.Recipient,
-                Status = s.Status,
-                CreatedAt = s.CreatedAt,
-                DeliveredAt = s.DeliveredAt
-            });
+            return shipments.Select(s => _mapper.Map<ShipmentDto>(s));
         }
 
         public async Task<ShipmentDto?> GetShipmentByTrackingNumberAsync(string trackingNumber)
@@ -52,15 +51,7 @@ namespace ShipmentTracker.Services
             if (shipment == null)
                 return null;
 
-            return new ShipmentDto
-            {
-                Id = shipment.Id,
-                TrackingNumber = shipment.TrackingNumber,
-                Recipient = shipment.Recipient,
-                Status = shipment.Status,
-                CreatedAt = shipment.CreatedAt,
-                DeliveredAt = shipment.DeliveredAt
-            };
+            return _mapper.Map<ShipmentDto>(shipment);
         }
 
         public async Task<ShipmentDto> CreateShipmentAsync(CreateShipmentDto createShipmentDto)
@@ -78,15 +69,7 @@ namespace ShipmentTracker.Services
             await _unitOfWork.ShipmentRepository.AddAsync(newShipment);
             await _unitOfWork.CommitAsync();
 
-            return new ShipmentDto
-            {
-                Id = newShipment.Id,
-                TrackingNumber = newShipment.TrackingNumber,
-                Recipient = newShipment.Recipient,
-                Status = newShipment.Status,
-                CreatedAt = newShipment.CreatedAt,
-                DeliveredAt = newShipment.DeliveredAt
-            };
+            return _mapper.Map<ShipmentDto>(newShipment);
         }
 
         public async Task<bool> UpdateShipmentStatusAsync(string trackingNumber, ShipmentStatus newStatus)
@@ -103,8 +86,7 @@ namespace ShipmentTracker.Services
                 NewStatus = newStatus
             };
 
-            var validator = new ShipmentTransitionValidator();
-            var validationResult = await validator.ValidateAsync(transitionContext);
+            var validationResult = await _transitionValidator.ValidateAsync(transitionContext);
 
             if (!validationResult.IsValid)
             {
