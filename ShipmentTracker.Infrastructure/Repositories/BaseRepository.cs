@@ -36,7 +36,7 @@ namespace ShipmentTracker.Infrastructure.Repositories
             return await dbSet.ToListAsync();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "", int? skip = null, int? take = null)
         {
             IQueryable<TEntity> query = dbSet;
 
@@ -49,9 +49,25 @@ namespace ShipmentTracker.Infrastructure.Repositories
             }
 
             if (orderBy != null)
-                return await orderBy(query).ToListAsync();
-            else
-                return await query.ToListAsync();
+                query = orderBy(query);
+
+            if (skip.HasValue)
+                query = query.Skip(skip.Value);
+
+            if (take.HasValue)
+                query = query.Take(take.Value);
+
+            return await query.ToListAsync();
+        }
+
+        public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> filter = null)
+        {
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            return await query.CountAsync();
         }
 
         public virtual async ValueTask<TEntity> GetByIdAsync(int id)

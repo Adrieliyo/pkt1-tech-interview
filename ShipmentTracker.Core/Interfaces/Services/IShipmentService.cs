@@ -11,9 +11,13 @@ namespace ShipmentTracker.Core.Interfaces.Services
     public interface IShipmentService
     {
         /// <summary>
-        /// Lista los envíos. Permite filtrar opcionalmente por el estado del envío usando el Enum.
+        /// Lista los envíos de forma paginada. Permite filtrar opcionalmente por el estado del envío
+        /// usando el Enum. Los envíos se devuelven ordenados por fecha de creación descendente.
         /// </summary>
-        Task<IEnumerable<ShipmentDto>> GetShipmentsAsync(ShipmentStatus? status = null);
+        /// <param name="status">Estado opcional para filtrar los envíos.</param>
+        /// <param name="page">Número de página solicitado (1-based).</param>
+        /// <param name="pageSize">Tamaño de página solicitado.</param>
+        Task<PagedResult<ShipmentDto>> GetShipmentsAsync(ShipmentStatus? status = null, int page = 1, int pageSize = 5);
 
         /// <summary>
         /// Obtiene un envío por su número de guía.

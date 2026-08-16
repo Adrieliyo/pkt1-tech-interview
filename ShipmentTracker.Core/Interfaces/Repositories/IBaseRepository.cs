@@ -13,7 +13,10 @@ namespace ShipmentTracker.Core.Interfaces.Repositories
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
                                                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                                string includeProperties = "");
+                                                string includeProperties = "",
+                                                int? skip = null,
+                                                int? take = null);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> filter = null);
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         Task AddAsync(TEntity entity);
         Task AddRangeAsync(IEnumerable<TEntity> entities);
