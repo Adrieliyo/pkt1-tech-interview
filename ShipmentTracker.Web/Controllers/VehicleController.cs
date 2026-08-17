@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ShipmentTracker.Core.DTOs;
+using ShipmentTracker.Core.DTOs.Vehicles;
 using ShipmentTracker.Core.Interfaces.Services;
 using System.ComponentModel.DataAnnotations;
 

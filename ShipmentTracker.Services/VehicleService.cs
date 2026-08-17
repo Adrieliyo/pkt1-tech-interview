@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
 using ShipmentTracker.Core.DTOs;
+using ShipmentTracker.Core.DTOs.Vehicles;
 using ShipmentTracker.Core.Entities;
 using ShipmentTracker.Core.Interfaces;
 using ShipmentTracker.Core.Interfaces.Services;

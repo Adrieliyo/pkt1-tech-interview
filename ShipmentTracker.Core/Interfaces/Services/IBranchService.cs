@@ -1,4 +1,5 @@
 using ShipmentTracker.Core.DTOs;
+using ShipmentTracker.Core.DTOs.Branches;
 using ShipmentTracker.Core.Enums;
 using System;
 using System.Collections.Generic;

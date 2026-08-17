@@ -1,4 +1,5 @@
 using ShipmentTracker.Core.DTOs;
+using ShipmentTracker.Core.DTOs.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;

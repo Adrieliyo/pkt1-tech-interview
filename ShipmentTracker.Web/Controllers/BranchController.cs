@@ -1,6 +1,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using ShipmentTracker.Core.DTOs;
+using ShipmentTracker.Core.DTOs.Branches;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces.Services;
 using System.ComponentModel.DataAnnotations;

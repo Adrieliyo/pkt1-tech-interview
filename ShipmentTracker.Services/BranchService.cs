@@ -1,6 +1,7 @@
 using AutoMapper;
 using FluentValidation;
 using ShipmentTracker.Core.DTOs;
+using ShipmentTracker.Core.DTOs.Branches;
 using ShipmentTracker.Core.Entities;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces;

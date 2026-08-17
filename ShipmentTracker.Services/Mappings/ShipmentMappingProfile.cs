@@ -1,5 +1,5 @@
 using AutoMapper;
-using ShipmentTracker.Core.DTOs;
+using ShipmentTracker.Core.DTOs.Shipments;
 using ShipmentTracker.Core.Entities;
 
 namespace ShipmentTracker.Services.Mappings

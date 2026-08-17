@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using ShipmentTracker.Core.DTOs;
+using ShipmentTracker.Core.DTOs.Shipments;
 using ShipmentTracker.Core.Entities;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces;
 using ShipmentTracker.Core.Interfaces.Services;
-using ShipmentTracker.Services.Validators;
+using ShipmentTracker.Services.Validators.Shipments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
