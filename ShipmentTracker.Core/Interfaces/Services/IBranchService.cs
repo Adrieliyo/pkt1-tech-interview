@@ -16,9 +16,14 @@ namespace ShipmentTracker.Core.Interfaces.Services
         Task<BranchDto> CreateBranchAsync(CreateBranchDto dto);
 
         /// <summary>
-        /// Lista sucursales, opcionalmente filtradas por tipo. Por defecto solo devuelve sucursales activas.
+        /// Lista sucursales de forma paginada, opcionalmente filtradas por tipo. Por defecto solo
+        /// devuelve sucursales activas, ordenadas por fecha de creación descendente.
         /// </summary>
-        Task<IEnumerable<BranchDto>> GetBranchesAsync(bool onlyActive = true, BranchType? type = null);
+        /// <param name="onlyActive">Si es <c>true</c> (por defecto), devuelve solo sucursales activas; si es <c>false</c>, devuelve solo inactivas.</param>
+        /// <param name="type">Tipo de sucursal opcional para filtrar los resultados.</param>
+        /// <param name="page">Número de página solicitado (1-based).</param>
+        /// <param name="pageSize">Tamaño de página solicitado. Se recorta a un máximo de 50.</param>
+        Task<PagedResult<BranchDto>> GetBranchesAsync(bool onlyActive = true, BranchType? type = null, int page = 1, int pageSize = 5);
 
         /// <summary>
         /// Obtiene una sucursal por su identificador, incluido su horario completo.

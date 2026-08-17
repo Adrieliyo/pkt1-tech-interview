@@ -15,6 +15,8 @@ namespace ShipmentTracker.Services
 {
     public class BranchService : IBranchService
     {
+        private const int MaxPageSize = 50;
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IValidator<CreateBranchDto> _createValidator;
@@ -64,15 +66,38 @@ namespace ShipmentTracker.Services
             return _mapper.Map<BranchDto>(branch);
         }
 
-        public async Task<IEnumerable<BranchDto>> GetBranchesAsync(bool onlyActive = true, BranchType? type = null)
+        public async Task<PagedResult<BranchDto>> GetBranchesAsync(bool onlyActive = true, BranchType? type = null, int page = 1, int pageSize = 5)
         {
             Expression<Func<Branch, bool>> filter = type.HasValue
                 ? x => x.IsActive == onlyActive && x.Type == type.Value
                 : x => x.IsActive == onlyActive;
 
-            var branches = await _unitOfWork.BranchRepository.GetAsync(filter);
+            var effectivePageSize = Math.Min(pageSize, MaxPageSize);
+            long skip = (long)(page - 1) * effectivePageSize;
 
-            return branches.Select(b => _mapper.Map<BranchDto>(b));
+            IEnumerable<Branch> branches;
+            if (skip > int.MaxValue)
+            {
+                branches = Enumerable.Empty<Branch>();
+            }
+            else
+            {
+                branches = await _unitOfWork.BranchRepository.GetAsync(
+                    filter,
+                    orderBy: q => q.OrderByDescending(x => x.CreatedAt),
+                    skip: (int)skip,
+                    take: effectivePageSize);
+            }
+
+            var totalCount = await _unitOfWork.BranchRepository.CountAsync(filter);
+
+            return new PagedResult<BranchDto>
+            {
+                Items = branches.Select(b => _mapper.Map<BranchDto>(b)),
+                Page = page,
+                PageSize = effectivePageSize,
+                TotalCount = totalCount
+            };
         }
 
         public async Task<BranchDto?> GetBranchByIdAsync(int id)

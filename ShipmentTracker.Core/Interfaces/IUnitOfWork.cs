@@ -13,6 +13,10 @@ namespace ShipmentTracker.Core.Interfaces
 
         IBranchRepository BranchRepository { get; }
 
+        IEmployeeRepository EmployeeRepository { get; }
+
+        IVehicleRepository VehicleRepository { get; }
+
         Task<int> CommitAsync();
     }
 }
