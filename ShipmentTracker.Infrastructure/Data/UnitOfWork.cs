@@ -13,13 +13,16 @@ namespace ShipmentTracker.Infrastructure.Data
     {
         private readonly AppDbContext _context;
         private ShipmentRepository _shipmentRepository;
-        
+        private BranchRepository _branchRepository;
+
         public UnitOfWork(AppDbContext context)
         {
             this._context = context;
         }
 
         public IShipmentRepository ShipmentRepository => _shipmentRepository ??= new ShipmentRepository(_context);
+
+        public IBranchRepository BranchRepository => _branchRepository ??= new BranchRepository(_context);
 
         public async Task<int> CommitAsync()
         {

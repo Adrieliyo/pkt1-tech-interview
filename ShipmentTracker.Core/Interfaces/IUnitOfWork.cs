@@ -11,6 +11,8 @@ namespace ShipmentTracker.Core.Interfaces
     {
         IShipmentRepository ShipmentRepository { get; }
 
+        IBranchRepository BranchRepository { get; }
+
         Task<int> CommitAsync();
     }
 }

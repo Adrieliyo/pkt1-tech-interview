@@ -13,6 +13,10 @@ namespace ShipmentTracker.Infrastructure.Data
     {
         public DbSet<Shipment> Shipments { get; set; }
 
+        public DbSet<Branch> Branches { get; set; }
+
+        public DbSet<BranchSchedule> BranchSchedules { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -20,6 +24,8 @@ namespace ShipmentTracker.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ShipmentConfiguration());
+            builder.ApplyConfiguration(new BranchConfiguration());
+            builder.ApplyConfiguration(new BranchScheduleConfiguration());
         }
     }
 }

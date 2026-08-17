@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using ShipmentTracker.Core.DTOs;
 using ShipmentTracker.Core.Interfaces;
 using ShipmentTracker.Core.Interfaces.Repositories;
 using ShipmentTracker.Core.Interfaces.Services;
@@ -42,6 +43,10 @@ builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IShipmentRepository, ShipmentRepository>();
 builder.Services.AddScoped<IShipmentService, ShipmentService>();
 builder.Services.AddScoped<IValidator<StatusTransitionContext>, ShipmentTransitionValidator>();
+builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+builder.Services.AddScoped<IBranchService, BranchService>();
+builder.Services.AddScoped<IValidator<CreateBranchDto>, CreateBranchDtoValidator>();
+builder.Services.AddScoped<IValidator<UpdateBranchDto>, UpdateBranchDtoValidator>();
 
 builder.Services.AddSwaggerGen(options =>
 {
