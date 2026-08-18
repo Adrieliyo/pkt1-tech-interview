@@ -2,961 +2,1153 @@
   ".claude/settings.json": {
     "mtime": 1786992357.0713677,
     "seen": 1787007939.0635154,
-    "ast_hash": "9c58e233326844dfdeefaca1144959ee",
-    "semantic_hash": "9c58e233326844dfdeefaca1144959ee"
+    "ast_hash": "",
+    "semantic_hash": ""
   },
   ".specify/init-options.json": {
     "mtime": 1786895754.8664625,
     "seen": 1787007939.06352,
-    "ast_hash": "1fe405d54679afdf891f42ccb720faab",
-    "semantic_hash": "1fe405d54679afdf891f42ccb720faab"
+    "ast_hash": "",
+    "semantic_hash": ""
   },
   ".specify/integration.json": {
     "mtime": 1786895754.6471684,
     "seen": 1787007939.0635219,
-    "ast_hash": "d5ebfcda7e8ca542279760c83a2cff4c",
-    "semantic_hash": "d5ebfcda7e8ca542279760c83a2cff4c"
+    "ast_hash": "",
+    "semantic_hash": ""
   },
   ".specify/integrations/claude.manifest.json": {
     "mtime": 1786895754.6421869,
     "seen": 1787007939.0635228,
-    "ast_hash": "4ce0e452123e11d5048819c004c69fcd",
-    "semantic_hash": "4ce0e452123e11d5048819c004c69fcd"
+    "ast_hash": "",
+    "semantic_hash": ""
   },
   ".specify/integrations/speckit.manifest.json": {
     "mtime": 1786895754.777961,
     "seen": 1787007939.063524,
-    "ast_hash": "5dd1f34ec8a1fac278f60a6d0caf36f7",
-    "semantic_hash": "5dd1f34ec8a1fac278f60a6d0caf36f7"
+    "ast_hash": "",
+    "semantic_hash": ""
   },
   ".specify/memory/.constitution-template.json": {
     "mtime": 1786895754.8750203,
     "seen": 1787007939.063525,
-    "ast_hash": "7e3332a78cec1722b4351c6bf52dfc51",
-    "semantic_hash": "7e3332a78cec1722b4351c6bf52dfc51"
+    "ast_hash": "",
+    "semantic_hash": ""
   },
   ".specify/scripts/powershell/check-prerequisites.ps1": {
     "mtime": 1786895754.6849794,
-    "seen": 1787007939.0635262,
+    "seen": 1787011021.6683404,
     "ast_hash": "ab9d4c9d5772d28c6b2150b1f53ac638",
     "semantic_hash": "ab9d4c9d5772d28c6b2150b1f53ac638"
   },
   ".specify/scripts/powershell/common.ps1": {
     "mtime": 1786895754.693525,
-    "seen": 1787007939.063527,
+    "seen": 1787011021.668346,
     "ast_hash": "6d1dc2322173d3cd13a3633d61324293",
     "semantic_hash": "6d1dc2322173d3cd13a3633d61324293"
   },
   ".specify/scripts/powershell/create-new-feature.ps1": {
     "mtime": 1786895754.7040918,
-    "seen": 1787007939.0635283,
+    "seen": 1787011021.6683488,
     "ast_hash": "fad051375e6dcd47030cc49188472fe1",
     "semantic_hash": "fad051375e6dcd47030cc49188472fe1"
   },
   ".specify/scripts/powershell/resolve-template.ps1": {
     "mtime": 1786895754.7123506,
-    "seen": 1787007939.0635293,
+    "seen": 1787011021.66835,
     "ast_hash": "645ad018c6297df6e23949ac3e915749",
     "semantic_hash": "645ad018c6297df6e23949ac3e915749"
   },
   ".specify/scripts/powershell/setup-plan.ps1": {
     "mtime": 1786895754.7210302,
-    "seen": 1787007939.06353,
+    "seen": 1787011021.6683512,
     "ast_hash": "02abf0794256a7423782adc760f0e0ca",
     "semantic_hash": "02abf0794256a7423782adc760f0e0ca"
   },
   ".specify/scripts/powershell/setup-tasks.ps1": {
     "mtime": 1786895754.7296562,
-    "seen": 1787007939.063531,
+    "seen": 1787011021.6683526,
     "ast_hash": "c97a7f80df74295a055dac0106c8904f",
     "semantic_hash": "c97a7f80df74295a055dac0106c8904f"
   },
   ".specify/workflows/workflow-registry.json": {
     "mtime": 1786895754.864455,
     "seen": 1787007939.063532,
-    "ast_hash": "664e7741756d321f17cfa044de14305e",
-    "semantic_hash": "664e7741756d321f17cfa044de14305e"
+    "ast_hash": "",
+    "semantic_hash": ""
   },
   "ShipmentTracker.Core/DTOs/PagedResult.cs": {
     "mtime": 1786910897.2894244,
-    "seen": 1787007939.0635412,
+    "seen": 1787011021.6683712,
     "ast_hash": "8e37cb88d8af2bb10775613191e9b624",
     "semantic_hash": "8e37cb88d8af2bb10775613191e9b624"
   },
   "ShipmentTracker.Core/Entities/Branch.cs": {
     "mtime": 1786989745.0913973,
-    "seen": 1787007939.0635471,
+    "seen": 1787011021.6683784,
     "ast_hash": "7a62d728794f83ea969c25a8deb765d3",
     "semantic_hash": "7a62d728794f83ea969c25a8deb765d3"
   },
   "ShipmentTracker.Core/Entities/BranchSchedule.cs": {
     "mtime": 1786989740.0842738,
-    "seen": 1787007939.063548,
+    "seen": 1787011021.6683793,
     "ast_hash": "3764a524da3249958dc5d62d8a1155a1",
     "semantic_hash": "3764a524da3249958dc5d62d8a1155a1"
   },
   "ShipmentTracker.Core/Entities/Shipment.cs": {
     "mtime": 1785224378.8394196,
-    "seen": 1787007939.063551,
+    "seen": 1787011021.668385,
     "ast_hash": "919aa08a99216793a31f23b6b356ee14",
     "semantic_hash": "919aa08a99216793a31f23b6b356ee14"
   },
   "ShipmentTracker.Core/Enums/BranchType.cs": {
     "mtime": 1786989732.515813,
-    "seen": 1787007939.0635533,
+    "seen": 1787011021.6683867,
     "ast_hash": "18b005ee336047c7635e53dfbc347703",
     "semantic_hash": "18b005ee336047c7635e53dfbc347703"
   },
   "ShipmentTracker.Core/Enums/ScheduleDay.cs": {
     "mtime": 1786989735.7149167,
-    "seen": 1787007939.0635552,
+    "seen": 1787011021.66839,
     "ast_hash": "d83f58f204be2b8c2e35180570b99c09",
     "semantic_hash": "d83f58f204be2b8c2e35180570b99c09"
   },
   "ShipmentTracker.Core/Enums/ShipmentStatus.cs": {
     "mtime": 1785247033.1333659,
-    "seen": 1787007939.0635564,
+    "seen": 1787011021.6683912,
     "ast_hash": "f984c8c88e258dfd234e4c7f1bf67f66",
     "semantic_hash": "f984c8c88e258dfd234e4c7f1bf67f66"
   },
   "ShipmentTracker.Core/Interfaces/IUnitOfWork.cs": {
-    "mtime": 1787003475.7977874,
-    "seen": 1787007939.0635583,
-    "ast_hash": "154ebba7c99df5d4fb753c50e2deea60",
-    "semantic_hash": "154ebba7c99df5d4fb753c50e2deea60"
+    "mtime": 1787010496.7512474,
+    "seen": 1787011021.6683934,
+    "ast_hash": "9602457990c030ba672c7e99364ce770",
+    "semantic_hash": ""
   },
   "ShipmentTracker.Core/Interfaces/Repositories/IBaseRepository.cs": {
     "mtime": 1786910902.2748964,
-    "seen": 1787007939.0635595,
+    "seen": 1787011021.668395,
     "ast_hash": "220fa1fd7fba652ed2047e65b685f208",
     "semantic_hash": "220fa1fd7fba652ed2047e65b685f208"
   },
   "ShipmentTracker.Core/Interfaces/Repositories/IBranchRepository.cs": {
     "mtime": 1786989768.5017526,
-    "seen": 1787007939.0635602,
+    "seen": 1787011021.668396,
     "ast_hash": "ac8b1bbe4af515724fad1916a00cba18",
     "semantic_hash": "ac8b1bbe4af515724fad1916a00cba18"
   },
   "ShipmentTracker.Core/Interfaces/Repositories/IShipmentRepository.cs": {
     "mtime": 1785224179.1871424,
-    "seen": 1787007939.0635622,
+    "seen": 1787011021.668402,
     "ast_hash": "036793e017b1640358c05d42b5831f8c",
     "semantic_hash": "036793e017b1640358c05d42b5831f8c"
   },
   "ShipmentTracker.Core/Interfaces/Services/IBranchService.cs": {
     "mtime": 1787005686.9727948,
-    "seen": 1787007939.0635643,
+    "seen": 1787011021.6684043,
     "ast_hash": "5553387ff4c8e748f1acab77c6f4febc",
     "semantic_hash": "5553387ff4c8e748f1acab77c6f4febc"
   },
   "ShipmentTracker.Core/Interfaces/Services/IShipmentService.cs": {
     "mtime": 1787005803.82205,
-    "seen": 1787007939.0635664,
+    "seen": 1787011021.6684072,
     "ast_hash": "b0033d9a39e67ed0d55fd70ee334afa1",
     "semantic_hash": "b0033d9a39e67ed0d55fd70ee334afa1"
   },
   "ShipmentTracker.Core/ShipmentTracker.Core.csproj": {
     "mtime": 1787005803.9190466,
-    "seen": 1787007939.0635686,
+    "seen": 1787011021.6684093,
     "ast_hash": "75d3d66a4fdb8ac18e7220ac8bf0508a",
     "semantic_hash": "75d3d66a4fdb8ac18e7220ac8bf0508a"
   },
   "ShipmentTracker.Infrastructure/Data/AppDbContext.cs": {
-    "mtime": 1787003499.4508522,
-    "seen": 1787007939.0635695,
-    "ast_hash": "0466152d5fbdbf03ef1251cfc58dc6c9",
-    "semantic_hash": "0466152d5fbdbf03ef1251cfc58dc6c9"
+    "mtime": 1787010522.8388994,
+    "seen": 1787011021.6684105,
+    "ast_hash": "2e1add4b16536656bcc8b9255d86234c",
+    "semantic_hash": ""
   },
   "ShipmentTracker.Infrastructure/Data/Configurations/BranchConfiguration.cs": {
     "mtime": 1786989778.0109215,
-    "seen": 1787007939.0635705,
+    "seen": 1787011021.6684115,
     "ast_hash": "584ff5b19cfc4c7a0f8846aa36f4d44a",
     "semantic_hash": "584ff5b19cfc4c7a0f8846aa36f4d44a"
   },
   "ShipmentTracker.Infrastructure/Data/Configurations/BranchScheduleConfiguration.cs": {
     "mtime": 1786989784.006602,
-    "seen": 1787007939.0635712,
+    "seen": 1787011021.6684124,
     "ast_hash": "ec1f46312b8937aa5ac9ada611566359",
     "semantic_hash": "ec1f46312b8937aa5ac9ada611566359"
   },
   "ShipmentTracker.Infrastructure/Data/Configurations/ShipmentConfiguration.cs": {
     "mtime": 1785228255.3136332,
-    "seen": 1787007939.0635736,
+    "seen": 1787011021.6684175,
     "ast_hash": "0c71065a1db236d756165cffbfd7a9fe",
     "semantic_hash": "0c71065a1db236d756165cffbfd7a9fe"
   },
   "ShipmentTracker.Infrastructure/Data/UnitOfWork.cs": {
-    "mtime": 1787003514.9499521,
-    "seen": 1787007939.0635753,
-    "ast_hash": "42841871c0763aca38a41b71da145121",
-    "semantic_hash": "42841871c0763aca38a41b71da145121"
+    "mtime": 1787010533.9349222,
+    "seen": 1787011021.6684198,
+    "ast_hash": "26b55b4097036554c55c2b7f715f48ff",
+    "semantic_hash": ""
   },
   "ShipmentTracker.Infrastructure/Migrations/20260728094945_InitialModel.Designer.cs": {
     "mtime": 1785232185.93906,
-    "seen": 1787007939.0635762,
+    "seen": 1787011021.6684206,
     "ast_hash": "dc7395d293433e89de42fc2ae9ccd018",
     "semantic_hash": "dc7395d293433e89de42fc2ae9ccd018"
   },
   "ShipmentTracker.Infrastructure/Migrations/20260728094945_InitialModel.cs": {
     "mtime": 1785232185.9380617,
-    "seen": 1787007939.0635772,
+    "seen": 1787011021.668422,
     "ast_hash": "5a3c7f4dc92ea62c38e03bda69d20f5a",
     "semantic_hash": "5a3c7f4dc92ea62c38e03bda69d20f5a"
   },
   "ShipmentTracker.Infrastructure/Migrations/20260728103816_SeedInitialData.Designer.cs": {
     "mtime": 1785235096.5353703,
-    "seen": 1787007939.0635781,
+    "seen": 1787011021.668423,
     "ast_hash": "0bd3bd2f3cbc3ef785a4a7bec4e0a609",
     "semantic_hash": "0bd3bd2f3cbc3ef785a4a7bec4e0a609"
   },
   "ShipmentTracker.Infrastructure/Migrations/20260728103816_SeedInitialData.cs": {
     "mtime": 1785235118.9776409,
-    "seen": 1787007939.0635788,
+    "seen": 1787011021.668424,
     "ast_hash": "20b59bdeb7b300fc76148577cb98fcdf",
     "semantic_hash": "20b59bdeb7b300fc76148577cb98fcdf"
   },
   "ShipmentTracker.Infrastructure/Migrations/20260817180443_AddBranchesAndSchedule.Designer.cs": {
     "mtime": 1786989883.2722445,
-    "seen": 1787007939.0635798,
+    "seen": 1787011021.6684248,
     "ast_hash": "dfc8e13ef2e653d16aacdffff7a31e23",
     "semantic_hash": "dfc8e13ef2e653d16aacdffff7a31e23"
   },
   "ShipmentTracker.Infrastructure/Migrations/20260817180443_AddBranchesAndSchedule.cs": {
     "mtime": 1786989883.2707329,
-    "seen": 1787007939.0635808,
+    "seen": 1787011021.668426,
     "ast_hash": "73cbb50eb08ffd3e56896ee584ab79cd",
     "semantic_hash": "73cbb50eb08ffd3e56896ee584ab79cd"
   },
   "ShipmentTracker.Infrastructure/Migrations/AppDbContextModelSnapshot.cs": {
-    "mtime": 1787003555.8786173,
-    "seen": 1787007939.063586,
-    "ast_hash": "5f5b55e7bb462f5230973497243e12b9",
-    "semantic_hash": "5f5b55e7bb462f5230973497243e12b9"
+    "mtime": 1787010573.1054301,
+    "seen": 1787011021.668431,
+    "ast_hash": "f5727193d8fd95cd67256b125e34a63b",
+    "semantic_hash": ""
   },
   "ShipmentTracker.Infrastructure/Repositories/BaseRepository.cs": {
     "mtime": 1786910909.2841482,
-    "seen": 1787007939.0635872,
+    "seen": 1787011021.6684322,
     "ast_hash": "d18d66b731d721cac1f1626bab5486fc",
     "semantic_hash": "d18d66b731d721cac1f1626bab5486fc"
   },
   "ShipmentTracker.Infrastructure/Repositories/BranchRepository.cs": {
     "mtime": 1786989792.753894,
-    "seen": 1787007939.0635881,
+    "seen": 1787011021.6684334,
     "ast_hash": "4db3e51d90f5122a41542a9a12ae4e22",
     "semantic_hash": "4db3e51d90f5122a41542a9a12ae4e22"
   },
   "ShipmentTracker.Infrastructure/Repositories/ShipmentRepository.cs": {
     "mtime": 1785229130.7031603,
-    "seen": 1787007939.06359,
+    "seen": 1787011021.6684368,
     "ast_hash": "a0fad5323874af768144dc1a28de607c",
     "semantic_hash": "a0fad5323874af768144dc1a28de607c"
   },
   "ShipmentTracker.Infrastructure/ShipmentTracker.Infrastructure.csproj": {
     "mtime": 1785231479.8128061,
-    "seen": 1787007939.0635924,
+    "seen": 1787011021.6684391,
     "ast_hash": "c1d8e7555dada0b1a040ea0f3383566c",
     "semantic_hash": "c1d8e7555dada0b1a040ea0f3383566c"
   },
   "ShipmentTracker.Services/BranchService.cs": {
     "mtime": 1787005803.740512,
-    "seen": 1787007939.0635931,
+    "seen": 1787011021.6684403,
     "ast_hash": "392ec23eb6e97bb8d8f7566f881a67b0",
     "semantic_hash": "392ec23eb6e97bb8d8f7566f881a67b0"
   },
   "ShipmentTracker.Services/Mappings/BranchMappingProfile.cs": {
     "mtime": 1787005762.2169695,
-    "seen": 1787007939.0635955,
+    "seen": 1787011021.6684434,
     "ast_hash": "705372ffe991b3bc937f8dd177fca8d1",
     "semantic_hash": "705372ffe991b3bc937f8dd177fca8d1"
   },
   "ShipmentTracker.Services/Mappings/ShipmentMappingProfile.cs": {
     "mtime": 1787005783.0878634,
-    "seen": 1787007939.0635972,
+    "seen": 1787011021.6684468,
     "ast_hash": "d67c836f07b1fb6b21d57a6bfb1db220",
     "semantic_hash": "d67c836f07b1fb6b21d57a6bfb1db220"
   },
   "ShipmentTracker.Services/ShipmentService.cs": {
     "mtime": 1787006150.0484147,
-    "seen": 1787007939.0635993,
+    "seen": 1787011021.6684484,
     "ast_hash": "cf1181c5c81a570becb4aac081ea59dd",
     "semantic_hash": "cf1181c5c81a570becb4aac081ea59dd"
   },
   "ShipmentTracker.Services/ShipmentTracker.Services.csproj": {
     "mtime": 1787006160.474383,
-    "seen": 1787007939.0636,
+    "seen": 1787011021.6684492,
     "ast_hash": "e8fa1958a0f936be4dda49407dae8db4",
     "semantic_hash": "e8fa1958a0f936be4dda49407dae8db4"
   },
   "ShipmentTracker.Web/Controllers/BranchController.cs": {
     "mtime": 1787005673.9076073,
-    "seen": 1787007939.0636096,
+    "seen": 1787011021.6684692,
     "ast_hash": "3ba67b19689dd6bfcc121ddf162472cd",
     "semantic_hash": "3ba67b19689dd6bfcc121ddf162472cd"
   },
   "ShipmentTracker.Web/Controllers/ShipmentController.cs": {
     "mtime": 1787005783.1328583,
-    "seen": 1787007939.0636117,
+    "seen": 1787011021.6684723,
     "ast_hash": "b674959b53eeb393a5747fbd3dc249a2",
     "semantic_hash": "b674959b53eeb393a5747fbd3dc249a2"
   },
   "ShipmentTracker.Web/Mappers/MappingProfiles.cs": {
     "mtime": 1787005783.1548567,
-    "seen": 1787007939.0636137,
+    "seen": 1787011021.6684747,
     "ast_hash": "9f26633400ea8db2c5cd54498ea9748c",
     "semantic_hash": "9f26633400ea8db2c5cd54498ea9748c"
   },
   "ShipmentTracker.Web/Program.cs": {
-    "mtime": 1787006160.3929698,
-    "seen": 1787007939.0636146,
-    "ast_hash": "f9ea7892448a273b442f9a9833962513",
-    "semantic_hash": "f9ea7892448a273b442f9a9833962513"
+    "mtime": 1787010844.8671885,
+    "seen": 1787011021.6684759,
+    "ast_hash": "48e8adfdabf884dfe32d420c6513ba54",
+    "semantic_hash": ""
   },
   "ShipmentTracker.Web/Properties/launchSettings.json": {
     "mtime": 1785221309.464781,
-    "seen": 1787007939.0636158,
+    "seen": 1787011021.6684766,
     "ast_hash": "30e92a544c0f663ef7eb495ab6c6bd6e",
     "semantic_hash": "30e92a544c0f663ef7eb495ab6c6bd6e"
   },
   "ShipmentTracker.Web/ShipmentTracker.Web.csproj": {
     "mtime": 1785239859.7760012,
-    "seen": 1787007939.0636165,
+    "seen": 1787011021.6684778,
     "ast_hash": "7795ed3eb2d6c835f4c0ca316b3b2134",
     "semantic_hash": "7795ed3eb2d6c835f4c0ca316b3b2134"
   },
   "ShipmentTracker.Web/appsettings.Development.json": {
     "mtime": 1785221309.4657655,
     "seen": 1787007939.0636177,
-    "ast_hash": "804b473502a4c415cf75db61c56c32aa",
-    "semantic_hash": "804b473502a4c415cf75db61c56c32aa"
+    "ast_hash": "",
+    "semantic_hash": ""
   },
   "ShipmentTracker.Web/appsettings.json": {
     "mtime": 1785246533.5869913,
     "seen": 1787007939.063619,
-    "ast_hash": "98878408cdbadff8986fa1a12844e0da",
-    "semantic_hash": "98878408cdbadff8986fa1a12844e0da"
+    "ast_hash": "",
+    "semantic_hash": ""
   },
   "ShipmentTracker.sln": {
     "mtime": 1785221461.6113827,
-    "seen": 1787007939.06362,
+    "seen": 1787011021.6684787,
     "ast_hash": "aafa9052a161c819a118f3d257bbc8de",
     "semantic_hash": "aafa9052a161c819a118f3d257bbc8de"
   },
   ".claude/CLAUDE.md": {
     "mtime": 1786992357.0609834,
-    "seen": 1787007939.063621,
+    "seen": 1787011021.6684797,
     "ast_hash": "c232166e6492ba1ed955030b16979b05",
     "semantic_hash": "c232166e6492ba1ed955030b16979b05"
   },
   ".claude/skills/graphify/SKILL.md": {
     "mtime": 1786992357.0579858,
-    "seen": 1787007939.0636222,
+    "seen": 1787011021.6684809,
     "ast_hash": "3953c31b4ef6d89d3b1cb43f0110817d",
     "semantic_hash": "3953c31b4ef6d89d3b1cb43f0110817d"
   },
   ".claude/skills/graphify/references/add-watch.md": {
     "mtime": 1786992155.417202,
-    "seen": 1787007939.063623,
+    "seen": 1787011021.6684818,
     "ast_hash": "d59d027fe449f06aa03905a01184e779",
     "semantic_hash": "d59d027fe449f06aa03905a01184e779"
   },
   ".claude/skills/graphify/references/exports.md": {
     "mtime": 1786992155.4181974,
-    "seen": 1787007939.063624,
+    "seen": 1787011021.6684828,
     "ast_hash": "9da2a2152e60a22f07f05fed5158f287",
     "semantic_hash": "9da2a2152e60a22f07f05fed5158f287"
   },
   ".claude/skills/graphify/references/extraction-spec.md": {
     "mtime": 1786992155.4181974,
-    "seen": 1787007939.0636249,
+    "seen": 1787011021.6684835,
     "ast_hash": "42fef56a01698118f7fd722acdadea34",
     "semantic_hash": "42fef56a01698118f7fd722acdadea34"
   },
   ".claude/skills/graphify/references/github-and-merge.md": {
     "mtime": 1786992155.4191952,
-    "seen": 1787007939.063626,
+    "seen": 1787011021.6684847,
     "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
     "semantic_hash": "cde13df085e4c492aeb7ba298a996d0d"
   },
   ".claude/skills/graphify/references/hooks.md": {
     "mtime": 1786992155.4211946,
-    "seen": 1787007939.063627,
+    "seen": 1787011021.6684859,
     "ast_hash": "3f545db6ce646650bb9de588f5512a27",
     "semantic_hash": "3f545db6ce646650bb9de588f5512a27"
   },
   ".claude/skills/graphify/references/query.md": {
     "mtime": 1786992155.422198,
-    "seen": 1787007939.063628,
+    "seen": 1787011021.6684868,
     "ast_hash": "3c46f8ad006874260614ed8657d02307",
     "semantic_hash": "3c46f8ad006874260614ed8657d02307"
   },
   ".claude/skills/graphify/references/transcribe.md": {
     "mtime": 1786992155.424199,
-    "seen": 1787007939.0636292,
+    "seen": 1787011021.6684878,
     "ast_hash": "67b6a5fa6c0974e18f60db9f8932fbd8",
     "semantic_hash": "67b6a5fa6c0974e18f60db9f8932fbd8"
   },
   ".claude/skills/graphify/references/update.md": {
     "mtime": 1786992155.4251964,
-    "seen": 1787007939.06363,
+    "seen": 1787011021.6684887,
     "ast_hash": "9378bd03d56baaf78bd738ab3848f142",
     "semantic_hash": "9378bd03d56baaf78bd738ab3848f142"
   },
   ".claude/skills/speckit-analyze/SKILL.md": {
     "mtime": 1786895754.5439289,
-    "seen": 1787007939.0636308,
+    "seen": 1787011021.6684897,
     "ast_hash": "b02fd4ddc4ee06dc4a5cd54c210f7ec8",
     "semantic_hash": "b02fd4ddc4ee06dc4a5cd54c210f7ec8"
   },
   ".claude/skills/speckit-checklist/SKILL.md": {
     "mtime": 1786895754.6055584,
-    "seen": 1787007939.0636315,
+    "seen": 1787011021.6684904,
     "ast_hash": "891f642d9acb80a17c0926c01ca0b2e0",
     "semantic_hash": "891f642d9acb80a17c0926c01ca0b2e0"
   },
   ".claude/skills/speckit-clarify/SKILL.md": {
     "mtime": 1786895754.5563498,
-    "seen": 1787007939.0636325,
+    "seen": 1787011021.6684918,
     "ast_hash": "39c817acb2af9a9e66c8e726e734c390",
     "semantic_hash": "39c817acb2af9a9e66c8e726e734c390"
   },
   ".claude/skills/speckit-constitution/SKILL.md": {
     "mtime": 1786895754.5653892,
-    "seen": 1787007939.0636334,
+    "seen": 1787011021.6684928,
     "ast_hash": "1e0cfc54f5de55ebeb4e10149eed8c39",
     "semantic_hash": "1e0cfc54f5de55ebeb4e10149eed8c39"
   },
   ".claude/skills/speckit-converge/SKILL.md": {
     "mtime": 1786895754.5853148,
-    "seen": 1787007939.0636344,
+    "seen": 1787011021.6684937,
     "ast_hash": "6f64cd3de106518d8a6f33527e89d993",
     "semantic_hash": "6f64cd3de106518d8a6f33527e89d993"
   },
   ".claude/skills/speckit-implement/SKILL.md": {
     "mtime": 1786895754.5756428,
-    "seen": 1787007939.0636353,
+    "seen": 1787011021.6684947,
     "ast_hash": "4839982bf24ba7f725a6f51c5d7cf66c",
     "semantic_hash": "4839982bf24ba7f725a6f51c5d7cf66c"
   },
   ".claude/skills/speckit-plan/SKILL.md": {
     "mtime": 1786895754.5938795,
-    "seen": 1787007939.0636365,
+    "seen": 1787011021.6684957,
     "ast_hash": "edd957742b856e1b731ddd9d9f61aaaf",
     "semantic_hash": "edd957742b856e1b731ddd9d9f61aaaf"
   },
   ".claude/skills/speckit-specify/SKILL.md": {
     "mtime": 1786895754.6159735,
-    "seen": 1787007939.0636373,
+    "seen": 1787011021.6684964,
     "ast_hash": "70939fcfcb1ed426f79ff2791f702abd",
     "semantic_hash": "70939fcfcb1ed426f79ff2791f702abd"
   },
   ".claude/skills/speckit-tasks/SKILL.md": {
     "mtime": 1786895754.6263676,
-    "seen": 1787007939.0636382,
+    "seen": 1787011021.6684973,
     "ast_hash": "a8fbbffad285831f4c977e56ce3b6f35",
     "semantic_hash": "a8fbbffad285831f4c977e56ce3b6f35"
   },
   ".claude/skills/speckit-taskstoissues/SKILL.md": {
     "mtime": 1786895754.6356103,
-    "seen": 1787007939.063639,
+    "seen": 1787011021.6684985,
     "ast_hash": "87231bb7897400694a7c437ee9631f75",
     "semantic_hash": "87231bb7897400694a7c437ee9631f75"
   },
   ".specify/memory/constitution.md": {
     "mtime": 1786904234.0241857,
-    "seen": 1787007939.06364,
+    "seen": 1787011021.6684995,
     "ast_hash": "7eee8d4891d16f7e89f0839a6e06eaac",
     "semantic_hash": "7eee8d4891d16f7e89f0839a6e06eaac"
   },
   ".specify/templates/checklist-template.md": {
     "mtime": 1786895754.7366238,
-    "seen": 1787007939.0636408,
+    "seen": 1787011021.6685004,
     "ast_hash": "5af23404f7e1314e93fab2bcfcfa5c23",
     "semantic_hash": "5af23404f7e1314e93fab2bcfcfa5c23"
   },
   ".specify/templates/constitution-template.md": {
     "mtime": 1786895754.7441702,
-    "seen": 1787007939.0636418,
+    "seen": 1787011021.6685011,
     "ast_hash": "dcefb6b60e7cb3db2e966977b6f02f18",
     "semantic_hash": "dcefb6b60e7cb3db2e966977b6f02f18"
   },
   ".specify/templates/plan-template.md": {
     "mtime": 1786895754.7513177,
-    "seen": 1787007939.0636427,
+    "seen": 1787011021.6685023,
     "ast_hash": "311db0670c3d19d2f5b781de97529b79",
     "semantic_hash": "311db0670c3d19d2f5b781de97529b79"
   },
   ".specify/templates/spec-template.md": {
     "mtime": 1786895754.758862,
-    "seen": 1787007939.0636437,
+    "seen": 1787011021.6685033,
     "ast_hash": "45ac8538bc1220324c9f0d610145b53f",
     "semantic_hash": "45ac8538bc1220324c9f0d610145b53f"
   },
   ".specify/templates/tasks-template.md": {
     "mtime": 1786895754.7658632,
-    "seen": 1787007939.0636444,
+    "seen": 1787011021.668504,
     "ast_hash": "f8b4f62d384defa0a559bdbbaacb0540",
     "semantic_hash": "f8b4f62d384defa0a559bdbbaacb0540"
   },
   ".specify/workflows/speckit/workflow.yml": {
     "mtime": 1786895317.621897,
-    "seen": 1787007939.0636451,
+    "seen": 1787011021.6685052,
     "ast_hash": "06fd89e478bb8e0e668917a5f02f9055",
     "semantic_hash": "06fd89e478bb8e0e668917a5f02f9055"
   },
   "CLAUDE.md": {
     "mtime": 1787004978.1744244,
-    "seen": 1787007939.0636463,
+    "seen": 1787011021.6685061,
     "ast_hash": "66bab1dae224851611af243d76000cd0",
     "semantic_hash": "66bab1dae224851611af243d76000cd0"
   },
   "README.md": {
     "mtime": 1786907952.092144,
-    "seen": 1787007939.0636473,
+    "seen": 1787011021.668507,
     "ast_hash": "a0adf039703ef55d70d3821122a6e90a",
     "semantic_hash": "a0adf039703ef55d70d3821122a6e90a"
   },
   "specs/001-standardize-mapping-di/checklists/requirements.md": {
     "mtime": 1786905123.158446,
-    "seen": 1787007939.0636482,
+    "seen": 1787011021.6685078,
     "ast_hash": "10828733fc7d8a4125d271781c3f4a46",
     "semantic_hash": "10828733fc7d8a4125d271781c3f4a46"
   },
   "specs/001-standardize-mapping-di/contracts/shipment-api-contract.md": {
     "mtime": 1786906230.0046344,
-    "seen": 1787007939.0636492,
+    "seen": 1787011021.668509,
     "ast_hash": "e702d48c895f7e946cc18a2821764df4",
     "semantic_hash": "e702d48c895f7e946cc18a2821764df4"
   },
   "specs/001-standardize-mapping-di/data-model.md": {
     "mtime": 1786906182.2493196,
-    "seen": 1787007939.0636501,
+    "seen": 1787011021.66851,
     "ast_hash": "cd267ce50b610181cde566ce86b1d21e",
     "semantic_hash": "cd267ce50b610181cde566ce86b1d21e"
   },
   "specs/001-standardize-mapping-di/plan.md": {
     "mtime": 1786906262.8578103,
-    "seen": 1787007939.063651,
+    "seen": 1787011021.668511,
     "ast_hash": "1381953687ad82ce412b3416ca23af6e",
     "semantic_hash": "1381953687ad82ce412b3416ca23af6e"
   },
   "specs/001-standardize-mapping-di/quickstart.md": {
     "mtime": 1786906247.4465158,
-    "seen": 1787007939.0636518,
+    "seen": 1787011021.668512,
     "ast_hash": "76dce69e657ba10a20822b2e5ba90c93",
     "semantic_hash": "76dce69e657ba10a20822b2e5ba90c93"
   },
   "specs/001-standardize-mapping-di/research.md": {
     "mtime": 1786906099.8556485,
-    "seen": 1787007939.0636528,
+    "seen": 1787011021.668513,
     "ast_hash": "f4c8d284d508fdf192f8856e84231218",
     "semantic_hash": "f4c8d284d508fdf192f8856e84231218"
   },
   "specs/001-standardize-mapping-di/spec.md": {
     "mtime": 1786905646.6942768,
-    "seen": 1787007939.0636537,
+    "seen": 1787011021.6685138,
     "ast_hash": "599ac4dbbe0ad0c803b7f0107929735a",
     "semantic_hash": "599ac4dbbe0ad0c803b7f0107929735a"
   },
   "specs/001-standardize-mapping-di/tasks.md": {
     "mtime": 1786906935.2687676,
-    "seen": 1787007939.0636547,
+    "seen": 1787011021.6685147,
     "ast_hash": "6817a2e7f5d8bb98254ffa07fd8d6aac",
     "semantic_hash": "6817a2e7f5d8bb98254ffa07fd8d6aac"
   },
   "specs/002-paginate-shipment-list/checklists/requirements.md": {
     "mtime": 1786909881.2898214,
-    "seen": 1787007939.0636554,
+    "seen": 1787011021.668516,
     "ast_hash": "0fd24ba7ca6725bce3ee631e2a207593",
     "semantic_hash": "0fd24ba7ca6725bce3ee631e2a207593"
   },
   "specs/002-paginate-shipment-list/contracts/shipment-list-contract.md": {
     "mtime": 1786910226.6017256,
-    "seen": 1787007939.0636563,
+    "seen": 1787011021.6685169,
     "ast_hash": "9e9b5831bee8d4a61244acbfb047537e",
     "semantic_hash": "9e9b5831bee8d4a61244acbfb047537e"
   },
   "specs/002-paginate-shipment-list/data-model.md": {
     "mtime": 1786910213.0483754,
-    "seen": 1787007939.0636573,
+    "seen": 1787011021.6685178,
     "ast_hash": "8e534658db45526ce6854aafe734d722",
     "semantic_hash": "8e534658db45526ce6854aafe734d722"
   },
   "specs/002-paginate-shipment-list/plan.md": {
     "mtime": 1786910765.6390405,
-    "seen": 1787007939.0636582,
+    "seen": 1787011021.668519,
     "ast_hash": "dc47c04a6fd6430c45938576018c4f92",
     "semantic_hash": "dc47c04a6fd6430c45938576018c4f92"
   },
   "specs/002-paginate-shipment-list/quickstart.md": {
     "mtime": 1786910789.2116027,
-    "seen": 1787007939.063659,
+    "seen": 1787011021.66852,
     "ast_hash": "64b443b31ca9cc736b4d862ed468561d",
     "semantic_hash": "64b443b31ca9cc736b4d862ed468561d"
   },
   "specs/002-paginate-shipment-list/research.md": {
     "mtime": 1786910772.4876287,
-    "seen": 1787007939.0636601,
+    "seen": 1787011021.668521,
     "ast_hash": "296f0c219b8a5006b67c4173370b78c0",
     "semantic_hash": "296f0c219b8a5006b67c4173370b78c0"
   },
   "specs/002-paginate-shipment-list/spec.md": {
     "mtime": 1786909874.7187061,
-    "seen": 1787007939.0636609,
+    "seen": 1787011021.668522,
     "ast_hash": "e3a721820613cf18c2053128a143041f",
     "semantic_hash": "e3a721820613cf18c2053128a143041f"
   },
   "specs/002-paginate-shipment-list/tasks.md": {
     "mtime": 1786911139.684304,
-    "seen": 1787007939.0636618,
+    "seen": 1787011021.668523,
     "ast_hash": "7597a79d8e04ee67f7f16647643b0ab3",
     "semantic_hash": "7597a79d8e04ee67f7f16647643b0ab3"
   },
   "specs/003-branches-hubs/checklists/edge-cases.md": {
     "mtime": 1786990565.3857076,
-    "seen": 1787007939.0636625,
+    "seen": 1787011021.6685238,
     "ast_hash": "403ff7f0214303ecf384c0bd6796a1ff",
     "semantic_hash": "403ff7f0214303ecf384c0bd6796a1ff"
   },
   "specs/003-branches-hubs/checklists/requirements.md": {
     "mtime": 1786986543.081043,
-    "seen": 1787007939.0636637,
+    "seen": 1787011021.6685247,
     "ast_hash": "186679edd41396282d92e5a68131a416",
     "semantic_hash": "186679edd41396282d92e5a68131a416"
   },
   "specs/003-branches-hubs/contracts/branches-api-contract.md": {
     "mtime": 1786990507.9158473,
-    "seen": 1787007939.0636644,
+    "seen": 1787011021.668526,
     "ast_hash": "944828ad228e13bd5737e922d891d07d",
     "semantic_hash": "944828ad228e13bd5737e922d891d07d"
   },
   "specs/003-branches-hubs/data-model.md": {
     "mtime": 1786987804.554873,
-    "seen": 1787007939.0636654,
+    "seen": 1787011021.6685266,
     "ast_hash": "47fab19660c5c4d25a7efe0db22c2283",
     "semantic_hash": "47fab19660c5c4d25a7efe0db22c2283"
   },
   "specs/003-branches-hubs/plan.md": {
     "mtime": 1786987710.4606833,
-    "seen": 1787007939.063666,
+    "seen": 1787011021.6685278,
     "ast_hash": "52d4545b43d06a09a706059cae8650fe",
     "semantic_hash": "52d4545b43d06a09a706059cae8650fe"
   },
   "specs/003-branches-hubs/quickstart.md": {
     "mtime": 1786990521.0681455,
-    "seen": 1787007939.063667,
+    "seen": 1787011021.6685286,
     "ast_hash": "7c0accdb109ec4a38437442dfec13880",
     "semantic_hash": "7c0accdb109ec4a38437442dfec13880"
   },
   "specs/003-branches-hubs/research.md": {
     "mtime": 1786990537.8307657,
-    "seen": 1787007939.063668,
+    "seen": 1787011021.6685297,
     "ast_hash": "7f532ef2eb0cdd289a49bd58ebbb3781",
     "semantic_hash": "7f532ef2eb0cdd289a49bd58ebbb3781"
   },
   "specs/003-branches-hubs/spec.md": {
     "mtime": 1786989075.3297386,
-    "seen": 1787007939.063669,
+    "seen": 1787011021.6685307,
     "ast_hash": "548d013ca1a6f1a0d8027ab621a96835",
     "semantic_hash": "548d013ca1a6f1a0d8027ab621a96835"
   },
   "specs/003-branches-hubs/tasks.md": {
     "mtime": 1786990485.0018532,
-    "seen": 1787007939.06367,
+    "seen": 1787011021.6685317,
     "ast_hash": "c559d3fe7b9fe16c82ec19553f14bf04",
     "semantic_hash": "c559d3fe7b9fe16c82ec19553f14bf04"
   },
   "ShipmentTracker.Core/Entities/Employee.cs": {
     "mtime": 1787003441.924726,
-    "seen": 1787007939.0635498,
+    "seen": 1787011021.6683824,
     "ast_hash": "39e4eb581ba9e975ae1b6b1e3f0b0a36",
     "semantic_hash": "39e4eb581ba9e975ae1b6b1e3f0b0a36"
   },
   "ShipmentTracker.Core/Entities/Vehicle.cs": {
     "mtime": 1787003446.8588126,
-    "seen": 1787007939.0635521,
+    "seen": 1787011021.668386,
     "ast_hash": "d4edf7c67f053530cb0c5a7cd0eede46",
     "semantic_hash": "d4edf7c67f053530cb0c5a7cd0eede46"
   },
   "ShipmentTracker.Core/Enums/EmployeeRole.cs": {
     "mtime": 1787003433.9157107,
-    "seen": 1787007939.0635545,
+    "seen": 1787011021.668389,
     "ast_hash": "e0130b2514b8b7582618e88bda19c6f7",
     "semantic_hash": "e0130b2514b8b7582618e88bda19c6f7"
   },
   "ShipmentTracker.Core/Enums/VehicleType.cs": {
     "mtime": 1787003437.0215006,
-    "seen": 1787007939.0635574,
+    "seen": 1787011021.6683927,
     "ast_hash": "1b10b4b97d8a5aa8261e6f847e2f95b9",
     "semantic_hash": "1b10b4b97d8a5aa8261e6f847e2f95b9"
   },
   "ShipmentTracker.Core/Interfaces/Repositories/IEmployeeRepository.cs": {
     "mtime": 1787003465.9383051,
-    "seen": 1787007939.0635614,
+    "seen": 1787011021.668401,
     "ast_hash": "1135a7208cfc31ad6a88d3e820ce01d1",
     "semantic_hash": "1135a7208cfc31ad6a88d3e820ce01d1"
   },
   "ShipmentTracker.Core/Interfaces/Repositories/IVehicleRepository.cs": {
     "mtime": 1787003469.172678,
-    "seen": 1787007939.0635636,
+    "seen": 1787011021.668403,
     "ast_hash": "762bdcb83ecd351290134cf2306834e3",
     "semantic_hash": "762bdcb83ecd351290134cf2306834e3"
   },
   "ShipmentTracker.Core/Interfaces/Services/IEmployeeService.cs": {
     "mtime": 1787005730.3122668,
-    "seen": 1787007939.0635655,
+    "seen": 1787011021.6684062,
     "ast_hash": "a4cddc8a8c49b370ffb92b18a622c326",
     "semantic_hash": "a4cddc8a8c49b370ffb92b18a622c326"
   },
   "ShipmentTracker.Core/Interfaces/Services/IVehicleService.cs": {
     "mtime": 1787005793.6816967,
-    "seen": 1787007939.0635676,
+    "seen": 1787011021.6684084,
     "ast_hash": "88257984f42d7fc15f424916f2cbe4ec",
     "semantic_hash": "88257984f42d7fc15f424916f2cbe4ec"
   },
   "ShipmentTracker.Infrastructure/Data/Configurations/EmployeeConfiguration.cs": {
     "mtime": 1787003483.8634217,
-    "seen": 1787007939.0635722,
+    "seen": 1787011021.6684155,
     "ast_hash": "6f9511105e511cfcee3ef3b0e80c3978",
     "semantic_hash": "6f9511105e511cfcee3ef3b0e80c3978"
   },
   "ShipmentTracker.Infrastructure/Data/Configurations/VehicleConfiguration.cs": {
     "mtime": 1787003490.7211256,
-    "seen": 1787007939.0635746,
+    "seen": 1787011021.668419,
     "ast_hash": "a5c715a81c86ec3b9454d28ab337c00e",
     "semantic_hash": "a5c715a81c86ec3b9454d28ab337c00e"
   },
   "ShipmentTracker.Infrastructure/Migrations/20260817215235_AddEmployeesAndVehicles.Designer.cs": {
     "mtime": 1787003555.877618,
-    "seen": 1787007939.0635817,
+    "seen": 1787011021.6684272,
     "ast_hash": "8e28a4a13eae68d0e6c8ea916227b72f",
     "semantic_hash": "8e28a4a13eae68d0e6c8ea916227b72f"
   },
   "ShipmentTracker.Infrastructure/Migrations/20260817215235_AddEmployeesAndVehicles.cs": {
     "mtime": 1787003555.8756368,
-    "seen": 1787007939.0635853,
+    "seen": 1787011021.6684282,
     "ast_hash": "fad2512e08a79e84b87d1a755c2d6431",
     "semantic_hash": "fad2512e08a79e84b87d1a755c2d6431"
   },
   "ShipmentTracker.Infrastructure/Repositories/EmployeeRepository.cs": {
     "mtime": 1787003503.4540617,
-    "seen": 1787007939.063589,
+    "seen": 1787011021.6684358,
     "ast_hash": "e51c6c1818f17e291953eaadc132e965",
     "semantic_hash": "e51c6c1818f17e291953eaadc132e965"
   },
   "ShipmentTracker.Infrastructure/Repositories/VehicleRepository.cs": {
     "mtime": 1787003506.7079163,
-    "seen": 1787007939.0635915,
+    "seen": 1787011021.668438,
     "ast_hash": "0498cf5c8dc0d54a80ef0a5aa81f9aed",
     "semantic_hash": "0498cf5c8dc0d54a80ef0a5aa81f9aed"
   },
   "ShipmentTracker.Services/EmployeeService.cs": {
     "mtime": 1787005730.2692683,
-    "seen": 1787007939.0635943,
+    "seen": 1787011021.6684427,
     "ast_hash": "be8751654fca09f3f613e75460c9d2d8",
     "semantic_hash": "be8751654fca09f3f613e75460c9d2d8"
   },
   "ShipmentTracker.Services/Mappings/EmployeeMappingProfile.cs": {
     "mtime": 1787005730.2303445,
-    "seen": 1787007939.0635962,
+    "seen": 1787011021.6684453,
     "ast_hash": "6237b5a27114404d294eb2ace968dc0b",
     "semantic_hash": "6237b5a27114404d294eb2ace968dc0b"
   },
   "ShipmentTracker.Services/Mappings/VehicleMappingProfile.cs": {
     "mtime": 1787005793.58373,
-    "seen": 1787007939.0635984,
+    "seen": 1787011021.6684475,
     "ast_hash": "db457fc76e60013bdffffdbe21bb83f1",
     "semantic_hash": "db457fc76e60013bdffffdbe21bb83f1"
   },
   "ShipmentTracker.Services/VehicleService.cs": {
     "mtime": 1787005793.6347053,
-    "seen": 1787007939.0636086,
+    "seen": 1787011021.6684682,
     "ast_hash": "b3e2cf19156f0605b66ba36ee0b9514f",
     "semantic_hash": "b3e2cf19156f0605b66ba36ee0b9514f"
   },
   "ShipmentTracker.Web/Controllers/EmployeeController.cs": {
     "mtime": 1787005730.3876069,
-    "seen": 1787007939.0636106,
+    "seen": 1787011021.6684713,
     "ast_hash": "9306c6d5478c4cdeca9f16f82cee7f0d",
     "semantic_hash": "9306c6d5478c4cdeca9f16f82cee7f0d"
   },
   "ShipmentTracker.Web/Controllers/VehicleController.cs": {
     "mtime": 1787005793.760224,
-    "seen": 1787007939.0636127,
+    "seen": 1787011021.6684735,
     "ast_hash": "4b77a95bba9d31ba80bf41d95fe2a6a1",
     "semantic_hash": "4b77a95bba9d31ba80bf41d95fe2a6a1"
   },
   "specs/004-employees-vehicles/checklists/requirements.md": {
     "mtime": 1786995145.6608226,
-    "seen": 1787007939.063671,
+    "seen": 1787011021.6685328,
     "ast_hash": "6abea0b8d53bed1c6d992c35cc0a133c",
     "semantic_hash": "6abea0b8d53bed1c6d992c35cc0a133c"
   },
   "specs/004-employees-vehicles/contracts/employees-vehicles-api-contract.md": {
     "mtime": 1786996662.9468753,
-    "seen": 1787007939.0636718,
+    "seen": 1787011021.668534,
     "ast_hash": "f0a40d4f0eecd6df538dca3bf0fea889",
     "semantic_hash": "f0a40d4f0eecd6df538dca3bf0fea889"
   },
   "specs/004-employees-vehicles/data-model.md": {
     "mtime": 1786996642.2222247,
-    "seen": 1787007939.0636728,
+    "seen": 1787011021.6685352,
     "ast_hash": "cab5b09cc3fc3092712ec3b17c330004",
     "semantic_hash": "cab5b09cc3fc3092712ec3b17c330004"
   },
   "specs/004-employees-vehicles/plan.md": {
     "mtime": 1786996536.7625008,
-    "seen": 1787007939.063674,
+    "seen": 1787011021.668536,
     "ast_hash": "2a750a45778a94b4f3bc8cd7bef9e116",
     "semantic_hash": "2a750a45778a94b4f3bc8cd7bef9e116"
   },
   "specs/004-employees-vehicles/quickstart.md": {
     "mtime": 1786996685.590299,
-    "seen": 1787007939.063675,
+    "seen": 1787011021.6685371,
     "ast_hash": "20eb4f80004ac1daf1642be576871557",
     "semantic_hash": "20eb4f80004ac1daf1642be576871557"
   },
   "specs/004-employees-vehicles/research.md": {
     "mtime": 1786996608.7326078,
-    "seen": 1787007939.0636759,
+    "seen": 1787011021.6685383,
     "ast_hash": "a8f61f5bb5ffb64a5a22472004668d84",
     "semantic_hash": "a8f61f5bb5ffb64a5a22472004668d84"
   },
   "specs/004-employees-vehicles/spec.md": {
     "mtime": 1786995707.9740913,
-    "seen": 1787007939.0636768,
+    "seen": 1787011021.6685393,
     "ast_hash": "fdef40f0180c78f89270601cc8c943d8",
     "semantic_hash": "fdef40f0180c78f89270601cc8c943d8"
   },
   "specs/004-employees-vehicles/tasks.md": {
     "mtime": 1787004143.3684523,
-    "seen": 1787007939.0636778,
+    "seen": 1787011021.6685405,
     "ast_hash": "947d41ef48c695200287c329f966810f",
     "semantic_hash": "947d41ef48c695200287c329f966810f"
   },
   "ShipmentTracker.Core/DTOs/Branches/BranchDto.cs": {
     "mtime": 1787005689.4988966,
-    "seen": 1787007939.0635333,
+    "seen": 1787011021.668354,
     "ast_hash": "34886eab269d4e3f8e953adf77f970bc",
     "semantic_hash": "34886eab269d4e3f8e953adf77f970bc"
   },
   "ShipmentTracker.Core/DTOs/Branches/CreateBranchDto.cs": {
     "mtime": 1787005762.2709656,
-    "seen": 1787007939.0635343,
+    "seen": 1787011021.6683555,
     "ast_hash": "ee75e9cc2616865a2fd30d4d0b5f088e",
     "semantic_hash": "ee75e9cc2616865a2fd30d4d0b5f088e"
   },
   "ShipmentTracker.Core/DTOs/Branches/ScheduleEntryDto.cs": {
     "mtime": 1787005798.7551973,
-    "seen": 1787007939.0635357,
+    "seen": 1787011021.668357,
     "ast_hash": "ab4c590ce2d206e740424886385f1ae7",
     "semantic_hash": "ab4c590ce2d206e740424886385f1ae7"
   },
   "ShipmentTracker.Core/DTOs/Branches/ScheduleEntryInputDto.cs": {
     "mtime": 1787005762.303975,
-    "seen": 1787007939.0635366,
+    "seen": 1787011021.668358,
     "ast_hash": "287d38a1ba2cf3f2366994ab1c31740b",
     "semantic_hash": "287d38a1ba2cf3f2366994ab1c31740b"
   },
   "ShipmentTracker.Core/DTOs/Branches/UpdateBranchDto.cs": {
     "mtime": 1787005762.246965,
-    "seen": 1787007939.0635376,
+    "seen": 1787011021.6683595,
     "ast_hash": "6853460ef0ff63a9b12a646ee3dcfe52",
     "semantic_hash": "6853460ef0ff63a9b12a646ee3dcfe52"
   },
   "ShipmentTracker.Core/DTOs/Employees/CreateEmployeeDto.cs": {
     "mtime": 1787005735.014822,
-    "seen": 1787007939.0635383,
+    "seen": 1787011021.6683671,
     "ast_hash": "496f2cd4ccb6365469a865d6b50fa122",
     "semantic_hash": "496f2cd4ccb6365469a865d6b50fa122"
   },
   "ShipmentTracker.Core/DTOs/Employees/EmployeeDto.cs": {
     "mtime": 1787005730.3312702,
-    "seen": 1787007939.0635395,
+    "seen": 1787011021.6683686,
     "ast_hash": "e1ca81182a9f601d4fe15042d4518f4c",
     "semantic_hash": "e1ca81182a9f601d4fe15042d4518f4c"
   },
   "ShipmentTracker.Core/DTOs/Employees/UpdateEmployeeDto.cs": {
     "mtime": 1787005730.3512719,
-    "seen": 1787007939.0635402,
+    "seen": 1787011021.66837,
     "ast_hash": "ebfda75d560491d89250499ce0f0e736",
     "semantic_hash": "ebfda75d560491d89250499ce0f0e736"
   },
   "ShipmentTracker.Core/DTOs/Shipments/CreateShipmentDto.cs": {
     "mtime": 1787005797.7301292,
-    "seen": 1787007939.0635424,
+    "seen": 1787011021.6683724,
     "ast_hash": "0bd506158952f315343b01a851132669",
     "semantic_hash": "0bd506158952f315343b01a851132669"
   },
   "ShipmentTracker.Core/DTOs/Shipments/ShipmentDto.cs": {
     "mtime": 1787005803.8060489,
-    "seen": 1787007939.0635433,
+    "seen": 1787011021.668374,
     "ast_hash": "eca4af745501c2082d8f05a97e3f3183",
     "semantic_hash": "eca4af745501c2082d8f05a97e3f3183"
   },
   "ShipmentTracker.Core/DTOs/Vehicles/CreateVehicleDto.cs": {
     "mtime": 1787005796.3373263,
-    "seen": 1787007939.0635443,
+    "seen": 1787011021.668375,
     "ast_hash": "7f02e16aa0f1a7638de360b8efaab176",
     "semantic_hash": "7f02e16aa0f1a7638de360b8efaab176"
   },
   "ShipmentTracker.Core/DTOs/Vehicles/UpdateVehicleDto.cs": {
     "mtime": 1787005793.720227,
-    "seen": 1787007939.0635452,
+    "seen": 1787011021.668376,
     "ast_hash": "554f897d2ab21e4f703d732fe0050b89",
     "semantic_hash": "554f897d2ab21e4f703d732fe0050b89"
   },
   "ShipmentTracker.Core/DTOs/Vehicles/VehicleDto.cs": {
     "mtime": 1787005793.7007034,
-    "seen": 1787007939.0635464,
+    "seen": 1787011021.6683772,
     "ast_hash": "cdc5784d3c02bff6b5840a49374a3727",
     "semantic_hash": "cdc5784d3c02bff6b5840a49374a3727"
   },
   "ShipmentTracker.Services/Validators/Branches/CreateBranchDtoValidator.cs": {
     "mtime": 1787006160.4363852,
-    "seen": 1787007939.0636013,
+    "seen": 1787011021.6684506,
     "ast_hash": "92beee9546963e4ecc3edfc712d1b432",
     "semantic_hash": "92beee9546963e4ecc3edfc712d1b432"
   },
   "ShipmentTracker.Services/Validators/Branches/ScheduleEntryInputDtoValidator.cs": {
     "mtime": 1787006160.4553876,
-    "seen": 1787007939.0636022,
+    "seen": 1787011021.6684518,
     "ast_hash": "5a4b27db1ed21068bc8dc4cd6ed586f6",
     "semantic_hash": "5a4b27db1ed21068bc8dc4cd6ed586f6"
   },
   "ShipmentTracker.Services/Validators/Branches/UpdateBranchDtoValidator.cs": {
     "mtime": 1787006085.9274275,
-    "seen": 1787007939.0636032,
+    "seen": 1787011021.668453,
     "ast_hash": "59a62c7101611c919a10448775eb48cc",
     "semantic_hash": "59a62c7101611c919a10448775eb48cc"
   },
   "ShipmentTracker.Services/Validators/Employees/CreateEmployeeDtoValidator.cs": {
     "mtime": 1787006160.4243064,
-    "seen": 1787007939.063604,
+    "seen": 1787011021.6684568,
     "ast_hash": "24b0ac79ec83195639c4f391f29e0718",
     "semantic_hash": "24b0ac79ec83195639c4f391f29e0718"
   },
   "ShipmentTracker.Services/Validators/Employees/UpdateEmployeeDtoValidator.cs": {
     "mtime": 1787006120.6302352,
-    "seen": 1787007939.063605,
+    "seen": 1787011021.6684642,
     "ast_hash": "bc65dbcfa340ba4bf64e8b3ab4a61965",
     "semantic_hash": "bc65dbcfa340ba4bf64e8b3ab4a61965"
   },
   "ShipmentTracker.Services/Validators/Shipments/ShipmentTransitionValidator.cs": {
     "mtime": 1787006155.5102363,
-    "seen": 1787007939.063606,
+    "seen": 1787011021.668465,
     "ast_hash": "4e0c4e2149f5e8c7eb3395f64fd5527a",
     "semantic_hash": "4e0c4e2149f5e8c7eb3395f64fd5527a"
   },
   "ShipmentTracker.Services/Validators/Vehicles/CreateVehicleDtoValidator.cs": {
     "mtime": 1787006160.412277,
-    "seen": 1787007939.0636067,
+    "seen": 1787011021.668466,
     "ast_hash": "d96ee3ec1cac6fd50becd4bfb883434f",
     "semantic_hash": "d96ee3ec1cac6fd50becd4bfb883434f"
   },
   "ShipmentTracker.Services/Validators/Vehicles/UpdateVehicleDtoValidator.cs": {
     "mtime": 1787006141.8854468,
-    "seen": 1787007939.0636077,
+    "seen": 1787011021.6684673,
     "ast_hash": "24e91281ac38b607d4f224ef2b322073",
     "semantic_hash": "24e91281ac38b607d4f224ef2b322073"
+  },
+  "ShipmentTracker.Core/DTOs/Customers/BusinessDetailDto.cs": {
+    "mtime": 1787010483.2057695,
+    "seen": 1787011021.6683607,
+    "ast_hash": "c0ce3cb65ab322957b5b20d94c3bbd0e",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/DTOs/Customers/CreateBusinessCustomerDto.cs": {
+    "mtime": 1787010644.7455199,
+    "seen": 1787011021.668362,
+    "ast_hash": "6fdf8bccbfb529c7e3096b4f1b622ff8",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/DTOs/Customers/CreateIndividualCustomerDto.cs": {
+    "mtime": 1787010638.513455,
+    "seen": 1787011021.668363,
+    "ast_hash": "8f55c72c861152aefe74f1c8a2064de7",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/DTOs/Customers/CustomerDetailDto.cs": {
+    "mtime": 1787010491.1838963,
+    "seen": 1787011021.6683638,
+    "ast_hash": "9906cf322144d59fac6058e7b71035da",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/DTOs/Customers/IndividualDetailDto.cs": {
+    "mtime": 1787010479.290357,
+    "seen": 1787011021.6683648,
+    "ast_hash": "7fb900ecf7c9522d4a9f75de64da9839",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/DTOs/Customers/UpdateCustomerDto.cs": {
+    "mtime": 1787010767.7903662,
+    "seen": 1787011021.6683662,
+    "ast_hash": "f3fd7308581faab67f95501e4df6c7d5",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/Entities/BusinessCustomer.cs": {
+    "mtime": 1787010472.6506336,
+    "seen": 1787011021.6683805,
+    "ast_hash": "2101043f09e7a652682f5042414e8d41",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/Entities/Customer.cs": {
+    "mtime": 1787010466.498492,
+    "seen": 1787011021.6683815,
+    "ast_hash": "8ef1744178d35bb0d6df8026eb2be53e",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/Entities/IndividualCustomer.cs": {
+    "mtime": 1787010469.986878,
+    "seen": 1787011021.668384,
+    "ast_hash": "8532f5772e1abe803ef20254e9470106",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/Enums/CustomerType.cs": {
+    "mtime": 1787010462.7143803,
+    "seen": 1787011021.668388,
+    "ast_hash": "4f852da84c0ce5a5371aa515f35d8422",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/Interfaces/Repositories/ICustomerRepository.cs": {
+    "mtime": 1787010494.3801427,
+    "seen": 1787011021.668397,
+    "ast_hash": "70336146118de0db613101ee860d5d8e",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Core/Interfaces/Services/ICustomerService.cs": {
+    "mtime": 1787010863.1903446,
+    "seen": 1787011021.668405,
+    "ast_hash": "472628c3488de46c87640091a83dc6d0",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Infrastructure/Data/Configurations/BusinessCustomerConfiguration.cs": {
+    "mtime": 1787010516.5599208,
+    "seen": 1787011021.6684134,
+    "ast_hash": "c9d7f702594cf6a9de5496896d1966de",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Infrastructure/Data/Configurations/CustomerConfiguration.cs": {
+    "mtime": 1787010507.0431137,
+    "seen": 1787011021.6684144,
+    "ast_hash": "6fe3f243f46f23c42db7c7aabe07e13e",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Infrastructure/Data/Configurations/IndividualCustomerConfiguration.cs": {
+    "mtime": 1787010511.5016806,
+    "seen": 1787011021.6684165,
+    "ast_hash": "678660c298d8b600ac22c4a68c012aca",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Infrastructure/Migrations/20260817234933_AddCustomers.Designer.cs": {
+    "mtime": 1787010573.104438,
+    "seen": 1787011021.6684294,
+    "ast_hash": "059594a843bc7c3f7c745bd4975dd0b0",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Infrastructure/Migrations/20260817234933_AddCustomers.cs": {
+    "mtime": 1787010573.1024287,
+    "seen": 1787011021.66843,
+    "ast_hash": "51002c20df01a6065dfaf031336a2340",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Infrastructure/Repositories/CustomerRepository.cs": {
+    "mtime": 1787010527.917559,
+    "seen": 1787011021.6684344,
+    "ast_hash": "8d3d20b7fa4523de53e160c18736336c",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Services/CustomerService.cs": {
+    "mtime": 1787010866.8951457,
+    "seen": 1787011021.668441,
+    "ast_hash": "7ba4c355691e34775882965a65c174ab",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Services/Mappings/CustomerMappingProfile.cs": {
+    "mtime": 1787010539.3836286,
+    "seen": 1787011021.6684444,
+    "ast_hash": "cc8ece0f3740d4419464192e505c8148",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Services/Validators/Customers/CreateBusinessCustomerDtoValidator.cs": {
+    "mtime": 1787010658.1820233,
+    "seen": 1787011021.668454,
+    "ast_hash": "e93704cd7ca619eb7b71e3d7b1733c5c",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Services/Validators/Customers/CreateIndividualCustomerDtoValidator.cs": {
+    "mtime": 1787010651.7985575,
+    "seen": 1787011021.668455,
+    "ast_hash": "30655669040528dd8cc658d7a872678d",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Services/Validators/Customers/UpdateCustomerDtoValidator.cs": {
+    "mtime": 1787010777.0581782,
+    "seen": 1787011021.6684556,
+    "ast_hash": "92a8a57538212eca4af52ac029f8860d",
+    "semantic_hash": ""
+  },
+  "ShipmentTracker.Web/Controllers/CustomerController.cs": {
+    "mtime": 1787010884.9048812,
+    "seen": 1787011021.6684704,
+    "ast_hash": "90d18b03b400c04f864e3d25e0f8914b",
+    "semantic_hash": ""
+  },
+  "specs/005-customers-accounts/checklists/requirements.md": {
+    "mtime": 1787009444.94595,
+    "seen": 1787011021.6685414,
+    "ast_hash": "c27918a822c1899e591e516b6d566e6f",
+    "semantic_hash": ""
+  },
+  "specs/005-customers-accounts/contracts/customers-api-contract.md": {
+    "mtime": 1787010146.7986803,
+    "seen": 1787011021.6685424,
+    "ast_hash": "6a723602a1b524fd2e56d1dfadf952c7",
+    "semantic_hash": ""
+  },
+  "specs/005-customers-accounts/data-model.md": {
+    "mtime": 1787010122.667895,
+    "seen": 1787011021.6685433,
+    "ast_hash": "9fa102efa561a7b518d466f0671330c0",
+    "semantic_hash": ""
+  },
+  "specs/005-customers-accounts/plan.md": {
+    "mtime": 1787010202.63,
+    "seen": 1787011021.6685443,
+    "ast_hash": "94e2b519cfca469aba86c5a97173a4a4",
+    "semantic_hash": ""
+  },
+  "specs/005-customers-accounts/quickstart.md": {
+    "mtime": 1787010163.3692324,
+    "seen": 1787011021.6685452,
+    "ast_hash": "364714a498be05c2b06e8ae9339a5c4d",
+    "semantic_hash": ""
+  },
+  "specs/005-customers-accounts/research.md": {
+    "mtime": 1787010086.5493658,
+    "seen": 1787011021.6685462,
+    "ast_hash": "20235d975e911be1cc8463d6b43f33b7",
+    "semantic_hash": ""
+  },
+  "specs/005-customers-accounts/spec.md": {
+    "mtime": 1787009439.0297227,
+    "seen": 1787011021.6685472,
+    "ast_hash": "eea5e70ae35c54ce3d5db7458f05f63a",
+    "semantic_hash": ""
+  },
+  "specs/005-customers-accounts/tasks.md": {
+    "mtime": 1787010898.598549,
+    "seen": 1787011021.668548,
+    "ast_hash": "98246e54afec8608595423953edbd45d",
+    "semantic_hash": ""
   }
 }

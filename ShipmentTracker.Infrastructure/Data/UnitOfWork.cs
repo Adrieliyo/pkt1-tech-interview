@@ -16,6 +16,7 @@ namespace ShipmentTracker.Infrastructure.Data
         private BranchRepository _branchRepository;
         private EmployeeRepository _employeeRepository;
         private VehicleRepository _vehicleRepository;
+        private CustomerRepository _customerRepository;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -29,6 +30,8 @@ namespace ShipmentTracker.Infrastructure.Data
         public IEmployeeRepository EmployeeRepository => _employeeRepository ??= new EmployeeRepository(_context);
 
         public IVehicleRepository VehicleRepository => _vehicleRepository ??= new VehicleRepository(_context);
+
+        public ICustomerRepository CustomerRepository => _customerRepository ??= new CustomerRepository(_context);
 
         public async Task<int> CommitAsync()
         {

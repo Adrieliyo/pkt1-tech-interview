@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using ShipmentTracker.Core.DTOs.Branches;
+using ShipmentTracker.Core.DTOs.Customers;
 using ShipmentTracker.Core.DTOs.Employees;
 using ShipmentTracker.Core.DTOs.Vehicles;
 using ShipmentTracker.Core.Interfaces;
@@ -12,6 +13,7 @@ using ShipmentTracker.Infrastructure.Data;
 using ShipmentTracker.Infrastructure.Repositories;
 using ShipmentTracker.Services;
 using ShipmentTracker.Services.Validators.Branches;
+using ShipmentTracker.Services.Validators.Customers;
 using ShipmentTracker.Services.Validators.Employees;
 using ShipmentTracker.Services.Validators.Shipments;
 using ShipmentTracker.Services.Validators.Vehicles;
@@ -54,12 +56,17 @@ builder.Services.AddScoped<IValidator<CreateBranchDto>, CreateBranchDtoValidator
 builder.Services.AddScoped<IValidator<UpdateBranchDto>, UpdateBranchDtoValidator>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IValidator<CreateEmployeeDto>, CreateEmployeeDtoValidator>();
 builder.Services.AddScoped<IVehicleService, VehicleService>();
 builder.Services.AddScoped<IValidator<CreateVehicleDto>, CreateVehicleDtoValidator>();
 builder.Services.AddScoped<IValidator<UpdateEmployeeDto>, UpdateEmployeeDtoValidator>();
 builder.Services.AddScoped<IValidator<UpdateVehicleDto>, UpdateVehicleDtoValidator>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IValidator<CreateIndividualCustomerDto>, CreateIndividualCustomerDtoValidator>();
+builder.Services.AddScoped<IValidator<CreateBusinessCustomerDto>, CreateBusinessCustomerDtoValidator>();
+builder.Services.AddScoped<IValidator<UpdateCustomerDto>, UpdateCustomerDtoValidator>();
 
 builder.Services.AddSwaggerGen(options =>
 {

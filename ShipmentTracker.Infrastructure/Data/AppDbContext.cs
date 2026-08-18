@@ -21,6 +21,12 @@ namespace ShipmentTracker.Infrastructure.Data
 
         public DbSet<Vehicle> Vehicles { get; set; }
 
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<IndividualCustomer> IndividualCustomers { get; set; }
+
+        public DbSet<BusinessCustomer> BusinessCustomers { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -32,6 +38,9 @@ namespace ShipmentTracker.Infrastructure.Data
             builder.ApplyConfiguration(new BranchScheduleConfiguration());
             builder.ApplyConfiguration(new EmployeeConfiguration());
             builder.ApplyConfiguration(new VehicleConfiguration());
+            builder.ApplyConfiguration(new CustomerConfiguration());
+            builder.ApplyConfiguration(new IndividualCustomerConfiguration());
+            builder.ApplyConfiguration(new BusinessCustomerConfiguration());
         }
     }
 }

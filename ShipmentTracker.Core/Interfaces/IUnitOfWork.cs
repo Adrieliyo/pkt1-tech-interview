@@ -17,6 +17,8 @@ namespace ShipmentTracker.Core.Interfaces
 
         IVehicleRepository VehicleRepository { get; }
 
+        ICustomerRepository CustomerRepository { get; }
+
         Task<int> CommitAsync();
     }
 }
