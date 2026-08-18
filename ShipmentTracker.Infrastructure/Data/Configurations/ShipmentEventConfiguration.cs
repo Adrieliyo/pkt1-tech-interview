@@ -36,6 +36,26 @@ namespace ShipmentTracker.Infrastructure.Data.Configurations
                    .HasForeignKey(x => x.ShipmentId)
                    .IsRequired()
                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Property(x => x.EmployeeId)
+                   .IsRequired(false);
+
+            builder.Property(x => x.LocationLabel)
+                   .IsRequired(false)
+                   .HasMaxLength(255);
+
+            builder.Property(x => x.Notes)
+                   .IsRequired(false)
+                   .HasMaxLength(1000);
+
+            builder.Property(x => x.CreatedAt)
+                   .IsRequired();
+
+            builder.HasOne(x => x.Employee)
+                   .WithMany()
+                   .HasForeignKey(x => x.EmployeeId)
+                   .IsRequired(false)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

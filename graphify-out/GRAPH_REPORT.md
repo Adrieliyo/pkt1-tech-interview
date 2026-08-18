@@ -1,28 +1,28 @@
 # Graph Report - ShipmentTracker  (2026-08-17)
 
 ## Corpus Check
-- 234 files · ~151,226 words
+- 261 files · ~169,045 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1365 nodes · 2274 edges · 98 communities (86 shown, 12 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 69 edges (avg confidence: 0.8)
+- 1555 nodes · 2568 edges · 109 communities (96 shown, 13 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 75 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2641f20b`
+- Built from commit: `9a2a844d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- ShipmentTracker.Core.Interfaces.Services
+- ShipmentTracker.Core.DTOs
 - 002 Implementation Plan
 - EmployeeDto
 - /graphify Skill
+- VehicleDto
+- ShipmentStatus
 - .CommitAsync
-- ShipmentDto
-- BranchDto
-- Migration
+- AddEmployeesAndVehicles
 - BaseRepository
 - /speckit-specify Command
 - Quickstart: Validar el módulo de Employees & Vehicles
@@ -31,7 +31,7 @@
 - Vehicle Entity
 - Spec Kit PowerShell Helpers
 - CreateEmployeeAsync/UpdateEmployeeAsync Validation Flow
-- Edge Cases Checklist: Branches & Hubs Module
+- User Story 1: Register a new branch (P1)
 - Branch
 - BranchSchedule
 - 003-branches-hubs Module (Branch entity)
@@ -40,16 +40,16 @@
 - OrderDto
 - Branch Entity
 - US3: Register a new vehicle (P3)
+- Shipment
 - UnitOfWork
-- Vehicle
 - Employee Entity
 - CustomerDetailDto
 - Tasks: Branches & Hubs Module
 - Implementation Plan: Employees & Vehicles Module
 - Implementation Plan: Customers & Accounts Module
-- BranchDto
+- ShipmentEventDto
 - BranchSchedule Entity
-- Employee
+- ShipmentTracker.Infrastructure.Data.Configurations
 - UpdateBranchDto
 - create-new-feature.ps1
 - User Story 4: Deactivate a branch (P4)
@@ -67,7 +67,7 @@
 - SC-003: 100% of Employees/Vehicles associated with a valid active Branch
 - SC-004: Register vehicle and view complete active fleet at a branch
 - IBaseRepository
-- ShipmentTracker.Infrastructure.Data.Configurations
+- AppDbContext
 - Research: Customers & Accounts Module
 - Data Model: Customers & Accounts Module
 - US2: Find drivers available at a branch (P2)
@@ -83,7 +83,7 @@
 - US7: Deactivate an employee (P7)
 - /speckit-constitution Command
 - CLAUDE.md
-- ShipmentTracker.Core.Enums
+- ShipmentTracker.Core.DTOs.Orders
 - speckit.analyze.md
 - AbstractValidator
 - Data Model: Orders Module
@@ -95,32 +95,43 @@
 - speckit.plan.md
 - speckit.specify.md
 - speckit.tasks.md
-- BranchService
-- ShipmentTracker.Infrastructure.Migrations
+- Implementation Plan: Shipment Tracking Events
+- AddOrdersAndShipmentEvents
 - EmployeeDto
 - speckit.checklist.md
-- InitialModel
+- Migration
 - SeedInitialData
 - AddBranchesAndSchedule
-- AddCustomers
+- ShipmentTracker.Infrastructure.Migrations
 - speckit.clarify.md
 - speckit.implement.md
 - speckit.constitution.md
 - AppDbContextModelSnapshot.cs
 - speckit.taskstoissues.md
-- ScheduleEntryDto
+- ShipmentTracker.Core.Enums
+- Tasks: Shipment Tracking Events
+- Data Model: Shipment Tracking Events
+- Research: Shipment Tracking Events
+- Program.cs
+- ShipmentTracker.Core.DTOs.Employees
+- ShipmentTracker.Core.Interfaces.Services
+- IEntityTypeConfiguration
+- 2. Scenarios to validate (map 1:1 to `spec.md`'s Acceptance Scenarios)
+- ShipmentEvent
+- ExtendShipmentEventsAndAddDeliveryAttempts
+- HTTP Contract: Shipment Tracking Events API
 
 ## God Nodes (most connected - your core abstractions)
-1. `ShipmentTracker.Core.Enums` - 52 edges
-2. `ShipmentTracker.Core.Entities` - 48 edges
+1. `ShipmentTracker.Core.Enums` - 62 edges
+2. `ShipmentTracker.Core.Entities` - 54 edges
 3. `OrderDto` - 23 edges
-4. `BaseRepository` - 22 edges
-5. `CustomerDetailDto` - 20 edges
-6. `IBaseRepository` - 20 edges
-7. `ShipmentTracker.Core.Interfaces.Repositories` - 19 edges
-8. `ShipmentTracker.Core.Interfaces.Services` - 19 edges
-9. `UnitOfWork` - 19 edges
-10. `ShipmentTracker.Infrastructure.Data` - 18 edges
+4. `BaseRepository` - 23 edges
+5. `ShipmentTracker.Core.Interfaces.Services` - 22 edges
+6. `ShipmentTracker.Core.Interfaces.Repositories` - 21 edges
+7. `IBaseRepository` - 21 edges
+8. `UnitOfWork` - 21 edges
+9. `CustomerDetailDto` - 20 edges
+10. `ShipmentTracker.Infrastructure.Data` - 20 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Per-Property JsonStringEnumConverter Gotcha` --semantically_similar_to--> `Decisión 12: BranchId/role como filtro de query string sin conversor especial`  [INFERRED] [semantically similar]
@@ -150,39 +161,39 @@
 - **Employee Full-Stack Layer Flow (Core/Infra/Services/Web)** — specs_004_employees_vehicles_data_model_employee, specs_004_employees_vehicles_plan_employeerepository, specs_004_employees_vehicles_plan_employeeservice, specs_004_employees_vehicles_plan_employeecontroller, specs_004_employees_vehicles_data_model_employeedto [INFERRED 0.95]
 - **Vehicle Full-Stack Layer Flow (Core/Infra/Services/Web)** — specs_004_employees_vehicles_data_model_vehicle, specs_004_employees_vehicles_plan_vehiclerepository, specs_004_employees_vehicles_plan_vehicleservice, specs_004_employees_vehicles_plan_vehiclecontroller, specs_004_employees_vehicles_data_model_vehicledto [INFERRED 0.95]
 
-## Communities (98 total, 12 thin omitted)
+## Communities (109 total, 13 thin omitted)
 
-### Community 0 - "ShipmentTracker.Core.Interfaces.Services"
-Cohesion: 0.17
-Nodes (7): ShipmentTracker.Core.DTOs, ShipmentTracker.Core.DTOs.Shipments, ShipmentTracker.Core.DTOs.Vehicles, ShipmentTracker.Services.Validators.Shipments, ShipmentTracker.Services, ShipmentTracker.Core.Interfaces, ShipmentTracker.Core.Interfaces.Services
+### Community 0 - "ShipmentTracker.Core.DTOs"
+Cohesion: 0.40
+Nodes (4): ShipmentTracker.Core.DTOs, ShipmentTracker.Services.Validators.Shipments, ShipmentTracker.Services, ShipmentTracker.Core.Interfaces
 
 ### Community 1 - "002 Implementation Plan"
 Cohesion: 0.07
-Nodes (58): Spec Kit Full SDD Cycle Workflow, AllowReactApp CORS Policy, Manual (Swagger/HTTP) Verification Policy, Medium Clean Architecture Article, Shipment List Pagination Mechanism, README, Shipment Status Transition State Machine, CreateShipmentDto (+50 more)
+Nodes (59): Spec Kit Full SDD Cycle Workflow, AllowReactApp CORS Policy, Manual (Swagger/HTTP) Verification Policy, Medium Clean Architecture Article, Shipment List Pagination Mechanism, README, Shipment Status Transition State Machine, CreateShipmentDto (+51 more)
 
 ### Community 2 - "EmployeeDto"
-Cohesion: 0.09
-Nodes (27): ControllerBase, DateOnly, CreateEmployeeDto, DateOnly, DateTime, EmployeeDto, DateOnly, UpdateEmployeeDto (+19 more)
+Cohesion: 0.10
+Nodes (26): DateOnly, CreateEmployeeDto, DateOnly, DateTime, EmployeeDto, DateOnly, UpdateEmployeeDto, EmployeeRole (+18 more)
 
 ### Community 3 - "/graphify Skill"
 Cohesion: 0.17
 Nodes (15): GitHub Clone & Cross-Repo Merge Reference, graphify clone, graphify merge-graphs, graphify claude install (CLAUDE.md integration), Commit Hook & CLAUDE.md Integration Reference, graphify hook install (post-commit hook), Transcribe Video/Audio Reference, Whisper Domain-Hint Prompt (+7 more)
 
-### Community 4 - ".CommitAsync"
-Cohesion: 0.07
-Nodes (29): ShipmentTracker.Services.Validators.Vehicles, IDisposable, CreateVehicleDto, UpdateVehicleDto, DateTime, VehicleDto, VehicleType, Task (+21 more)
+### Community 4 - "VehicleDto"
+Cohesion: 0.10
+Nodes (23): CreateVehicleDto, UpdateVehicleDto, DateTime, VehicleDto, VehicleType, Task, IVehicleService, IMapper (+15 more)
 
-### Community 5 - "ShipmentDto"
+### Community 5 - "ShipmentStatus"
 Cohesion: 0.11
 Nodes (21): HttpPatch, CreateShipmentDto, DateTime, ShipmentDto, ShipmentStatus, Task, IShipmentService, IMapper (+13 more)
 
-### Community 6 - "BranchDto"
-Cohesion: 0.17
-Nodes (15): DateTime, List, BranchDto, BranchType, Task, IBranchService, ActionResult, HttpDelete (+7 more)
+### Community 6 - ".CommitAsync"
+Cohesion: 0.08
+Nodes (32): IDisposable, DateTime, List, BranchDto, List, CreateBranchDto, TimeOnly, ScheduleEntryDto (+24 more)
 
-### Community 7 - "Migration"
-Cohesion: 0.25
-Nodes (4): Migration, MigrationBuilder, ModelBuilder, AddEmployeesAndVehicles
+### Community 7 - "AddEmployeesAndVehicles"
+Cohesion: 0.29
+Nodes (3): MigrationBuilder, ModelBuilder, AddEmployeesAndVehicles
 
 ### Community 8 - "BaseRepository"
 Cohesion: 0.18
@@ -216,13 +227,13 @@ Nodes (13): Find-SpecifyRoot(), Format-SpecKitCommand(), Get-CurrentBranch(), Ge
 Cohesion: 0.16
 Nodes (14): CreateEmployeeDtoValidator, CreateVehicleDtoValidator, UpdateEmployeeDtoValidator, UpdateVehicleDtoValidator, CreateEmployeeAsync/UpdateEmployeeAsync Validation Flow, EmployeeController, EmployeeService, Decisión 6: Método privado compartido ValidateBusinessRulesAsync para Create/Update (+6 more)
 
-### Community 16 - "Edge Cases Checklist: Branches & Hubs Module"
-Cohesion: 0.21
-Nodes (13): ShipmentDto, Edge Cases Checklist: Branches & Hubs Module, POST /api/branches, Decision 12: JSON representation of BranchType/ScheduleDay as enum name, scoped converter, Decision 13: opensAt/closesAt require HH:mm:ss format, Decision 2: 7-day coverage without explicit 'all days present' rule, Decision 9: Validation errors via FluentValidation.ValidationException with full error list, FR-001: Create branch with name, type, full address (+5 more)
+### Community 16 - "User Story 1: Register a new branch (P1)"
+Cohesion: 0.18
+Nodes (15): BranchDto, CreateBranchDto, ScheduleEntryDto, ScheduleEntryInputDto, ShipmentDto, BranchType Enum, ScheduleDay Enum, POST /api/branches (+7 more)
 
 ### Community 17 - "Branch"
-Cohesion: 0.21
-Nodes (8): ICollection, DateTime, Branch, Task, IBranchRepository, EntityTypeBuilder, Task, BranchRepository
+Cohesion: 0.19
+Nodes (9): ICollection, DateTime, Branch, Task, IBranchRepository, EntityTypeBuilder, BranchConfiguration, Task (+1 more)
 
 ### Community 18 - "BranchSchedule"
 Cohesion: 0.33
@@ -237,12 +248,12 @@ Cohesion: 0.25
 Nodes (11): GET /api/branches/{id}, GET /api/branches, Decision 11: GetByIdWithScheduleAsync new repository method, Decision 7: onlyActive bool default true covers listing cases, FR-013: List branches with optional status/type filters, FR-014: Default listing returns only active branches, FR-015: Single branch retrieval always includes complete schedule, FR-016: Clear not-found result for missing branch id (+3 more)
 
 ### Community 21 - "ShipmentTracker.Core.Entities"
-Cohesion: 0.23
+Cohesion: 0.19
 Nodes (4): ShipmentTracker.Infrastructure.Data, ShipmentTracker.Core.Interfaces.Repositories, ShipmentTracker.Core.Entities, ShipmentTracker.Infrastructure.Repositories
 
 ### Community 22 - "OrderDto"
-Cohesion: 0.08
-Nodes (31): ConvertOrderResultDto, DateTime, CreateOrderDto, DateTime, OrderDto, DateTime, UpdateOrderDto, DateTime (+23 more)
+Cohesion: 0.07
+Nodes (32): ConvertOrderResultDto, DateTime, CreateOrderDto, DateTime, OrderDto, DateTime, UpdateOrderDto, DateTime (+24 more)
 
 ### Community 23 - "Branch Entity"
 Cohesion: 0.22
@@ -252,21 +263,21 @@ Nodes (10): Branch Entity, AppDbContext (extended), BranchConfiguration, BranchS
 Cohesion: 0.22
 Nodes (9): Per-Property JsonStringEnumConverter Gotcha, VehicleController, VehicleService, Decisión 12: BranchId/role como filtro de query string sin conversor especial, FR-011: Create Vehicle with unique plate, type, brand, model, year, capacity, branch, FR-012: Reject Vehicle create/update on duplicate plate (company-wide, incl. inactive), FR-013: Reject Vehicle create/update if Branch missing/inactive, US3: Register a new vehicle (P3) (+1 more)
 
-### Community 25 - "UnitOfWork"
-Cohesion: 0.11
-Nodes (18): DbContext, DateTime, Shipment, DateTime, ShipmentEvent, IOrderRepository, IShipmentEventRepository, IShipmentRepository (+10 more)
-
-### Community 26 - "Vehicle"
+### Community 25 - "Shipment"
 Cohesion: 0.28
-Nodes (6): DateTime, Vehicle, IVehicleRepository, EntityTypeBuilder, VehicleConfiguration, VehicleRepository
+Nodes (6): DateTime, Shipment, IShipmentRepository, EntityTypeBuilder, ShipmentConfiguration, ShipmentRepository
+
+### Community 26 - "UnitOfWork"
+Cohesion: 0.17
+Nodes (10): DateTime, Vehicle, IOrderRepository, IVehicleRepository, EntityTypeBuilder, VehicleConfiguration, Task, UnitOfWork (+2 more)
 
 ### Community 27 - "Employee Entity"
 Cohesion: 0.18
 Nodes (17): FK Restrict + Unidirectional Navigation Convention, Repository + Unit of Work Pattern, DELETE /api/employees/{id}, Employee Entity, EmployeeRole Enum, IEmployeeRepository, IUnitOfWork (extended), IVehicleRepository (+9 more)
 
 ### Community 28 - "CustomerDetailDto"
-Cohesion: 0.06
-Nodes (39): ShipmentTracker.Services.Validators.Customers, ShipmentTracker.Core.DTOs.Customers, BusinessDetailDto, CreateBusinessCustomerDto, DateOnly, CreateIndividualCustomerDto, DateTime, CustomerDetailDto (+31 more)
+Cohesion: 0.07
+Nodes (32): ControllerBase, BusinessDetailDto, CreateBusinessCustomerDto, DateOnly, CreateIndividualCustomerDto, DateTime, CustomerDetailDto, DateOnly (+24 more)
 
 ### Community 29 - "Tasks: Branches & Hubs Module"
 Cohesion: 0.57
@@ -280,17 +291,17 @@ Nodes (12): Branch/BranchSchedule Module (Branches & Hubs), Employee/Vehicle Mod
 Cohesion: 0.06
 Nodes (31): Content Quality, Feature Readiness, Notes, Requirement Completeness, Specification Quality Checklist: Customers & Accounts Module, Complexity Tracking, Constitution Check, Documentation (this feature) (+23 more)
 
-### Community 32 - "BranchDto"
-Cohesion: 0.38
-Nodes (7): BranchDto, CreateBranchDto, ScheduleEntryDto, ScheduleEntryInputDto, BranchType Enum, ScheduleDay Enum, Decision 1: Nullable Type/DayOfWeek enums in input DTOs
+### Community 32 - "ShipmentEventDto"
+Cohesion: 0.08
+Nodes (33): DateTime, DeliveryAttemptDetailDto, DateTime, RegisterDeliveryAttemptDto, DateTime, RegisterEventDto, DateTime, ShipmentEventDto (+25 more)
 
 ### Community 33 - "BranchSchedule Entity"
-Cohesion: 0.33
-Nodes (7): BranchSchedule Entity, Decision 3: Closed-day vs schedule-times consistency, Decision 5: Full schedule replacement via EF Core cascade delete, FR-006: Opening time strictly earlier than closing time, FR-007: Schedule entry may be marked closed with no times, FR-017: Reject inconsistent closed+times schedule submission, FR-019: Schedule times are branch-local time-of-day, no time zone
+Cohesion: 0.25
+Nodes (11): BranchSchedule Entity, Edge Cases Checklist: Branches & Hubs Module, Decision 2: 7-day coverage without explicit 'all days present' rule, Decision 3: Closed-day vs schedule-times consistency, FR-004: Exactly one schedule entry per day of week (7 total), FR-005: Reject duplicate day entries in schedule, FR-006: Opening time strictly earlier than closing time, FR-007: Schedule entry may be marked closed with no times (+3 more)
 
-### Community 34 - "Employee"
-Cohesion: 0.24
-Nodes (7): DateOnly, DateTime, Employee, IEmployeeRepository, EntityTypeBuilder, EmployeeConfiguration, EmployeeRepository
+### Community 34 - "ShipmentTracker.Infrastructure.Data.Configurations"
+Cohesion: 0.18
+Nodes (8): ShipmentTracker.Infrastructure.Data.Configurations, DateOnly, DateTime, Employee, IEmployeeRepository, EntityTypeBuilder, EmployeeConfiguration, EmployeeRepository
 
 ### Community 35 - "UpdateBranchDto"
 Cohesion: 0.47
@@ -316,9 +327,9 @@ Nodes (4): ShipmentTracker.Core, ShipmentTracker.Infrastructure, ShipmentTracker
 Cohesion: 0.18
 Nodes (8): Expression, Func, IEnumerable, IOrderedQueryable, IQueryable, Task, ValueTask, IBaseRepository
 
-### Community 56 - "ShipmentTracker.Infrastructure.Data.Configurations"
-Cohesion: 0.08
-Nodes (19): ShipmentTracker.Infrastructure.Data.Configurations, IEntityTypeConfiguration, BusinessCustomer, DateTime, Customer, DateOnly, IndividualCustomer, ICustomerRepository (+11 more)
+### Community 56 - "AppDbContext"
+Cohesion: 0.10
+Nodes (17): DbContext, BusinessCustomer, DateTime, Customer, DateOnly, IndividualCustomer, ICustomerRepository, DbSet (+9 more)
 
 ### Community 57 - "Research: Customers & Accounts Module"
 Cohesion: 0.13
@@ -376,25 +387,25 @@ Nodes (5): FR-006: Deactivate an active Employee, FR-007: Deactivating already-i
 Cohesion: 0.67
 Nodes (3): /speckit-constitution Command, Sync Impact Report, Constitution Template
 
-### Community 72 - "ShipmentTracker.Core.Enums"
-Cohesion: 0.11
-Nodes (8): ShipmentTracker.Core.DTOs.Employees, ShipmentTracker.Web.Controllers, ShipmentTracker.Core.DTOs.Orders, ShipmentTracker.Services.Validators.Orders, ShipmentTracker.Core.Enums, ShipmentEventType, CreateOrderDtoValidator, UpdateOrderDtoValidator
+### Community 72 - "ShipmentTracker.Core.DTOs.Orders"
+Cohesion: 0.22
+Nodes (4): ShipmentTracker.Core.DTOs.Orders, ShipmentTracker.Services.Validators.Orders, CreateOrderDtoValidator, UpdateOrderDtoValidator
 
 ### Community 73 - "speckit.analyze.md"
 Cohesion: 0.08
 Nodes (25): 1. Initialize Analysis Context, 2. Load Artifacts (Progressive Disclosure), 3. Build Semantic Models, 4. Detection Passes (Token-Efficient Analysis), 5. Severity Assignment, 6. Produce Compact Analysis Report, 7. Provide Next Actions, 8. Offer Remediation (+17 more)
 
 ### Community 74 - "AbstractValidator"
-Cohesion: 0.11
-Nodes (15): AbstractValidator, ShipmentTracker.Core.DTOs.Branches, ShipmentTracker.Services.Validators.Employees, ShipmentTracker.Services.Validators.Branches, List, CreateBranchDto, TimeOnly, ScheduleEntryInputDto (+7 more)
+Cohesion: 0.12
+Nodes (13): AbstractValidator, ShipmentTracker.Services.Validators.Customers, ShipmentTracker.Core.DTOs.Customers, ShipmentTracker.Services.Validators.Branches, CreateBranchDtoValidator, ScheduleEntryInputDtoValidator, UpdateBranchDtoValidator, string (+5 more)
 
 ### Community 75 - "Data Model: Orders Module"
 Cohesion: 0.11
 Nodes (17): Data Model: Orders Module, Database-dependent (`OrderService`), DTOs, Entity: `Order`, Entity: `Shipment` (existing, module `001`/`002`) — one new nullable column, Entity: `ShipmentEvent` (new), Enums, Flow: `ConfirmOrderAsync` / `CancelOrderAsync` (+9 more)
 
 ### Community 76 - "Profile"
-Cohesion: 0.15
-Nodes (10): ShipmentTracker.Web.Mappers, ShipmentTracker.Services.Mappings, Profile, BranchMappingProfile, CustomerMappingProfile, EmployeeMappingProfile, OrderMappingProfile, ShipmentMappingProfile (+2 more)
+Cohesion: 0.12
+Nodes (12): ShipmentTracker.Core.DTOs.Shipments, ShipmentTracker.Web.Mappers, ShipmentTracker.Services.Mappings, Profile, BranchMappingProfile, CustomerMappingProfile, EmployeeMappingProfile, OrderMappingProfile (+4 more)
 
 ### Community 77 - "Research: Orders Module"
 Cohesion: 0.12
@@ -424,13 +435,13 @@ Nodes (10): Completion Report, Done When, For AI Generation, Mandatory Post-Exec
 Cohesion: 0.18
 Nodes (10): Checklist Format (REQUIRED), Completion Report, Done When, Mandatory Post-Execution Hooks, Outline, Phase Structure, Pre-Execution Checks, Task Generation Rules (+2 more)
 
-### Community 84 - "BranchService"
-Cohesion: 0.29
-Nodes (5): IMapper, int, IValidator, Task, BranchService
+### Community 84 - "Implementation Plan: Shipment Tracking Events"
+Cohesion: 0.06
+Nodes (30): Content Quality, Feature Readiness, Requirement Completeness, Specification Quality Checklist: Shipment Tracking Events, Complexity Tracking, Constitution Check, Documentation (this feature), Implementation Plan: Shipment Tracking Events (+22 more)
 
-### Community 85 - "ShipmentTracker.Infrastructure.Migrations"
-Cohesion: 0.28
-Nodes (4): ShipmentTracker.Infrastructure.Migrations, MigrationBuilder, ModelBuilder, AddOrdersAndShipmentEvents
+### Community 85 - "AddOrdersAndShipmentEvents"
+Cohesion: 0.29
+Nodes (3): MigrationBuilder, ModelBuilder, AddOrdersAndShipmentEvents
 
 ### Community 86 - "EmployeeDto"
 Cohesion: 0.25
@@ -440,9 +451,9 @@ Nodes (9): GET /api/employees/{id}, PUT /api/employees/{id}, EmployeeDto, IEmplo
 Cohesion: 0.25
 Nodes (7): Anti-Examples: What NOT To Do, Checklist Purpose: "Unit Tests for English", Example Checklist Types & Sample Items, Execution Steps, Post-Execution Checks, Pre-Execution Checks, User Input
 
-### Community 88 - "InitialModel"
-Cohesion: 0.29
-Nodes (3): MigrationBuilder, ModelBuilder, InitialModel
+### Community 88 - "Migration"
+Cohesion: 0.25
+Nodes (4): Migration, MigrationBuilder, ModelBuilder, InitialModel
 
 ### Community 89 - "SeedInitialData"
 Cohesion: 0.29
@@ -452,9 +463,9 @@ Nodes (3): MigrationBuilder, ModelBuilder, SeedInitialData
 Cohesion: 0.29
 Nodes (3): MigrationBuilder, ModelBuilder, AddBranchesAndSchedule
 
-### Community 91 - "AddCustomers"
-Cohesion: 0.29
-Nodes (3): MigrationBuilder, ModelBuilder, AddCustomers
+### Community 91 - "ShipmentTracker.Infrastructure.Migrations"
+Cohesion: 0.28
+Nodes (4): ShipmentTracker.Infrastructure.Migrations, MigrationBuilder, ModelBuilder, AddCustomers
 
 ### Community 92 - "speckit.clarify.md"
 Cohesion: 0.29
@@ -476,29 +487,69 @@ Nodes (3): ModelSnapshot, ModelBuilder, AppDbContextModelSnapshot
 Cohesion: 0.40
 Nodes (4): Outline, Post-Execution Checks, Pre-Execution Checks, User Input
 
-### Community 97 - "ScheduleEntryDto"
-Cohesion: 0.40
-Nodes (3): TimeOnly, ScheduleEntryDto, ScheduleDay
+### Community 97 - "ShipmentTracker.Core.Enums"
+Cohesion: 0.22
+Nodes (3): ShipmentTracker.Core.DTOs.Branches, ShipmentTracker.Core.DTOs.ShipmentEvents, ShipmentTracker.Core.Enums
+
+### Community 98 - "Tasks: Shipment Tracking Events"
+Cohesion: 0.07
+Nodes (27): Core layer (`ShipmentTracker.Core/`), Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation for User Story 1, Implementation for User Story 2, Implementation for User Story 3, Implementation Strategy, Incremental Delivery (+19 more)
+
+### Community 99 - "Data Model: Shipment Tracking Events"
+Cohesion: 0.13
+Nodes (14): Data Model: Shipment Tracking Events, Database-dependent (`ShipmentEventService`, shared private helper — research.md Decision 10), DTOs, Entity: `DeliveryAttempt` (new), Entity: `ShipmentEvent` (existing, additive changes only), Enums, Flow: `GetEventsByShipmentAsync` / `GetTrackingAsync`, Flow: `RegisterDeliveryAttemptAsync` (+6 more)
+
+### Community 100 - "Research: Shipment Tracking Events"
+Cohesion: 0.13
+Nodes (14): Decision 10: No DTO inheritance for `RegisterDeliveryAttemptDto` — a flat, independent DTO; shared rules live in one Service-layer helper, Decision 11: `AttemptNumber` computed via the generic repository, filtering through the `ShipmentEvent` navigation — no new repository method, Decision 12: No pagination on any of this feature's four endpoints, Decision 1: File paths corrected from `Domain/...` to this solution's actual `Core/...` layout, Decision 2: No `Returned` shipment status — only `Delivered`/`Cancelled` are terminal, matching the existing enum and the clarified spec, Decision 3: Reuse the existing `ShipmentTransitionValidator`/`StatusTransitionContext` — no new "`ShipmentTransitionRules`" class, Decision 4: The "current status must be `OutForDelivery`" gate for delivery attempts is a plain equality check, not routed through the transition validator, Decision 5: New route prefix `/api/shipments/...` (plural) coexists with the existing `/api/shipment/...` (singular) — the existing route is not renamed (+6 more)
+
+### Community 101 - "Program.cs"
+Cohesion: 0.18
+Nodes (5): ShipmentTracker.Services.Validators.Vehicles, ShipmentTracker.Core.DTOs.Vehicles, ShipmentTracker.Services.Validators.ShipmentEvents, CreateVehicleDtoValidator, UpdateVehicleDtoValidator
+
+### Community 102 - "ShipmentTracker.Core.DTOs.Employees"
+Cohesion: 0.22
+Nodes (4): ShipmentTracker.Core.DTOs.Employees, ShipmentTracker.Services.Validators.Employees, CreateEmployeeDtoValidator, UpdateEmployeeDtoValidator
+
+### Community 104 - "IEntityTypeConfiguration"
+Cohesion: 0.24
+Nodes (7): IEntityTypeConfiguration, DateTime, DeliveryAttempt, IDeliveryAttemptRepository, EntityTypeBuilder, DeliveryAttemptConfiguration, DeliveryAttemptRepository
+
+### Community 105 - "2. Scenarios to validate (map 1:1 to `spec.md`'s Acceptance Scenarios)"
+Cohesion: 0.20
+Nodes (9): 1. Build and run, 2. Scenarios to validate (map 1:1 to `spec.md`'s Acceptance Scenarios), 3. Verify nothing else changed, Additional edge cases, Prerequisites, Quickstart: Validating Shipment Tracking Events, User Story 1 — Mark a shipment out for delivery (P1), User Story 2 — Log a failed delivery attempt (P2) (+1 more)
+
+### Community 106 - "ShipmentEvent"
+Cohesion: 0.28
+Nodes (6): DateTime, ShipmentEvent, IShipmentEventRepository, EntityTypeBuilder, ShipmentEventConfiguration, ShipmentEventRepository
+
+### Community 107 - "ExtendShipmentEventsAndAddDeliveryAttempts"
+Cohesion: 0.29
+Nodes (3): MigrationBuilder, ModelBuilder, ExtendShipmentEventsAndAddDeliveryAttempts
+
+### Community 108 - "HTTP Contract: Shipment Tracking Events API"
+Cohesion: 0.25
+Nodes (7): Examples, `GET /api/shipments/{id}/events`, `GET /api/shipments/tracking/{trackingNumber}`, HTTP Contract: Shipment Tracking Events API, JSON format notes, `POST /api/shipments/{id}/events`, `POST /api/shipments/{id}/events/delivery-attempt`
 
 ## Knowledge Gaps
-- **402 isolated node(s):** `net8.0`, `Microsoft.NET.Sdk`, `net8.0`, `Microsoft.EntityFrameworkCore (8.0.*)`, `Microsoft.EntityFrameworkCore.Design (8.0.*)` (+397 more)
+- **481 isolated node(s):** `net8.0`, `Microsoft.NET.Sdk`, `net8.0`, `Microsoft.EntityFrameworkCore (8.0.*)`, `Microsoft.EntityFrameworkCore.Design (8.0.*)` (+476 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `ShipmentTracker.Core.Entities` connect `ShipmentTracker.Core.Entities` to `ShipmentTracker.Core.Interfaces.Services`, `Employee`, `ShipmentTracker.Core.Enums`, `Profile`, `Branch`, `BranchSchedule`, `ShipmentTracker.Infrastructure.Data.Configurations`, `UnitOfWork`, `Vehicle`?**
-  _High betweenness centrality (0.052) - this node is a cross-community bridge._
-- **Why does `ShipmentTracker.Core.Enums` connect `ShipmentTracker.Core.Enums` to `ShipmentTracker.Core.Interfaces.Services`, `ScheduleEntryDto`, `Employee`, `EmployeeDto`, `.CommitAsync`, `ShipmentDto`, `AbstractValidator`, `Branch`, `BranchSchedule`, `ShipmentTracker.Infrastructure.Data.Configurations`, `UnitOfWork`, `Vehicle`, `CustomerDetailDto`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
-- **Why does `ShipmentTracker.Infrastructure.Data` connect `ShipmentTracker.Core.Entities` to `Migration`, `ShipmentTracker.Infrastructure.Migrations`, `InitialModel`, `SeedInitialData`, `AddBranchesAndSchedule`, `AddCustomers`, `AppDbContextModelSnapshot.cs`?**
-  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+- **Why does `ShipmentTracker.Core.Enums` connect `ShipmentTracker.Core.Enums` to `ShipmentTracker.Core.DTOs`, `EmployeeDto`, `VehicleDto`, `ShipmentStatus`, `.CommitAsync`, `Branch`, `BranchSchedule`, `ShipmentTracker.Core.Entities`, `OrderDto`, `Shipment`, `UnitOfWork`, `CustomerDetailDto`, `ShipmentEventDto`, `ShipmentTracker.Infrastructure.Data.Configurations`, `AppDbContext`, `ShipmentTracker.Core.DTOs.Orders`, `AbstractValidator`, `Profile`, `Program.cs`, `ShipmentTracker.Core.DTOs.Employees`, `ShipmentTracker.Core.Interfaces.Services`, `IEntityTypeConfiguration`, `ShipmentEvent`?**
+  _High betweenness centrality (0.036) - this node is a cross-community bridge._
+- **Why does `ShipmentTracker.Infrastructure.Data` connect `ShipmentTracker.Core.Entities` to `Program.cs`, `AddEmployeesAndVehicles`, `ExtendShipmentEventsAndAddDeliveryAttempts`, `AddOrdersAndShipmentEvents`, `Migration`, `SeedInitialData`, `AddBranchesAndSchedule`, `ShipmentTracker.Infrastructure.Migrations`, `AppDbContextModelSnapshot.cs`?**
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
+- **Why does `ShipmentTracker.Core.Entities` connect `ShipmentTracker.Core.Entities` to `ShipmentTracker.Core.DTOs`, `ShipmentTracker.Infrastructure.Data.Configurations`, `IEntityTypeConfiguration`, `ShipmentEvent`, `Profile`, `Branch`, `BranchSchedule`, `AppDbContext`, `Shipment`, `UnitOfWork`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
 - **What connects `net8.0`, `Microsoft.NET.Sdk`, `net8.0` to the rest of the system?**
-  _402 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _481 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `002 Implementation Plan` be split into smaller, more focused modules?**
-  _Cohesion score 0.07071887784921099 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06892655367231638 - nodes in this community are weakly interconnected._
 - **Should `EmployeeDto` be split into smaller, more focused modules?**
-  _Cohesion score 0.0919661733615222 - nodes in this community are weakly interconnected._
-- **Should `.CommitAsync` be split into smaller, more focused modules?**
-  _Cohesion score 0.07450980392156863 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
+- **Should `VehicleDto` be split into smaller, more focused modules?**
+  _Cohesion score 0.10256410256410256 - nodes in this community are weakly interconnected._

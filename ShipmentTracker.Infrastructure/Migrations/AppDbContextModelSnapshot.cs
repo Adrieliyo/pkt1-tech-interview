@@ -178,6 +178,35 @@ namespace ShipmentTracker.Infrastructure.Migrations
                     b.UseTptMappingStrategy();
                 });
 
+            modelBuilder.Entity("ShipmentTracker.Core.Entities.DeliveryAttempt", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AttemptNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FailureReason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("NextAttemptAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ShipmentEventId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShipmentEventId")
+                        .IsUnique();
+
+                    b.ToTable("DeliveryAttempts", (string)null);
+                });
+
             modelBuilder.Entity("ShipmentTracker.Core.Entities.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -398,9 +427,23 @@ namespace ShipmentTracker.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("EventType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationLabel")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<DateTime>("OccurredAt")
                         .HasColumnType("datetime2");
@@ -413,6 +456,8 @@ namespace ShipmentTracker.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("ShipmentId");
 
@@ -544,6 +589,17 @@ namespace ShipmentTracker.Infrastructure.Migrations
                     b.Navigation("Branch");
                 });
 
+            modelBuilder.Entity("ShipmentTracker.Core.Entities.DeliveryAttempt", b =>
+                {
+                    b.HasOne("ShipmentTracker.Core.Entities.ShipmentEvent", "ShipmentEvent")
+                        .WithMany()
+                        .HasForeignKey("ShipmentEventId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ShipmentEvent");
+                });
+
             modelBuilder.Entity("ShipmentTracker.Core.Entities.Employee", b =>
                 {
                     b.HasOne("ShipmentTracker.Core.Entities.Branch", "Branch")
@@ -579,11 +635,18 @@ namespace ShipmentTracker.Infrastructure.Migrations
 
             modelBuilder.Entity("ShipmentTracker.Core.Entities.ShipmentEvent", b =>
                 {
+                    b.HasOne("ShipmentTracker.Core.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("ShipmentTracker.Core.Entities.Shipment", "Shipment")
                         .WithMany()
                         .HasForeignKey("ShipmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Employee");
 
                     b.Navigation("Shipment");
                 });

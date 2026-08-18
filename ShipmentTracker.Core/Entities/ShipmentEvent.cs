@@ -39,5 +39,31 @@ namespace ShipmentTracker.Core.Entities
         /// Momento en el que ocurrió el evento (UTC), asignado por el servicio.
         /// </summary>
         public DateTime OccurredAt { get; set; }
+
+        /// <summary>
+        /// Identificador opcional del Employee que realizó o registró el evento. Requerido y debe
+        /// ser un Driver activo cuando EventType es OutForDelivery; opcional (solo activo) para el resto.
+        /// </summary>
+        public int? EmployeeId { get; set; }
+
+        /// <summary>
+        /// Navegación hacia el Employee (solo de ida; Employee no expone colección inversa).
+        /// </summary>
+        public Employee? Employee { get; set; }
+
+        /// <summary>
+        /// Descripción legible de la ubicación del evento (p. ej. "Hub CDMX Norte"), opcional.
+        /// </summary>
+        public string? LocationLabel { get; set; }
+
+        /// <summary>
+        /// Observaciones de texto libre sobre el evento, opcionales.
+        /// </summary>
+        public string? Notes { get; set; }
+
+        /// <summary>
+        /// Fecha y hora del sistema en que se insertó el registro (UTC), distinta de OccurredAt.
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
     }
 }

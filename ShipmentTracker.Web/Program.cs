@@ -6,6 +6,7 @@ using ShipmentTracker.Core.DTOs.Branches;
 using ShipmentTracker.Core.DTOs.Customers;
 using ShipmentTracker.Core.DTOs.Employees;
 using ShipmentTracker.Core.DTOs.Orders;
+using ShipmentTracker.Core.DTOs.ShipmentEvents;
 using ShipmentTracker.Core.DTOs.Vehicles;
 using ShipmentTracker.Core.Interfaces;
 using ShipmentTracker.Core.Interfaces.Repositories;
@@ -17,6 +18,7 @@ using ShipmentTracker.Services.Validators.Branches;
 using ShipmentTracker.Services.Validators.Customers;
 using ShipmentTracker.Services.Validators.Employees;
 using ShipmentTracker.Services.Validators.Orders;
+using ShipmentTracker.Services.Validators.ShipmentEvents;
 using ShipmentTracker.Services.Validators.Shipments;
 using ShipmentTracker.Services.Validators.Vehicles;
 using System.Reflection;
@@ -74,6 +76,10 @@ builder.Services.AddScoped<IShipmentEventRepository, ShipmentEventRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IValidator<CreateOrderDto>, CreateOrderDtoValidator>();
 builder.Services.AddScoped<IValidator<UpdateOrderDto>, UpdateOrderDtoValidator>();
+builder.Services.AddScoped<IDeliveryAttemptRepository, DeliveryAttemptRepository>();
+builder.Services.AddScoped<IShipmentEventService, ShipmentEventService>();
+builder.Services.AddScoped<IValidator<RegisterEventDto>, RegisterEventDtoValidator>();
+builder.Services.AddScoped<IValidator<RegisterDeliveryAttemptDto>, RegisterDeliveryAttemptDtoValidator>();
 
 builder.Services.AddSwaggerGen(options =>
 {

@@ -31,6 +31,8 @@ namespace ShipmentTracker.Infrastructure.Data
 
         public DbSet<ShipmentEvent> ShipmentEvents { get; set; }
 
+        public DbSet<DeliveryAttempt> DeliveryAttempts { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -47,6 +49,7 @@ namespace ShipmentTracker.Infrastructure.Data
             builder.ApplyConfiguration(new BusinessCustomerConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new ShipmentEventConfiguration());
+            builder.ApplyConfiguration(new DeliveryAttemptConfiguration());
         }
     }
 }

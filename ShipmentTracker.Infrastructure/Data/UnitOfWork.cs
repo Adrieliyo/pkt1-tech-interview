@@ -19,6 +19,7 @@ namespace ShipmentTracker.Infrastructure.Data
         private CustomerRepository _customerRepository;
         private OrderRepository _orderRepository;
         private ShipmentEventRepository _shipmentEventRepository;
+        private DeliveryAttemptRepository _deliveryAttemptRepository;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -38,6 +39,8 @@ namespace ShipmentTracker.Infrastructure.Data
         public IOrderRepository OrderRepository => _orderRepository ??= new OrderRepository(_context);
 
         public IShipmentEventRepository ShipmentEventRepository => _shipmentEventRepository ??= new ShipmentEventRepository(_context);
+
+        public IDeliveryAttemptRepository DeliveryAttemptRepository => _deliveryAttemptRepository ??= new DeliveryAttemptRepository(_context);
 
         public async Task<int> CommitAsync()
         {

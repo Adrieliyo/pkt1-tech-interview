@@ -23,6 +23,8 @@ namespace ShipmentTracker.Core.Interfaces
 
         IShipmentEventRepository ShipmentEventRepository { get; }
 
+        IDeliveryAttemptRepository DeliveryAttemptRepository { get; }
+
         Task<int> CommitAsync();
     }
 }

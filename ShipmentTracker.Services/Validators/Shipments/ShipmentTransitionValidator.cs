@@ -41,6 +41,11 @@ namespace ShipmentTracker.Services.Validators.Shipments
 
             if (context.CurrentStatus == ShipmentStatus.InTransit)
             {
+                return newStatus == ShipmentStatus.Delivered || newStatus == ShipmentStatus.Cancelled || newStatus == ShipmentStatus.OutForDelivery;
+            }
+
+            if (context.CurrentStatus == ShipmentStatus.OutForDelivery)
+            {
                 return newStatus == ShipmentStatus.Delivered || newStatus == ShipmentStatus.Cancelled;
             }
 
