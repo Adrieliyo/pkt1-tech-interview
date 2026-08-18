@@ -1,12 +1,18 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShipmentTracker.Core.Constants;
 using ShipmentTracker.Core.DTOs.ShipmentEvents;
 using ShipmentTracker.Core.Interfaces.Services;
+using System.Security.Claims;
 
 namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
     /// Controlador encargado del registro y consulta de eventos de Shipment, incluidos los
-    /// intentos de entrega y la vista pública de tracking.
+    /// intentos de entrega y la vista pública de tracking. RegisterEvent/GetEventsByShipment
+    /// aplican además un gate a nivel de Service según el rol/EmployeeId del caller (module 008,
+    /// research.md Decisiones 4/8/9): restricción de tipo para WarehouseStaff, restricción de
+    /// asignación para Driver.
     /// </summary>
     [Route("api/shipments")]
     [ApiController]
@@ -29,11 +35,12 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="dto">Datos del evento a registrar.</param>
         /// <returns>El evento recién creado.</returns>
         [HttpPost("{id}/events")]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator + "," + Roles.Driver + "," + Roles.WarehouseStaff)]
         public async Task<ActionResult<ShipmentEventDto>> RegisterEvent(int id, [FromBody] RegisterEventDto dto)
         {
             try
             {
-                var result = await _shipmentEventService.RegisterEventAsync(id, dto);
+                var result = await _shipmentEventService.RegisterEventAsync(id, dto, GetCallerRole(), GetCallerEmployeeId());
 
                 if (result == null)
                 {
@@ -46,6 +53,10 @@ namespace ShipmentTracker.Web.Controllers
             {
                 return BadRequest(new { errors = ex.Errors.Select(e => new { property = e.PropertyName, message = e.ErrorMessage }) });
             }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
+            }
         }
 
         /// <summary>
@@ -57,6 +68,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="dto">Datos del intento de entrega a registrar.</param>
         /// <returns>El evento recién creado, con su detalle de intento de entrega.</returns>
         [HttpPost("{id}/events/delivery-attempt")]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Driver)]
         public async Task<ActionResult<ShipmentEventDto>> RegisterDeliveryAttempt(int id, [FromBody] RegisterDeliveryAttemptDto dto)
         {
             try
@@ -84,27 +96,38 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="id">El identificador único del Shipment.</param>
         /// <returns>La lista de eventos del Shipment.</returns>
         [HttpGet("{id}/events")]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator + "," + Roles.Driver + "," + Roles.WarehouseStaff)]
         public async Task<ActionResult<IEnumerable<ShipmentEventDto>>> GetEventsByShipment(int id)
         {
-            var events = await _shipmentEventService.GetEventsByShipmentAsync(id);
-
-            if (events == null)
+            try
             {
-                return NotFound(new { message = $"No shipment was found with id '{id}'." });
-            }
+                var events = await _shipmentEventService.GetEventsByShipmentAsync(id, GetCallerRole(), GetCallerEmployeeId());
 
-            return Ok(events);
+                if (events == null)
+                {
+                    return NotFound(new { message = $"No shipment was found with id '{id}'." });
+                }
+
+                return Ok(events);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
+            }
         }
 
         /// <summary>
         /// Obtiene la información pública de tracking de un Shipment por su número de guía: resumen
         /// del envío más su línea de tiempo de eventos. Endpoint PÚBLICO — nunca incluye
-        /// <c>employeeId</c> ni ningún otro dato personal de empleados. No requiere autenticación (este
-        /// proyecto no cuenta con middleware de autenticación en ningún endpoint).
+        /// <c>employeeId</c> ni ningún otro dato personal de empleados. Único endpoint, junto con
+        /// <c>POST /api/auth/login</c>, explícitamente exento de autenticación en todo el sistema
+        /// (module 008, spec FR-016) — [AllowAnonymous] es necesario aquí porque el resto de la API
+        /// ahora deniega por defecto (FallbackPolicy en Program.cs).
         /// </summary>
         /// <param name="trackingNumber">El número de guía del Shipment.</param>
         /// <returns>El resumen público de tracking del Shipment.</returns>
         [HttpGet("tracking/{trackingNumber}")]
+        [AllowAnonymous]
         public async Task<ActionResult<ShipmentTrackingDto>> GetTracking(string trackingNumber)
         {
             var tracking = await _shipmentEventService.GetTrackingAsync(trackingNumber);
@@ -116,5 +139,12 @@ namespace ShipmentTracker.Web.Controllers
 
             return Ok(tracking);
         }
+
+        // Services no depende de ASP.NET Core (research.md Decisión 9): el Controller extrae el
+        // rol/EmployeeId del caller desde los claims de la cookie y los pasa como parámetros planos.
+        private string? GetCallerRole() => User.FindFirst(ClaimTypes.Role)?.Value;
+
+        private int? GetCallerEmployeeId() =>
+            int.TryParse(User.FindFirstValue("EmployeeId"), out var employeeId) ? employeeId : null;
     }
 }

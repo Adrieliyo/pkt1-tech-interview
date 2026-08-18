@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShipmentTracker.Core.Constants;
 using ShipmentTracker.Core.DTOs.Customers;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces.Services;
@@ -8,6 +10,7 @@ namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
     /// Controlador encargado de gestionar las operaciones relacionadas con los clientes (Customers &amp; Accounts).
+    /// Escritura restringida a BranchManager — Operator solo tiene lectura (spec 008 FR-013).
     /// </summary>
     [Route("api/customers")]
     [ApiController]
@@ -27,6 +30,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="dto">Datos del cliente Individual a crear.</param>
         /// <returns>El cliente recién creado.</returns>
         [HttpPost("individual")]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<ActionResult<CustomerDetailDto>> CreateIndividualCustomer([FromBody] CreateIndividualCustomerDto dto)
         {
             try
@@ -49,6 +53,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="dto">Datos del cliente Business a crear.</param>
         /// <returns>El cliente recién creado.</returns>
         [HttpPost("business")]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<ActionResult<CustomerDetailDto>> CreateBusinessCustomer([FromBody] CreateBusinessCustomerDto dto)
         {
             try
@@ -75,6 +80,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="pageSize">Cantidad de clientes por página. Por defecto, 5. Se recorta a un máximo de 50.</param>
         /// <returns>Una lista de clientes correspondiente a la página solicitada.</returns>
         [HttpGet]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator)]
         public async Task<ActionResult<IEnumerable<CustomerDetailDto>>> GetCustomers(
             [FromQuery] bool onlyActive = true,
             [FromQuery] CustomerType? type = null,
@@ -97,6 +103,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="id">El identificador único del cliente.</param>
         /// <returns>Los detalles del cliente encontrado.</returns>
         [HttpGet("{id}")]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator)]
         public async Task<ActionResult<CustomerDetailDto>> GetCustomerById(int id)
         {
             var customer = await _customerService.GetCustomerByIdAsync(id);
@@ -118,6 +125,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="dto">Datos completos de reemplazo del cliente.</param>
         /// <returns>El cliente actualizado.</returns>
         [HttpPut("{id}")]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<ActionResult<CustomerDetailDto>> UpdateCustomer(int id, [FromBody] UpdateCustomerDto dto)
         {
             try
@@ -144,6 +152,7 @@ namespace ShipmentTracker.Web.Controllers
         /// </summary>
         /// <param name="id">El identificador único del cliente.</param>
         [HttpDelete("{id}")]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<IActionResult> DeactivateCustomer(int id)
         {
             var success = await _customerService.DeactivateCustomerAsync(id);

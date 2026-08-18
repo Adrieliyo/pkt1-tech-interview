@@ -1,6 +1,7 @@
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
+using ShipmentTracker.Core.Constants;
 using ShipmentTracker.Core.DTOs.ShipmentEvents;
 using ShipmentTracker.Core.Entities;
 using ShipmentTracker.Core.Enums;
@@ -67,12 +68,28 @@ namespace ShipmentTracker.Services
             return failures;
         }
 
-        public async Task<ShipmentEventDto?> RegisterEventAsync(int shipmentId, RegisterEventDto dto)
+        // Tipos que un caller WarehouseStaff puede registrar vía el endpoint genérico (spec 008 FR-015).
+        private static readonly HashSet<ShipmentEventType> WarehouseStaffAllowedTypes = new()
+        {
+            ShipmentEventType.ReceivedAtBranch,
+            ShipmentEventType.DepartedFromBranch,
+            ShipmentEventType.InTransit
+        };
+
+        public async Task<ShipmentEventDto?> RegisterEventAsync(int shipmentId, RegisterEventDto dto, string? callerRole = null, int? callerEmployeeId = null)
         {
             var shipment = await _unitOfWork.ShipmentRepository.GetByIdAsync(shipmentId);
 
             if (shipment == null)
                 return null;
+
+            // Gate de rol (module 008, research.md Decisiones 8/9): un WarehouseStaff solo puede
+            // registrar los tres tipos de evento de almacén, no cualquier tipo permitido por el
+            // endpoint genérico. No es una regla de transición, es un gate directo — InvalidOperationException.
+            if (callerRole == Roles.WarehouseStaff && dto.EventType.HasValue && !WarehouseStaffAllowedTypes.Contains(dto.EventType.Value))
+            {
+                throw new InvalidOperationException("WarehouseStaff can only register ReceivedAtBranch, DepartedFromBranch, or InTransit events.");
+            }
 
             var structuralResult = await _registerEventValidator.ValidateAsync(dto);
             var failures = new List<ValidationFailure>(structuralResult.Errors);
@@ -178,12 +195,28 @@ namespace ShipmentTracker.Services
             return eventDto;
         }
 
-        public async Task<IEnumerable<ShipmentEventDto>?> GetEventsByShipmentAsync(int shipmentId)
+        public async Task<IEnumerable<ShipmentEventDto>?> GetEventsByShipmentAsync(int shipmentId, string? callerRole = null, int? callerEmployeeId = null)
         {
             var shipment = await _unitOfWork.ShipmentRepository.GetByIdAsync(shipmentId);
 
             if (shipment == null)
                 return null;
+
+            // Gate de asignación (module 008, research.md Decisión 4): un Driver solo puede leer
+            // Shipments en los que haya registrado al menos un OutForDelivery/DeliveryAttempted.
+            // Igualdad simple, no es una transición de estado — InvalidOperationException.
+            if (callerRole == Roles.Driver)
+            {
+                var isAssigned = await _unitOfWork.ShipmentEventRepository.CountAsync(
+                    x => x.ShipmentId == shipmentId
+                      && x.EmployeeId == callerEmployeeId
+                      && (x.EventType == ShipmentEventType.OutForDelivery || x.EventType == ShipmentEventType.DeliveryAttempted)) > 0;
+
+                if (!isAssigned)
+                {
+                    throw new InvalidOperationException("You are not assigned to this shipment.");
+                }
+            }
 
             var events = await _unitOfWork.ShipmentEventRepository.GetAsync(
                 x => x.ShipmentId == shipmentId,

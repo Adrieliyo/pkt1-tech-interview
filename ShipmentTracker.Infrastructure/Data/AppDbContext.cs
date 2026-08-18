@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ShipmentTracker.Core.Entities;
 using ShipmentTracker.Infrastructure.Data.Configurations;
+using ShipmentTracker.Core.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ShipmentTracker.Infrastructure.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public DbSet<Shipment> Shipments { get; set; }
 
@@ -39,6 +41,9 @@ namespace ShipmentTracker.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new ShipmentConfiguration());
             builder.ApplyConfiguration(new BranchConfiguration());
             builder.ApplyConfiguration(new BranchScheduleConfiguration());

@@ -1,5 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <!-- Solo los POCOs de Identity (IdentityUser/IdentityRole): sin dependencia de EF Core ni
+         de ASP.NET Core web — ApplicationUser/ApplicationRone viven aquí porque Services los
+         necesita para UserManager (research.md Decisión 1, corregida en implementación). -->
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.*" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

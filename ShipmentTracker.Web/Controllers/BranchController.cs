@@ -1,5 +1,7 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShipmentTracker.Core.Constants;
 using ShipmentTracker.Core.DTOs.Branches;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces.Services;
@@ -28,6 +30,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="dto">Datos de la sucursal a crear.</param>
         /// <returns>La sucursal recién creada.</returns>
         [HttpPost]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<ActionResult<BranchDto>> CreateBranch([FromBody] CreateBranchDto dto)
         {
             try
@@ -58,6 +61,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="pageSize">Cantidad de sucursales por página. Por defecto, 5. Se recorta a un máximo de 50.</param>
         /// <returns>Una lista de sucursales correspondiente a la página solicitada.</returns>
         [HttpGet]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator)]
         public async Task<ActionResult<IEnumerable<BranchDto>>> GetBranches(
             [FromQuery] bool onlyActive = true,
             [FromQuery] BranchType? type = null,
@@ -80,6 +84,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="id">El identificador único de la sucursal.</param>
         /// <returns>Los detalles de la sucursal encontrada.</returns>
         [HttpGet("{id}")]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator)]
         public async Task<ActionResult<BranchDto>> GetBranchById(int id)
         {
             var branch = await _branchService.GetBranchByIdAsync(id);
@@ -101,6 +106,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="dto">Datos completos de reemplazo de la sucursal.</param>
         /// <returns>La sucursal actualizada.</returns>
         [HttpPut("{id}")]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<ActionResult<BranchDto>> UpdateBranch(int id, [FromBody] UpdateBranchDto dto)
         {
             try
@@ -127,6 +133,7 @@ namespace ShipmentTracker.Web.Controllers
         /// </summary>
         /// <param name="id">El identificador único de la sucursal.</param>
         [HttpDelete("{id}")]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<IActionResult> DeactivateBranch(int id)
         {
             var success = await _branchService.DeactivateBranchAsync(id);

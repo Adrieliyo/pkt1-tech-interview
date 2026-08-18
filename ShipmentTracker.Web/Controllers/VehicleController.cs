@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShipmentTracker.Core.Constants;
 using ShipmentTracker.Core.DTOs.Vehicles;
 using ShipmentTracker.Core.Interfaces.Services;
 using System.ComponentModel.DataAnnotations;
@@ -7,10 +9,12 @@ namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
     /// Controlador encargado de gestionar las operaciones relacionadas con los vehículos.
+    /// Gestión de Vehicles restringida a BranchManager en su totalidad (spec 008 FR-013/FR-014/FR-015).
     /// </summary>
     [Route("api/vehicles")]
     [ApiController]
     [Produces("application/json")]
+    [Authorize(Roles = Roles.BranchManager)]
     public class VehicleController : ControllerBase
     {
         private readonly IVehicleService _vehicleService;

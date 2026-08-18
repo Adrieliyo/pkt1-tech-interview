@@ -1,7 +1,12 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using ShipmentTracker.Core.Constants;
+using ShipmentTracker.Core.DTOs.Auth;
 using ShipmentTracker.Core.DTOs.Branches;
 using ShipmentTracker.Core.DTOs.Customers;
 using ShipmentTracker.Core.DTOs.Employees;
@@ -12,8 +17,12 @@ using ShipmentTracker.Core.Interfaces;
 using ShipmentTracker.Core.Interfaces.Repositories;
 using ShipmentTracker.Core.Interfaces.Services;
 using ShipmentTracker.Infrastructure.Data;
+using ShipmentTracker.Infrastructure.Data.Seed;
+using ShipmentTracker.Core.Identity;
+using ShipmentTracker.Infrastructure.Identity;
 using ShipmentTracker.Infrastructure.Repositories;
 using ShipmentTracker.Services;
+using ShipmentTracker.Services.Validators.Auth;
 using ShipmentTracker.Services.Validators.Branches;
 using ShipmentTracker.Services.Validators.Customers;
 using ShipmentTracker.Services.Validators.Employees;
@@ -21,6 +30,7 @@ using ShipmentTracker.Services.Validators.Orders;
 using ShipmentTracker.Services.Validators.ShipmentEvents;
 using ShipmentTracker.Services.Validators.Shipments;
 using ShipmentTracker.Services.Validators.Vehicles;
+using ShipmentTracker.Web.Authorization;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,9 +55,62 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program).Assembly, typeof(ShipmentService).Assembly);
 
-builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
     x => x.MigrationsAssembly("ShipmentTracker.Infrastructure")));
+
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+{
+    options.Password.RequiredLength = 8;
+    options.Password.RequireDigit = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+    options.User.RequireUniqueEmail = true;
+})
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddClaimsPrincipalFactory<ApplicationUserClaimsPrincipalFactory>()
+    .AddDefaultTokenProviders();
+
+// Fuerza la revalidación (Employee activo + rol vigente) en cada request en vez de cada 30 min
+// (research.md Decisión 15, FR-005/SC-003).
+builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+{
+    options.ValidationInterval = TimeSpan.Zero;
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.ExpireTimeSpan = TimeSpan.FromHours(8);
+    options.SlidingExpiration = true;
+    // API pura: 401/403 en JSON en vez del redirect HTML por defecto de Identity.
+    options.Events.OnRedirectToLogin = ctx =>
+    {
+        ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    };
+    options.Events.OnRedirectToAccessDenied = ctx =>
+    {
+        ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return Task.CompletedTask;
+    };
+    options.Events.OnValidatePrincipal = EmployeeSessionValidator.ValidateAsync;
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    // Deniega por defecto cualquier endpoint sin [Authorize]/[AllowAnonymous] explícito (FR-010/FR-017):
+    // defensa en profundidad frente a un futuro controlador que olvide decorar una acción nueva.
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+// SuperAdmin pasa cualquier [Authorize(Roles = "...")] sin listarlo explícitamente (research.md Decisión 6).
+builder.Services.AddSingleton<IAuthorizationHandler, SuperAdminAuthorizationHandler>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -80,6 +143,9 @@ builder.Services.AddScoped<IDeliveryAttemptRepository, DeliveryAttemptRepository
 builder.Services.AddScoped<IShipmentEventService, ShipmentEventService>();
 builder.Services.AddScoped<IValidator<RegisterEventDto>, RegisterEventDtoValidator>();
 builder.Services.AddScoped<IValidator<RegisterDeliveryAttemptDto>, RegisterDeliveryAttemptDtoValidator>();
+builder.Services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IValidator<CreateUserDto>, CreateUserDtoValidator>();
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -115,7 +181,12 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowReactApp");
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
+
+await IdentitySeeder.SeedAsync(app.Services);
 
 app.Run();
 

@@ -1,5 +1,7 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShipmentTracker.Core.Constants;
 using ShipmentTracker.Core.DTOs.Orders;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces.Services;
@@ -10,10 +12,13 @@ namespace ShipmentTracker.Web.Controllers
     /// <summary>
     /// Controlador encargado de gestionar el ciclo de vida de las órdenes de envío:
     /// creación, listado, consulta, actualización, confirmación, cancelación y conversión a Shipment.
+    /// BranchManager y Operator comparten todo salvo la conversión a Shipment, exclusiva de
+    /// BranchManager (spec 008 FR-012/FR-013).
     /// </summary>
     [Route("api/orders")]
     [ApiController]
     [Produces("application/json")]
+    [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator)]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -197,6 +202,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="id">El identificador único de la orden.</param>
         /// <returns>El identificador y número de guía del Shipment recién creado.</returns>
         [HttpPost("{id}/convert")]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<ActionResult<ConvertOrderResultDto>> ConvertOrder(int id)
         {
             try

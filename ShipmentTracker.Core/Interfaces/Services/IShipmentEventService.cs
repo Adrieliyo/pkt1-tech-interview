@@ -9,10 +9,12 @@ namespace ShipmentTracker.Core.Interfaces.Services
     public interface IShipmentEventService
     {
         /// <summary>
-        /// Registra un evento genérico (actualmente solo OutForDelivery es aceptado). Devuelve null
-        /// si el Shipment no existe; lanza ValidationException por reglas estructurales/de negocio.
+        /// Registra un evento genérico. Devuelve null si el Shipment no existe; lanza
+        /// ValidationException por reglas estructurales/de negocio. callerRole/callerEmployeeId
+        /// (module 008): cuando callerRole es WarehouseStaff, solo se permiten los tipos
+        /// ReceivedAtBranch/DepartedFromBranch/InTransit (lanza InvalidOperationException si no).
         /// </summary>
-        Task<ShipmentEventDto?> RegisterEventAsync(int shipmentId, RegisterEventDto dto);
+        Task<ShipmentEventDto?> RegisterEventAsync(int shipmentId, RegisterEventDto dto, string? callerRole = null, int? callerEmployeeId = null);
 
         /// <summary>
         /// Registra un intento de entrega fallido, creando su ShipmentEvent y su DeliveryAttempt
@@ -22,9 +24,11 @@ namespace ShipmentTracker.Core.Interfaces.Services
 
         /// <summary>
         /// Lista todos los eventos de un Shipment (vista operacional, incluye EmployeeId), ordenados
-        /// cronológicamente. Devuelve null si el Shipment no existe.
+        /// cronológicamente. Devuelve null si el Shipment no existe. callerRole/callerEmployeeId
+        /// (module 008): cuando callerRole es Driver, lanza InvalidOperationException si el Shipment
+        /// no tiene ningún evento OutForDelivery/DeliveryAttempted registrado por ese Employee.
         /// </summary>
-        Task<IEnumerable<ShipmentEventDto>?> GetEventsByShipmentAsync(int shipmentId);
+        Task<IEnumerable<ShipmentEventDto>?> GetEventsByShipmentAsync(int shipmentId, string? callerRole = null, int? callerEmployeeId = null);
 
         /// <summary>
         /// Obtiene la información pública de tracking de un Shipment por su número de guía. Devuelve

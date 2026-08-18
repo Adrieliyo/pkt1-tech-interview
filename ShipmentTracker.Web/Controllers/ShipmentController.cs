@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ShipmentTracker.Core.Constants;
 using ShipmentTracker.Core.DTOs.Shipments;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces.Services;
@@ -7,7 +9,10 @@ using System.ComponentModel.DataAnnotations;
 namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
-    /// Controlador encargado de gestionar las operaciones relacionadas con los envíos.
+    /// Controlador encargado de gestionar las operaciones relacionadas con los envíos. Lectura
+    /// abierta a BranchManager/Operator/WarehouseStaff; creación directa y cambio manual de estado
+    /// restringidos a BranchManager por defecto de mínimo privilegio, al no estar nombrados para
+    /// ningún otro rol (spec 008 FR-017, research.md Decisión 8).
     /// </summary>
     [Route("api/shipment")]
     [ApiController]
@@ -33,6 +38,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="pageSize">Cantidad de envíos por página. Por defecto, 5. Se recorta a un máximo de 50.</param>
         /// <returns>Una lista de envíos correspondiente a la página solicitada.</returns>
         [HttpGet]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator + "," + Roles.WarehouseStaff)]
         public async Task<ActionResult<IEnumerable<ShipmentDto>>> GetShipments(
             [FromQuery] ShipmentStatus? status,
             [FromQuery, Range(1, int.MaxValue)] int page = 1,
@@ -54,6 +60,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="trackingNumber">El número de guía único del envío.</param>
         /// <returns>Los detalles del envío encontrado.</returns>
         [HttpGet("{trackingNumber}")]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator + "," + Roles.WarehouseStaff)]
         public async Task<ActionResult<ShipmentDto>> GetShipmentByTrackingNumber(string trackingNumber)
         {
             var shipment = await _shipmentService.GetShipmentByTrackingNumberAsync(trackingNumber);
@@ -72,6 +79,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="createShipmentDto">Modelo con la información necesaria para crear el envío.</param>
         /// <returns>El envío recién creado.</returns>
         [HttpPost]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<ActionResult<ShipmentDto>> CreateShipment([FromBody] CreateShipmentDto createShipmentDto)
         {
             var newShipment = await _shipmentService.CreateShipmentAsync(createShipmentDto);
@@ -92,6 +100,7 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="newStatus">El nuevo estado a asignar.</param>
         /// <returns>Un código de estado HTTP 204 sin contenido en caso de éxito.</returns>
         [HttpPatch("{trackingNumber}/status")]
+        [Authorize(Roles = Roles.BranchManager)]
         public async Task<IActionResult> UpdateStatus(string trackingNumber, [FromBody] ShipmentStatus newStatus)
         {
             try

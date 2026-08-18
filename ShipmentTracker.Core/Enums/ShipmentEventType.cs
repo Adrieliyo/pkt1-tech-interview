@@ -11,12 +11,19 @@ namespace ShipmentTracker.Core.Enums
     /// activo con rol Driver.<br/><br/>
     /// <b>DeliveryAttempted:</b> se intentó entregar el envío y no se logró. Tiene su propio endpoint
     /// dedicado y siempre genera un DeliveryAttempt asociado — nunca aceptado por el endpoint
-    /// genérico de registro de eventos.
+    /// genérico de registro de eventos.<br/><br/>
+    /// <b>ReceivedAtBranch, DepartedFromBranch, InTransit:</b> añadidos por el módulo 008
+    /// (Authentication &amp; Authorization) para el rol WarehouseStaff. Sin reglas de negocio propias
+    /// más allá de la restricción de rol — se registran vía el endpoint genérico existente, igual que
+    /// cualquier otro evento permitido (spec 008 FR-015, Assumptions).
     /// </summary>
     public enum ShipmentEventType
     {
         OrderConverted,
         OutForDelivery,
-        DeliveryAttempted
+        DeliveryAttempted,
+        ReceivedAtBranch,
+        DepartedFromBranch,
+        InTransit
     }
 }

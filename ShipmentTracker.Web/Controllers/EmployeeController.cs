@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShipmentTracker.Core.Constants;
 using ShipmentTracker.Core.DTOs.Employees;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces.Services;
@@ -8,10 +10,12 @@ namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
     /// Controlador encargado de gestionar las operaciones relacionadas con los empleados.
+    /// Gestión de Employees restringida a BranchManager en su totalidad (spec 008 FR-013/FR-014/FR-015).
     /// </summary>
     [Route("api/employees")]
     [ApiController]
     [Produces("application/json")]
+    [Authorize(Roles = Roles.BranchManager)]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
