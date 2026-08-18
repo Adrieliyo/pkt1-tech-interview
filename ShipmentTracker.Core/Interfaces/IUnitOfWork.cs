@@ -19,6 +19,10 @@ namespace ShipmentTracker.Core.Interfaces
 
         ICustomerRepository CustomerRepository { get; }
 
+        IOrderRepository OrderRepository { get; }
+
+        IShipmentEventRepository ShipmentEventRepository { get; }
+
         Task<int> CommitAsync();
     }
 }

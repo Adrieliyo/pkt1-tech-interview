@@ -242,6 +242,111 @@ namespace ShipmentTracker.Infrastructure.Migrations
                     b.ToTable("Employees", (string)null);
                 });
 
+            modelBuilder.Entity("ShipmentTracker.Core.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DeclaredHeightCm")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DeclaredLengthCm")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DeclaredWeightKg")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DeclaredWidthCm")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("OriginBranchId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PickupAddress")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("PickupScheduledAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PickupType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("QuotedPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RecipientAddress")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("RecipientCity")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RecipientName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("RecipientPhone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("RecipientState")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RecipientZipCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ServiceType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrderNumber")
+                        .IsUnique();
+
+                    b.HasIndex("OriginBranchId");
+
+                    b.ToTable("Orders", (string)null);
+                });
+
             modelBuilder.Entity("ShipmentTracker.Core.Entities.Shipment", b =>
                 {
                     b.Property<int>("Id")
@@ -255,6 +360,9 @@ namespace ShipmentTracker.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DeliveredAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Recipient")
                         .IsRequired()
@@ -272,10 +380,43 @@ namespace ShipmentTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
+
                     b.HasIndex("TrackingNumber")
                         .IsUnique();
 
                     b.ToTable("Shipments", (string)null);
+                });
+
+            modelBuilder.Entity("ShipmentTracker.Core.Entities.ShipmentEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OccurredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ShipmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StatusSnapshot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShipmentId");
+
+                    b.ToTable("ShipmentEvents", (string)null);
                 });
 
             modelBuilder.Entity("ShipmentTracker.Core.Entities.Vehicle", b =>
@@ -412,6 +553,39 @@ namespace ShipmentTracker.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("ShipmentTracker.Core.Entities.Order", b =>
+                {
+                    b.HasOne("ShipmentTracker.Core.Entities.Customer", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ShipmentTracker.Core.Entities.Branch", null)
+                        .WithMany()
+                        .HasForeignKey("OriginBranchId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("ShipmentTracker.Core.Entities.Shipment", b =>
+                {
+                    b.HasOne("ShipmentTracker.Core.Entities.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("ShipmentTracker.Core.Entities.ShipmentEvent", b =>
+                {
+                    b.HasOne("ShipmentTracker.Core.Entities.Shipment", "Shipment")
+                        .WithMany()
+                        .HasForeignKey("ShipmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Shipment");
                 });
 
             modelBuilder.Entity("ShipmentTracker.Core.Entities.Vehicle", b =>

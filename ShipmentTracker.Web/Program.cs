@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using ShipmentTracker.Core.DTOs.Branches;
 using ShipmentTracker.Core.DTOs.Customers;
 using ShipmentTracker.Core.DTOs.Employees;
+using ShipmentTracker.Core.DTOs.Orders;
 using ShipmentTracker.Core.DTOs.Vehicles;
 using ShipmentTracker.Core.Interfaces;
 using ShipmentTracker.Core.Interfaces.Repositories;
@@ -15,6 +16,7 @@ using ShipmentTracker.Services;
 using ShipmentTracker.Services.Validators.Branches;
 using ShipmentTracker.Services.Validators.Customers;
 using ShipmentTracker.Services.Validators.Employees;
+using ShipmentTracker.Services.Validators.Orders;
 using ShipmentTracker.Services.Validators.Shipments;
 using ShipmentTracker.Services.Validators.Vehicles;
 using System.Reflection;
@@ -67,6 +69,11 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IValidator<CreateIndividualCustomerDto>, CreateIndividualCustomerDtoValidator>();
 builder.Services.AddScoped<IValidator<CreateBusinessCustomerDto>, CreateBusinessCustomerDtoValidator>();
 builder.Services.AddScoped<IValidator<UpdateCustomerDto>, UpdateCustomerDtoValidator>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IShipmentEventRepository, ShipmentEventRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IValidator<CreateOrderDto>, CreateOrderDtoValidator>();
+builder.Services.AddScoped<IValidator<UpdateOrderDto>, UpdateOrderDtoValidator>();
 
 builder.Services.AddSwaggerGen(options =>
 {

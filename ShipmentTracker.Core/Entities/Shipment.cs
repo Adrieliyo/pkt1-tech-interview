@@ -25,5 +25,8 @@ namespace ShipmentTracker.Core.Entities
 
         // Fecha de entrega del envio
         public DateTime? DeliveredAt { get; set; }
+
+        // Orden de origen (nullable: los Shipments creados directamente por POST /api/shipment no tienen orden)
+        public int? OrderId { get; set; }
     }
 }

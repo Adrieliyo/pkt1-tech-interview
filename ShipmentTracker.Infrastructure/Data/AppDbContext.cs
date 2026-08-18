@@ -27,6 +27,10 @@ namespace ShipmentTracker.Infrastructure.Data
 
         public DbSet<BusinessCustomer> BusinessCustomers { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<ShipmentEvent> ShipmentEvents { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -41,6 +45,8 @@ namespace ShipmentTracker.Infrastructure.Data
             builder.ApplyConfiguration(new CustomerConfiguration());
             builder.ApplyConfiguration(new IndividualCustomerConfiguration());
             builder.ApplyConfiguration(new BusinessCustomerConfiguration());
+            builder.ApplyConfiguration(new OrderConfiguration());
+            builder.ApplyConfiguration(new ShipmentEventConfiguration());
         }
     }
 }

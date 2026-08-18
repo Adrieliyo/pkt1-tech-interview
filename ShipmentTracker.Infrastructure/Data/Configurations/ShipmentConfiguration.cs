@@ -40,6 +40,22 @@ namespace ShipmentTracker.Infrastructure.Data.Configurations
 
             builder.Property(x => x.DeliveredAt)
                    .IsRequired(false);
+
+            // Referencia opcional a la orden de origen: null para Shipments creados directamente
+            // por POST /api/shipment; asignado solo cuando el Shipment nace de la conversión de una orden.
+            builder.Property(x => x.OrderId)
+                   .IsRequired(false);
+
+            // Índice único que permite múltiples NULL (comportamiento por defecto de SQL Server),
+            // exigido por los 5 Shipments sembrados y la creación directa aún activa.
+            builder.HasIndex(x => x.OrderId)
+                   .IsUnique();
+
+            builder.HasOne<Order>()
+                   .WithMany()
+                   .HasForeignKey(x => x.OrderId)
+                   .IsRequired(false)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
