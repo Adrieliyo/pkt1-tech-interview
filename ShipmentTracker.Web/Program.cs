@@ -42,6 +42,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:3000", "http://localhost:5173")
               .AllowAnyHeader()
               .AllowAnyMethod()
+              .AllowCredentials()
               .WithExposedHeaders("X-Total-Count", "X-Page", "X-Page-Size", "X-Total-Pages");
     });
 });
@@ -84,7 +85,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.Cookie.SameSite = SameSiteMode.Strict;
+    // None (no Strict/Lax) porque el frontend (http://localhost:3000) y esta API
+    // (https://localhost:7156) difieren en esquema: los navegadores los tratan como cross-site
+    // ("schemeful same-site"), y Strict/Lax nunca envían la cookie en fetch cross-site aunque
+    // CORS permita credenciales. Secure ya está forzado arriba, requisito de SameSite=None.
+    options.Cookie.SameSite = SameSiteMode.None;
     options.ExpireTimeSpan = TimeSpan.FromHours(8);
     options.SlidingExpiration = true;
     // API pura: 401/403 en JSON en vez del redirect HTML por defecto de Identity.
