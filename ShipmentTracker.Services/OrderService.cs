@@ -82,20 +82,40 @@ namespace ShipmentTracker.Services
             return _mapper.Map<OrderDto>(order);
         }
 
-        public async Task<PagedResult<OrderDto>> GetOrdersAsync(int? customerId = null, OrderStatus? status = null, int page = 1, int pageSize = 5)
+        public async Task<PagedResult<OrderDto>> GetOrdersAsync(int? customerId = null, OrderStatus? status = null, string? orderNumberContains = null, int page = 1, int pageSize = 5)
         {
+            var hasCustomerId = customerId.HasValue;
+            var hasStatus = status.HasValue;
+            var hasOrderNumberContains = !string.IsNullOrWhiteSpace(orderNumberContains);
+
             Expression<Func<Order, bool>> filter = null;
-            if (customerId.HasValue && status.HasValue)
+            if (hasCustomerId && hasStatus && hasOrderNumberContains)
             {
-                filter = x => x.CustomerId == customerId.Value && x.Status == status.Value;
+                filter = x => x.CustomerId == customerId!.Value && x.Status == status!.Value && x.OrderNumber.Contains(orderNumberContains!);
             }
-            else if (customerId.HasValue)
+            else if (hasCustomerId && hasStatus)
             {
-                filter = x => x.CustomerId == customerId.Value;
+                filter = x => x.CustomerId == customerId!.Value && x.Status == status!.Value;
             }
-            else if (status.HasValue)
+            else if (hasCustomerId && hasOrderNumberContains)
             {
-                filter = x => x.Status == status.Value;
+                filter = x => x.CustomerId == customerId!.Value && x.OrderNumber.Contains(orderNumberContains!);
+            }
+            else if (hasStatus && hasOrderNumberContains)
+            {
+                filter = x => x.Status == status!.Value && x.OrderNumber.Contains(orderNumberContains!);
+            }
+            else if (hasCustomerId)
+            {
+                filter = x => x.CustomerId == customerId!.Value;
+            }
+            else if (hasStatus)
+            {
+                filter = x => x.Status == status!.Value;
+            }
+            else if (hasOrderNumberContains)
+            {
+                filter = x => x.OrderNumber.Contains(orderNumberContains!);
             }
 
             var effectivePageSize = Math.Min(pageSize, MaxPageSize);

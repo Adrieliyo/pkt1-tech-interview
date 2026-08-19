@@ -17,9 +17,10 @@ namespace ShipmentTracker.Core.Interfaces.Services
         Task<OrderDto> CreateOrderAsync(CreateOrderDto dto);
 
         /// <summary>
-        /// Lista órdenes paginadas, opcionalmente filtradas por customerId y/o status, ordenadas por CreatedAt descendente.
+        /// Lista órdenes paginadas, opcionalmente filtradas por customerId, status y/o una coincidencia
+        /// parcial (contains, case-insensitive) sobre OrderNumber, ordenadas por CreatedAt descendente.
         /// </summary>
-        Task<PagedResult<OrderDto>> GetOrdersAsync(int? customerId = null, OrderStatus? status = null, int page = 1, int pageSize = 5);
+        Task<PagedResult<OrderDto>> GetOrdersAsync(int? customerId = null, OrderStatus? status = null, string? orderNumberContains = null, int page = 1, int pageSize = 5);
 
         /// <summary>
         /// Obtiene una orden por su identificador. Devuelve null si no existe.

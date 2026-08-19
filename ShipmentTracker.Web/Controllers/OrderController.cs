@@ -50,13 +50,15 @@ namespace ShipmentTracker.Web.Controllers
         }
 
         /// <summary>
-        /// Lista órdenes de forma paginada, opcionalmente filtradas por customerId y/o status,
-        /// ordenadas por fecha de creación descendente (más recientes primero). La metadata de
-        /// paginación se expone en los encabezados <c>X-Total-Count</c>, <c>X-Page</c>,
-        /// <c>X-Page-Size</c> y <c>X-Total-Pages</c>.
+        /// Lista órdenes de forma paginada, opcionalmente filtradas por customerId, status y/o una
+        /// coincidencia parcial sobre el número de orden, ordenadas por fecha de creación
+        /// descendente (más recientes primero). La metadata de paginación se expone en los
+        /// encabezados <c>X-Total-Count</c>, <c>X-Page</c>, <c>X-Page-Size</c> y
+        /// <c>X-Total-Pages</c>.
         /// </summary>
         /// <param name="customerId">Identificador del Customer cuyas órdenes se desean (opcional).</param>
         /// <param name="status">Estado de orden por el que filtrar (opcional).</param>
+        /// <param name="orderNumberContains">Subcadena a buscar dentro de OrderNumber, sin distinguir mayúsculas/minúsculas (opcional).</param>
         /// <param name="page">Número de página solicitada (1-based). Por defecto, 1.</param>
         /// <param name="pageSize">Cantidad de órdenes por página. Por defecto, 5. Se recorta a un máximo de 50.</param>
         /// <returns>Una lista de órdenes correspondiente a la página solicitada.</returns>
@@ -64,10 +66,11 @@ namespace ShipmentTracker.Web.Controllers
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders(
             [FromQuery] int? customerId = null,
             [FromQuery] OrderStatus? status = null,
+            [FromQuery] string? orderNumberContains = null,
             [FromQuery, Range(1, int.MaxValue)] int page = 1,
             [FromQuery, Range(1, int.MaxValue)] int pageSize = 5)
         {
-            var result = await _orderService.GetOrdersAsync(customerId, status, page, pageSize);
+            var result = await _orderService.GetOrdersAsync(customerId, status, orderNumberContains, page, pageSize);
 
             Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
             Response.Headers.Append("X-Page", result.Page.ToString());
