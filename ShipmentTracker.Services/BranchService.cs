@@ -86,6 +86,7 @@ namespace ShipmentTracker.Services
                 branches = await _unitOfWork.BranchRepository.GetAsync(
                     filter,
                     orderBy: q => q.OrderByDescending(x => x.CreatedAt),
+                    includeProperties: nameof(Branch.Schedule),
                     skip: (int)skip,
                     take: effectivePageSize);
             }

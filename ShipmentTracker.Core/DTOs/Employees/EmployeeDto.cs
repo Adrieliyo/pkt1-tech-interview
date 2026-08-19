@@ -62,5 +62,10 @@ namespace ShipmentTracker.Core.DTOs.Employees
         /// Fecha de la última actualización. Null si nunca se ha actualizado.
         /// </summary>
         public DateTime? UpdatedAt { get; set; }
+        /// <summary>
+        /// Indica si el empleado ya tiene una cuenta de acceso (ApplicationUser) vinculada.
+        /// Calculado en el servicio, no persistido en la entidad Employee.
+        /// </summary>
+        public bool HasAccount { get; set; }
     }
 }

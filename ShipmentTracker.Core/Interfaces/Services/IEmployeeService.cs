@@ -18,9 +18,10 @@ namespace ShipmentTracker.Core.Interfaces.Services
 
         /// <summary>
         /// Lista empleados de forma paginada, opcionalmente filtrados por sucursal, por rol, o
-        /// por ambos. Solo devuelve empleados activos.
+        /// por ambos. Por defecto solo devuelve empleados activos; <paramref name="onlyActive"/>
+        /// en <c>false</c> devuelve solo los inactivos.
         /// </summary>
-        Task<PagedResult<EmployeeDto>> GetEmployeesAsync(int? branchId = null, EmployeeRole? role = null, int page = 1, int pageSize = 5);
+        Task<PagedResult<EmployeeDto>> GetEmployeesAsync(bool onlyActive = true, int? branchId = null, EmployeeRole? role = null, int page = 1, int pageSize = 5);
 
         /// <summary>
         /// Obtiene un empleado por su identificador, activo o inactivo.

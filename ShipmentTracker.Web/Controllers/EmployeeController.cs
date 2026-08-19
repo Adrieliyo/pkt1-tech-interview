@@ -48,25 +48,29 @@ namespace ShipmentTracker.Web.Controllers
         }
 
         /// <summary>
-        /// Lista empleados de forma paginada. Solo devuelve empleados activos. Permite filtrar
-        /// opcionalmente por sucursal, por rol, o por ambos de forma combinada — esta combinación
-        /// es la usada para buscar choferes disponibles en una sucursal antes de asignarlos a un
-        /// envío. La metadata de paginación se expone en los encabezados <c>X-Total-Count</c>,
-        /// <c>X-Page</c>, <c>X-Page-Size</c> y <c>X-Total-Pages</c>.
+        /// Lista empleados de forma paginada. Por defecto solo devuelve empleados activos;
+        /// <paramref name="onlyActive"/> en <c>false</c> devuelve solo los inactivos (mismo
+        /// patrón que <c>GET /api/branches</c>). Permite filtrar opcionalmente por sucursal, por
+        /// rol, o por ambos de forma combinada — esta combinación es la usada para buscar
+        /// choferes disponibles en una sucursal antes de asignarlos a un envío. La metadata de
+        /// paginación se expone en los encabezados <c>X-Total-Count</c>, <c>X-Page</c>,
+        /// <c>X-Page-Size</c> y <c>X-Total-Pages</c>.
         /// </summary>
+        /// <param name="onlyActive">Si es <c>true</c> (por defecto) devuelve solo activos; si es <c>false</c>, solo inactivos.</param>
         /// <param name="branchId">Identificador de sucursal opcional para filtrar los resultados.</param>
         /// <param name="role">Rol opcional para filtrar los resultados.</param>
         /// <param name="page">Número de página solicitada (1-based). Por defecto, 1.</param>
         /// <param name="pageSize">Cantidad de empleados por página. Por defecto, 5. Se recorta a un máximo de 50.</param>
-        /// <returns>La lista de empleados activos que cumplen los filtros.</returns>
+        /// <returns>La lista de empleados que cumplen los filtros.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployees(
-            [FromQuery] int? branchId,
-            [FromQuery] EmployeeRole? role,
+            [FromQuery] bool onlyActive = true,
+            [FromQuery] int? branchId = null,
+            [FromQuery] EmployeeRole? role = null,
             [FromQuery, Range(1, int.MaxValue)] int page = 1,
             [FromQuery, Range(1, int.MaxValue)] int pageSize = 5)
         {
-            var result = await _employeeService.GetEmployeesAsync(branchId, role, page, pageSize);
+            var result = await _employeeService.GetEmployeesAsync(onlyActive, branchId, role, page, pageSize);
 
             Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
             Response.Headers.Append("X-Page", result.Page.ToString());

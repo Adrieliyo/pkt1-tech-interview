@@ -1,10 +1,12 @@
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Identity;
 using ShipmentTracker.Core.DTOs;
 using ShipmentTracker.Core.DTOs.Employees;
 using ShipmentTracker.Core.Entities;
 using ShipmentTracker.Core.Enums;
+using ShipmentTracker.Core.Identity;
 using ShipmentTracker.Core.Interfaces;
 using ShipmentTracker.Core.Interfaces.Services;
 using System;
@@ -23,14 +25,28 @@ namespace ShipmentTracker.Services
         private readonly IMapper _mapper;
         private readonly IValidator<CreateEmployeeDto> _createValidator;
         private readonly IValidator<UpdateEmployeeDto> _updateValidator;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public EmployeeService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateEmployeeDto> createValidator, IValidator<UpdateEmployeeDto> updateValidator)
+        public EmployeeService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateEmployeeDto> createValidator, IValidator<UpdateEmployeeDto> updateValidator, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
+            _userManager = userManager;
         }
+
+        // LINQ síncrono sobre UserManager.Users (IQueryable respaldado por EF Core) — mismo patrón
+        // que UserService.CreateUserForEmployeeAsync, para no añadir una referencia a EF Core en
+        // Services.
+        private bool HasAccount(int employeeId) =>
+            _userManager.Users.Any(u => u.EmployeeId == employeeId);
+
+        private HashSet<int> EmployeeIdsWithAccounts(IEnumerable<int> employeeIds) =>
+            _userManager.Users
+                .Where(u => u.EmployeeId != null && employeeIds.Contains(u.EmployeeId.Value))
+                .Select(u => u.EmployeeId!.Value)
+                .ToHashSet();
 
         // Reglas dependientes de base de datos (sucursal activa + unicidad global de Email/EmployeeNumber,
         // incluso contra registros inactivos) — compartidas entre Create y Update. currentId = 0 en Create
@@ -95,27 +111,30 @@ namespace ShipmentTracker.Services
             await _unitOfWork.EmployeeRepository.AddAsync(employee);
             await _unitOfWork.CommitAsync();
 
-            return _mapper.Map<EmployeeDto>(employee);
+            // A newly created employee can never already have an account.
+            var createdDto = _mapper.Map<EmployeeDto>(employee);
+            createdDto.HasAccount = false;
+            return createdDto;
         }
 
-        public async Task<PagedResult<EmployeeDto>> GetEmployeesAsync(int? branchId = null, EmployeeRole? role = null, int page = 1, int pageSize = 5)
+        public async Task<PagedResult<EmployeeDto>> GetEmployeesAsync(bool onlyActive = true, int? branchId = null, EmployeeRole? role = null, int page = 1, int pageSize = 5)
         {
             Expression<Func<Employee, bool>> filter;
             if (branchId.HasValue && role.HasValue)
             {
-                filter = x => x.IsActive && x.BranchId == branchId.Value && x.Role == role.Value;
+                filter = x => x.IsActive == onlyActive && x.BranchId == branchId.Value && x.Role == role.Value;
             }
             else if (branchId.HasValue)
             {
-                filter = x => x.IsActive && x.BranchId == branchId.Value;
+                filter = x => x.IsActive == onlyActive && x.BranchId == branchId.Value;
             }
             else if (role.HasValue)
             {
-                filter = x => x.IsActive && x.Role == role.Value;
+                filter = x => x.IsActive == onlyActive && x.Role == role.Value;
             }
             else
             {
-                filter = x => x.IsActive;
+                filter = x => x.IsActive == onlyActive;
             }
 
             var effectivePageSize = Math.Min(pageSize, MaxPageSize);
@@ -137,9 +156,16 @@ namespace ShipmentTracker.Services
 
             var totalCount = await _unitOfWork.EmployeeRepository.CountAsync(filter);
 
+            var items = employees.Select(e => _mapper.Map<EmployeeDto>(e)).ToList();
+            var accountIds = EmployeeIdsWithAccounts(items.Select(e => e.Id));
+            foreach (var item in items)
+            {
+                item.HasAccount = accountIds.Contains(item.Id);
+            }
+
             return new PagedResult<EmployeeDto>
             {
-                Items = employees.Select(e => _mapper.Map<EmployeeDto>(e)),
+                Items = items,
                 Page = page,
                 PageSize = effectivePageSize,
                 TotalCount = totalCount
@@ -153,7 +179,9 @@ namespace ShipmentTracker.Services
             if (employee == null)
                 return null;
 
-            return _mapper.Map<EmployeeDto>(employee);
+            var dto = _mapper.Map<EmployeeDto>(employee);
+            dto.HasAccount = HasAccount(employee.Id);
+            return dto;
         }
 
         public async Task<EmployeeDto?> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto)
@@ -192,7 +220,9 @@ namespace ShipmentTracker.Services
             await _unitOfWork.EmployeeRepository.Update(employee);
             await _unitOfWork.CommitAsync();
 
-            return _mapper.Map<EmployeeDto>(employee);
+            var updatedDto = _mapper.Map<EmployeeDto>(employee);
+            updatedDto.HasAccount = HasAccount(employee.Id);
+            return updatedDto;
         }
 
         public async Task<bool> DeactivateEmployeeAsync(int id)
