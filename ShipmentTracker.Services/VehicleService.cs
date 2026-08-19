@@ -88,11 +88,11 @@ namespace ShipmentTracker.Services
             return _mapper.Map<VehicleDto>(vehicle);
         }
 
-        public async Task<PagedResult<VehicleDto>> GetVehiclesAsync(int? branchId = null, int page = 1, int pageSize = 5)
+        public async Task<PagedResult<VehicleDto>> GetVehiclesAsync(bool onlyActive = true, int? branchId = null, int page = 1, int pageSize = 5)
         {
             Expression<Func<Vehicle, bool>> filter = branchId.HasValue
-                ? x => x.IsActive && x.BranchId == branchId.Value
-                : x => x.IsActive;
+                ? x => x.IsActive == onlyActive && x.BranchId == branchId.Value
+                : x => x.IsActive == onlyActive;
 
             var effectivePageSize = Math.Min(pageSize, MaxPageSize);
             long skip = (long)(page - 1) * effectivePageSize;

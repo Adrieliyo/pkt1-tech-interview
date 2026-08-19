@@ -16,10 +16,11 @@ namespace ShipmentTracker.Core.Interfaces.Services
         Task<VehicleDto> CreateVehicleAsync(CreateVehicleDto dto);
 
         /// <summary>
-        /// Lista vehículos de forma paginada, opcionalmente filtrados por sucursal. Solo devuelve
-        /// vehículos activos.
+        /// Lista vehículos de forma paginada, opcionalmente filtrados por sucursal. Por defecto
+        /// solo devuelve vehículos activos; <paramref name="onlyActive"/> en <c>false</c> devuelve
+        /// solo los inactivos.
         /// </summary>
-        Task<PagedResult<VehicleDto>> GetVehiclesAsync(int? branchId = null, int page = 1, int pageSize = 5);
+        Task<PagedResult<VehicleDto>> GetVehiclesAsync(bool onlyActive = true, int? branchId = null, int page = 1, int pageSize = 5);
 
         /// <summary>
         /// Obtiene un vehículo por su identificador, activo o inactivo.

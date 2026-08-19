@@ -47,21 +47,25 @@ namespace ShipmentTracker.Web.Controllers
         }
 
         /// <summary>
-        /// Lista vehículos de forma paginada. Solo devuelve vehículos activos. Permite filtrar
+        /// Lista vehículos de forma paginada. Por defecto solo devuelve vehículos activos;
+        /// <paramref name="onlyActive"/> en <c>false</c> devuelve solo los inactivos (mismo
+        /// patrón que <c>GET /api/branches</c> y <c>GET /api/employees</c>). Permite filtrar
         /// opcionalmente por sucursal. La metadata de paginación se expone en los encabezados
         /// <c>X-Total-Count</c>, <c>X-Page</c>, <c>X-Page-Size</c> y <c>X-Total-Pages</c>.
         /// </summary>
+        /// <param name="onlyActive">Si es <c>true</c> (por defecto) devuelve solo activos; si es <c>false</c>, solo inactivos.</param>
         /// <param name="branchId">Identificador de sucursal opcional para filtrar los resultados.</param>
         /// <param name="page">Número de página solicitada (1-based). Por defecto, 1.</param>
         /// <param name="pageSize">Cantidad de vehículos por página. Por defecto, 5. Se recorta a un máximo de 50.</param>
-        /// <returns>La lista de vehículos activos que cumplen el filtro.</returns>
+        /// <returns>La lista de vehículos que cumplen los filtros.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<VehicleDto>>> GetVehicles(
-            [FromQuery] int? branchId,
+            [FromQuery] bool onlyActive = true,
+            [FromQuery] int? branchId = null,
             [FromQuery, Range(1, int.MaxValue)] int page = 1,
             [FromQuery, Range(1, int.MaxValue)] int pageSize = 5)
         {
-            var result = await _vehicleService.GetVehiclesAsync(branchId, page, pageSize);
+            var result = await _vehicleService.GetVehiclesAsync(onlyActive, branchId, page, pageSize);
 
             Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
             Response.Headers.Append("X-Page", result.Page.ToString());
