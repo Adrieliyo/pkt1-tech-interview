@@ -37,5 +37,10 @@ namespace ShipmentTracker.Core.DTOs.Shipments
         /// Representa la hora en la que el envío fue entregado. Este valor es opcional y solo se asigna cuando el estado del envío cambia a "Delivered".
         /// </summary>
         public DateTime? DeliveredAt { get; set; }
+        /// <summary>
+        /// Identificador de la Order que generó este envío mediante ConvertToShipmentAsync. Null para
+        /// los envíos creados directamente vía POST /api/shipment (sin pasar por una orden).
+        /// </summary>
+        public int? OrderId { get; set; }
     }
 }

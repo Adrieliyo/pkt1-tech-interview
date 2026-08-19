@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShipmentTracker.Core.Constants;
 using ShipmentTracker.Core.DTOs.Orders;
+using ShipmentTracker.Core.DTOs.Shipments;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces.Services;
 using System.ComponentModel.DataAnnotations;
@@ -198,9 +199,11 @@ namespace ShipmentTracker.Web.Controllers
         }
 
         /// <summary>
-        /// Convierte una orden confirmada en un Shipment: genera la guía (TRK-YYYYMMDD-XXXX), crea el
-        /// Shipment con su primer ShipmentEvent y marca la orden como Converted, todo en una sola
-        /// operación atómica.
+        /// Convierte una orden Confirmed o ya Converted en un nuevo Shipment: genera la guía
+        /// (TRK-YYYYMMDD-XXXX), crea el Shipment con su primer ShipmentEvent y marca la orden como
+        /// Converted, todo en una sola operación atómica. Puede invocarse repetidamente sobre la misma
+        /// orden mientras esta no esté Pending ni Cancelled — cada llamada genera un Shipment
+        /// independiente.
         /// </summary>
         /// <param name="id">El identificador único de la orden.</param>
         /// <returns>El identificador y número de guía del Shipment recién creado.</returns>
@@ -223,6 +226,37 @@ namespace ShipmentTracker.Web.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        /// <summary>
+        /// Lista, de forma paginada, los Shipments generados a partir de esta orden (una orden puede
+        /// tener cero, uno o varios), ordenados por fecha de creación descendente. La metadata de
+        /// paginación se expone en los encabezados <c>X-Total-Count</c>, <c>X-Page</c>,
+        /// <c>X-Page-Size</c> y <c>X-Total-Pages</c>.
+        /// </summary>
+        /// <param name="id">El identificador único de la orden.</param>
+        /// <param name="page">Número de página solicitada (1-based). Por defecto, 1.</param>
+        /// <param name="pageSize">Cantidad de envíos por página. Por defecto, 5. Se recorta a un máximo de 50.</param>
+        /// <returns>Los envíos generados a partir de la orden, correspondientes a la página solicitada.</returns>
+        [HttpGet("{id}/shipments")]
+        public async Task<ActionResult<IEnumerable<ShipmentDto>>> GetShipmentsByOrder(
+            int id,
+            [FromQuery, Range(1, int.MaxValue)] int page = 1,
+            [FromQuery, Range(1, int.MaxValue)] int pageSize = 5)
+        {
+            var result = await _orderService.GetShipmentsByOrderAsync(id, page, pageSize);
+
+            if (result == null)
+            {
+                return NotFound(new { message = $"No order was found with id '{id}'." });
+            }
+
+            Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
+            Response.Headers.Append("X-Page", result.Page.ToString());
+            Response.Headers.Append("X-Page-Size", result.PageSize.ToString());
+            Response.Headers.Append("X-Total-Pages", result.TotalPages.ToString());
+
+            return Ok(result.Items);
         }
     }
 }

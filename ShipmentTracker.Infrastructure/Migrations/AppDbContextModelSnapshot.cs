@@ -515,9 +515,7 @@ namespace ShipmentTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique()
-                        .HasFilter("[OrderId] IS NOT NULL");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("TrackingNumber")
                         .IsUnique();

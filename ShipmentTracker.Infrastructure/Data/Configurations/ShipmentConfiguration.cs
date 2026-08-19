@@ -46,10 +46,11 @@ namespace ShipmentTracker.Infrastructure.Data.Configurations
             builder.Property(x => x.OrderId)
                    .IsRequired(false);
 
-            // Índice único que permite múltiples NULL (comportamiento por defecto de SQL Server),
-            // exigido por los 5 Shipments sembrados y la creación directa aún activa.
-            builder.HasIndex(x => x.OrderId)
-                   .IsUnique();
+            // Índice NO único (spec 009): una Order puede generar más de un Shipment, por lo que
+            // OrderId ya no identifica una fila única. Se conserva el índice (no único) porque
+            // GetShipmentsByOrderAsync/ComputeFulfillmentAsync (OrderService) filtran por esta
+            // columna en cada consulta.
+            builder.HasIndex(x => x.OrderId);
 
             builder.HasOne<Order>()
                    .WithMany()

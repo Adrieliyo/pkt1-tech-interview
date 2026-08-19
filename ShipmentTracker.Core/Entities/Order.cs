@@ -7,7 +7,9 @@ namespace ShipmentTracker.Core.Entities
     /// Representa una solicitud de envío creada por un cliente antes de que el paquete físico sea recolectado.
     /// Captura la intención del remitente: destinatario, destino, tipo de recolección y dimensiones/peso estimados.
     /// Pertenece exactamente a un Customer y referencia opcionalmente una Branch de origen (obligatoria solo con PickupType.DropOff).
-    /// Una orden nunca se elimina: Cancelled y Converted son estados terminales permanentes.
+    /// Una orden nunca se elimina: Cancelled es un estado terminal permanente. Converted es permanente
+    /// para efectos de edición/cancelación, pero no bloquea generar Shipments adicionales sobre la
+    /// misma orden (relación 1:N, ver IOrderService.ConvertToShipmentAsync).
     /// </summary>
     public class Order
     {

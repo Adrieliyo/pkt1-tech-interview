@@ -10,11 +10,10 @@ namespace ShipmentTracker.Core.Interfaces.Services
     {
         /// <summary>
         /// Registra un evento genérico. Devuelve null si el Shipment no existe; lanza
-        /// ValidationException por reglas estructurales/de negocio. callerRole/callerEmployeeId
-        /// (module 008): cuando callerRole es WarehouseStaff, solo se permiten los tipos
-        /// ReceivedAtBranch/DepartedFromBranch/InTransit (lanza InvalidOperationException si no).
+        /// ValidationException por reglas estructurales/de negocio. WarehouseStaff no puede llegar
+        /// a este método en absoluto — se deniega a nivel de [Authorize] en el controller.
         /// </summary>
-        Task<ShipmentEventDto?> RegisterEventAsync(int shipmentId, RegisterEventDto dto, string? callerRole = null, int? callerEmployeeId = null);
+        Task<ShipmentEventDto?> RegisterEventAsync(int shipmentId, RegisterEventDto dto);
 
         /// <summary>
         /// Registra un intento de entrega fallido, creando su ShipmentEvent y su DeliveryAttempt

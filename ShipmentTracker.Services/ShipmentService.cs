@@ -31,12 +31,20 @@ namespace ShipmentTracker.Services
             _transitionValidator = transitionValidator;
         }
 
-        public async Task<PagedResult<ShipmentDto>> GetShipmentsAsync(ShipmentStatus? status = null, int page = 1, int pageSize = 5)
+        public async Task<PagedResult<ShipmentDto>> GetShipmentsAsync(ShipmentStatus? status = null, int? orderId = null, int page = 1, int pageSize = 5)
         {
             Expression<Func<Shipment, bool>> filter = null;
-            if (status.HasValue)
+            if (status.HasValue && orderId.HasValue)
+            {
+                filter = x => x.Status == status.Value && x.OrderId == orderId.Value;
+            }
+            else if (status.HasValue)
             {
                 filter = x => x.Status == status.Value;
+            }
+            else if (orderId.HasValue)
+            {
+                filter = x => x.OrderId == orderId.Value;
             }
 
             var effectivePageSize = Math.Min(pageSize, MaxPageSize);

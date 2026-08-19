@@ -1,5 +1,6 @@
 using ShipmentTracker.Core.DTOs;
 using ShipmentTracker.Core.DTOs.Orders;
+using ShipmentTracker.Core.DTOs.Shipments;
 using ShipmentTracker.Core.Enums;
 using System.Threading.Tasks;
 
@@ -51,10 +52,18 @@ namespace ShipmentTracker.Core.Interfaces.Services
         Task<bool> CancelOrderAsync(int id);
 
         /// <summary>
-        /// Convierte una orden confirmada en un Shipment (Confirmed → Converted), creando el Shipment,
-        /// su primer ShipmentEvent y actualizando el estado de la orden en una sola operación atómica.
-        /// Devuelve null si no existe; lanza InvalidOperationException si la orden no está Confirmed.
+        /// Convierte una orden Confirmed o ya Converted en un nuevo Shipment (Confirmed → Converted, o
+        /// Converted → Converted), creando el Shipment, su primer ShipmentEvent y actualizando el
+        /// estado de la orden en una sola operación atómica. Puede invocarse repetidamente sobre la
+        /// misma orden: cada llamada genera un Shipment independiente con su propio número de guía.
+        /// Devuelve null si no existe; lanza InvalidOperationException si la orden está Pending o Cancelled.
         /// </summary>
         Task<ConvertOrderResultDto?> ConvertToShipmentAsync(int id);
+
+        /// <summary>
+        /// Lista, de forma paginada, los Shipments generados a partir de una orden (relación 1:N),
+        /// ordenados por CreatedAt descendente. Devuelve null si la orden no existe.
+        /// </summary>
+        Task<PagedResult<ShipmentDto>?> GetShipmentsByOrderAsync(int orderId, int page = 1, int pageSize = 5);
     }
 }

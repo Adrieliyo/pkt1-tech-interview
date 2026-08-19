@@ -126,5 +126,19 @@ namespace ShipmentTracker.Core.DTOs.Orders
         /// Fecha de la última actualización (UTC). Null hasta la primera actualización vía PUT.
         /// </summary>
         public DateTime? UpdatedAt { get; set; }
+
+        /// <summary>
+        /// Cantidad total de Shipments generados a partir de esta orden (incluye cancelados). Calculado
+        /// bajo demanda a partir de los Shipments asociados; no es un valor persistido. Siempre 0 para
+        /// órdenes que nunca se convirtieron.
+        /// </summary>
+        public int ShipmentsCount { get; set; }
+
+        /// <summary>
+        /// Indica si la orden está completamente cumplida: existe al menos un Shipment no cancelado y
+        /// todos los Shipments no cancelados están en estado Delivered. Calculado bajo demanda; no es un
+        /// valor persistido (el campo <see cref="Status"/> no cambia de significado).
+        /// </summary>
+        public bool IsFulfilled { get; set; }
     }
 }

@@ -206,6 +206,8 @@ namespace ShipmentTracker.Services
                 throw new ValidationException(failures);
             }
 
+            var previousRole = employee.Role;
+
             employee.BranchId = dto.BranchId;
             employee.FirstName = dto.FirstName;
             employee.LastName = dto.LastName;
@@ -220,9 +222,44 @@ namespace ShipmentTracker.Services
             await _unitOfWork.EmployeeRepository.Update(employee);
             await _unitOfWork.CommitAsync();
 
+            if (previousRole != employee.Role)
+            {
+                await SyncAccountRoleAsync(employee.Id, employee.Role);
+            }
+
             var updatedDto = _mapper.Map<EmployeeDto>(employee);
             updatedDto.HasAccount = HasAccount(employee.Id);
             return updatedDto;
+        }
+
+        // Mantiene sincronizado el rol de Identity (AspNetUserRoles) con Employee.Role tras un cambio
+        // de rol en la edición. Sin esto, el rol de sesión (claims, [Authorize], sidebar) quedaba
+        // desactualizado indefinidamente: EmployeeSessionValidator detecta el desfase en cada request
+        // pero solo puede reconstruir el principal a partir de AspNetUserRoles, que nunca cambiaba. Es
+        // un no-op si el empleado no tiene cuenta vinculada (mismo patrón de HasAccount/lookup por
+        // EmployeeId).
+        private async Task SyncAccountRoleAsync(int employeeId, EmployeeRole newRole)
+        {
+            var user = _userManager.Users.SingleOrDefault(u => u.EmployeeId == employeeId);
+            if (user == null)
+            {
+                return;
+            }
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            var newRoleName = newRole.ToString();
+
+            if (currentRoles.Contains(newRoleName) && currentRoles.Count == 1)
+            {
+                return;
+            }
+
+            if (currentRoles.Any())
+            {
+                await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            }
+
+            await _userManager.AddToRoleAsync(user, newRoleName);
         }
 
         public async Task<bool> DeactivateEmployeeAsync(int id)

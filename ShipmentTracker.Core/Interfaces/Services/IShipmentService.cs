@@ -13,12 +13,14 @@ namespace ShipmentTracker.Core.Interfaces.Services
     {
         /// <summary>
         /// Lista los envíos de forma paginada. Permite filtrar opcionalmente por el estado del envío
-        /// usando el Enum. Los envíos se devuelven ordenados por fecha de creación descendente.
+        /// y/o por la Order que lo generó. Los envíos se devuelven ordenados por fecha de creación
+        /// descendente.
         /// </summary>
         /// <param name="status">Estado opcional para filtrar los envíos.</param>
+        /// <param name="orderId">Identificador opcional de la Order que generó el envío.</param>
         /// <param name="page">Número de página solicitado (1-based).</param>
         /// <param name="pageSize">Tamaño de página solicitado.</param>
-        Task<PagedResult<ShipmentDto>> GetShipmentsAsync(ShipmentStatus? status = null, int page = 1, int pageSize = 5);
+        Task<PagedResult<ShipmentDto>> GetShipmentsAsync(ShipmentStatus? status = null, int? orderId = null, int page = 1, int pageSize = 5);
 
         /// <summary>
         /// Obtiene un envío por su número de guía.

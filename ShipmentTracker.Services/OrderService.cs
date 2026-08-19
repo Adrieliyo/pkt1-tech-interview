@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using ShipmentTracker.Core.DTOs;
 using ShipmentTracker.Core.DTOs.Orders;
+using ShipmentTracker.Core.DTOs.Shipments;
 using ShipmentTracker.Core.Entities;
 using ShipmentTracker.Core.Enums;
 using ShipmentTracker.Core.Interfaces;
@@ -79,7 +80,10 @@ namespace ShipmentTracker.Services
             await _unitOfWork.OrderRepository.AddAsync(order);
             await _unitOfWork.CommitAsync();
 
-            return _mapper.Map<OrderDto>(order);
+            var result = _mapper.Map<OrderDto>(order);
+            result.ShipmentsCount = 0;
+            result.IsFulfilled = false;
+            return result;
         }
 
         public async Task<PagedResult<OrderDto>> GetOrdersAsync(int? customerId = null, OrderStatus? status = null, string? orderNumberContains = null, int page = 1, int pageSize = 5)
@@ -153,7 +157,7 @@ namespace ShipmentTracker.Services
             if (order == null)
                 return null;
 
-            return _mapper.Map<OrderDto>(order);
+            return await MapOrderWithFulfillmentAsync(order);
         }
 
         public async Task<OrderDto?> GetOrderByNumberAsync(string orderNumber)
@@ -163,7 +167,7 @@ namespace ShipmentTracker.Services
             if (order == null)
                 return null;
 
-            return _mapper.Map<OrderDto>(order);
+            return await MapOrderWithFulfillmentAsync(order);
         }
 
         public async Task<OrderDto?> UpdateOrderAsync(int id, UpdateOrderDto dto)
@@ -212,7 +216,7 @@ namespace ShipmentTracker.Services
             await _unitOfWork.OrderRepository.Update(order);
             await _unitOfWork.CommitAsync();
 
-            return _mapper.Map<OrderDto>(order);
+            return await MapOrderWithFulfillmentAsync(order);
         }
 
         public async Task<OrderDto?> ConfirmOrderAsync(int id)
@@ -233,7 +237,7 @@ namespace ShipmentTracker.Services
             await _unitOfWork.OrderRepository.Update(order);
             await _unitOfWork.CommitAsync();
 
-            return _mapper.Map<OrderDto>(order);
+            return await MapOrderWithFulfillmentAsync(order);
         }
 
         public async Task<bool> CancelOrderAsync(int id)
@@ -264,7 +268,7 @@ namespace ShipmentTracker.Services
             if (order == null)
                 return null;
 
-            if (order.Status != OrderStatus.Confirmed)
+            if (order.Status != OrderStatus.Confirmed && order.Status != OrderStatus.Converted)
             {
                 throw new InvalidOperationException("Only confirmed orders can be converted to a shipment.");
             }
@@ -299,6 +303,59 @@ namespace ShipmentTracker.Services
                 ShipmentId = shipment.Id,
                 TrackingNumber = shipment.TrackingNumber
             };
+        }
+
+        public async Task<PagedResult<ShipmentDto>?> GetShipmentsByOrderAsync(int orderId, int page = 1, int pageSize = 5)
+        {
+            var order = await _unitOfWork.OrderRepository.GetByIdAsync(orderId);
+
+            if (order == null)
+                return null;
+
+            var effectivePageSize = Math.Min(pageSize, MaxPageSize);
+            var skip = (page - 1) * effectivePageSize;
+
+            var shipments = await _unitOfWork.ShipmentRepository.GetAsync(
+                filter: s => s.OrderId == orderId,
+                orderBy: q => q.OrderByDescending(s => s.CreatedAt),
+                skip: skip,
+                take: effectivePageSize);
+
+            var totalCount = await _unitOfWork.ShipmentRepository.CountAsync(s => s.OrderId == orderId);
+
+            return new PagedResult<ShipmentDto>
+            {
+                Items = shipments.Select(s => _mapper.Map<ShipmentDto>(s)),
+                Page = page,
+                PageSize = effectivePageSize,
+                TotalCount = totalCount
+            };
+        }
+
+        /// <summary>
+        /// Mapea una orden a su OrderDto y calcula ShipmentsCount/IsFulfilled a partir de sus
+        /// Shipments asociados (ver ComputeFulfillmentAsync). No persiste nada, solo enriquece el DTO.
+        /// </summary>
+        private async Task<OrderDto> MapOrderWithFulfillmentAsync(Order order)
+        {
+            var dto = _mapper.Map<OrderDto>(order);
+            (dto.ShipmentsCount, dto.IsFulfilled) = await ComputeFulfillmentAsync(order.Id);
+            return dto;
+        }
+
+        /// <summary>
+        /// Calcula el cumplimiento agregado de una orden a partir de sus Shipments: el conteo total
+        /// (incluye cancelados) y si está completamente cumplida (al menos un Shipment no cancelado y
+        /// todos los Shipments no cancelados en estado Delivered).
+        /// </summary>
+        private async Task<(int ShipmentsCount, bool IsFulfilled)> ComputeFulfillmentAsync(int orderId)
+        {
+            var shipments = (await _unitOfWork.ShipmentRepository.GetAsync(filter: s => s.OrderId == orderId)).ToList();
+
+            var nonCancelled = shipments.Where(s => s.Status != ShipmentStatus.Cancelled).ToList();
+            var isFulfilled = nonCancelled.Count > 0 && nonCancelled.All(s => s.Status == ShipmentStatus.Delivered);
+
+            return (shipments.Count, isFulfilled);
         }
 
         /// <summary>

@@ -27,13 +27,14 @@ namespace ShipmentTracker.Web.Controllers
         }
 
         /// <summary>
-        /// Obtiene la lista de envíos de forma paginada. Opcionalmente filtra por estado.
-        /// Los envíos se devuelven ordenados por fecha de creación descendente (más recientes primero).
-        /// La metadata de paginación (total de registros, página actual, tamaño de página y total de
-        /// páginas) se expone en los encabezados <c>X-Total-Count</c>, <c>X-Page</c>, <c>X-Page-Size</c>
-        /// y <c>X-Total-Pages</c>.
+        /// Obtiene la lista de envíos de forma paginada. Opcionalmente filtra por estado y/o por la
+        /// Order que generó el envío. Los envíos se devuelven ordenados por fecha de creación
+        /// descendente (más recientes primero). La metadata de paginación (total de registros, página
+        /// actual, tamaño de página y total de páginas) se expone en los encabezados
+        /// <c>X-Total-Count</c>, <c>X-Page</c>, <c>X-Page-Size</c> y <c>X-Total-Pages</c>.
         /// </summary>
         /// <param name="status">Estado opcional para filtrar los envíos.</param>
+        /// <param name="orderId">Identificador opcional de la Order que generó el envío.</param>
         /// <param name="page">Número de página solicitado (1-based). Por defecto, 1.</param>
         /// <param name="pageSize">Cantidad de envíos por página. Por defecto, 5. Se recorta a un máximo de 50.</param>
         /// <returns>Una lista de envíos correspondiente a la página solicitada.</returns>
@@ -41,10 +42,11 @@ namespace ShipmentTracker.Web.Controllers
         [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator + "," + Roles.WarehouseStaff)]
         public async Task<ActionResult<IEnumerable<ShipmentDto>>> GetShipments(
             [FromQuery] ShipmentStatus? status,
+            [FromQuery] int? orderId = null,
             [FromQuery, Range(1, int.MaxValue)] int page = 1,
             [FromQuery, Range(1, int.MaxValue)] int pageSize = 5)
         {
-            var result = await _shipmentService.GetShipmentsAsync(status, page, pageSize);
+            var result = await _shipmentService.GetShipmentsAsync(status, orderId, page, pageSize);
 
             Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
             Response.Headers.Append("X-Page", result.Page.ToString());

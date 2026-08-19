@@ -68,28 +68,12 @@ namespace ShipmentTracker.Services
             return failures;
         }
 
-        // Tipos que un caller WarehouseStaff puede registrar vía el endpoint genérico (spec 008 FR-015).
-        private static readonly HashSet<ShipmentEventType> WarehouseStaffAllowedTypes = new()
-        {
-            ShipmentEventType.ReceivedAtBranch,
-            ShipmentEventType.DepartedFromBranch,
-            ShipmentEventType.InTransit
-        };
-
-        public async Task<ShipmentEventDto?> RegisterEventAsync(int shipmentId, RegisterEventDto dto, string? callerRole = null, int? callerEmployeeId = null)
+        public async Task<ShipmentEventDto?> RegisterEventAsync(int shipmentId, RegisterEventDto dto)
         {
             var shipment = await _unitOfWork.ShipmentRepository.GetByIdAsync(shipmentId);
 
             if (shipment == null)
                 return null;
-
-            // Gate de rol (module 008, research.md Decisiones 8/9): un WarehouseStaff solo puede
-            // registrar los tres tipos de evento de almacén, no cualquier tipo permitido por el
-            // endpoint genérico. No es una regla de transición, es un gate directo — InvalidOperationException.
-            if (callerRole == Roles.WarehouseStaff && dto.EventType.HasValue && !WarehouseStaffAllowedTypes.Contains(dto.EventType.Value))
-            {
-                throw new InvalidOperationException("WarehouseStaff can only register ReceivedAtBranch, DepartedFromBranch, or InTransit events.");
-            }
 
             var structuralResult = await _registerEventValidator.ValidateAsync(dto);
             var failures = new List<ValidationFailure>(structuralResult.Errors);

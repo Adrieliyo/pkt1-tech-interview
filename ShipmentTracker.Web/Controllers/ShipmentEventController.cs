@@ -9,9 +9,10 @@ namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
     /// Controlador encargado del registro y consulta de eventos de Shipment, incluidos los
-    /// intentos de entrega y la vista pública de tracking. RegisterEvent/GetEventsByShipment
-    /// aplican además un gate a nivel de Service según el rol/EmployeeId del caller (module 008,
-    /// research.md Decisiones 4/8/9): restricción de tipo para WarehouseStaff, restricción de
+    /// intentos de entrega y la vista pública de tracking. WarehouseStaff tiene solo lectura sobre
+    /// los eventos (GetEventsByShipment) — no puede registrar eventos, exclusivo de
+    /// BranchManager/Operator/Driver. GetEventsByShipment aplica además un gate a nivel de Service
+    /// según el EmployeeId del caller (module 008, research.md Decisión 4): restricción de
     /// asignación para Driver.
     /// </summary>
     [Route("api/shipments")]
@@ -35,12 +36,12 @@ namespace ShipmentTracker.Web.Controllers
         /// <param name="dto">Datos del evento a registrar.</param>
         /// <returns>El evento recién creado.</returns>
         [HttpPost("{id}/events")]
-        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator + "," + Roles.Driver + "," + Roles.WarehouseStaff)]
+        [Authorize(Roles = Roles.BranchManager + "," + Roles.Operator + "," + Roles.Driver)]
         public async Task<ActionResult<ShipmentEventDto>> RegisterEvent(int id, [FromBody] RegisterEventDto dto)
         {
             try
             {
-                var result = await _shipmentEventService.RegisterEventAsync(id, dto, GetCallerRole(), GetCallerEmployeeId());
+                var result = await _shipmentEventService.RegisterEventAsync(id, dto);
 
                 if (result == null)
                 {
