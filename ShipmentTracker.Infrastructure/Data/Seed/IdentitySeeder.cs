@@ -8,8 +8,8 @@ namespace ShipmentTracker.Infrastructure.Data.Seed
 {
     /// <summary>
     /// Seed idempotente de los 5 roles de Identity y de la cuenta SuperAdmin inicial
-    /// (research.md Decisión 14). Las credenciales de SuperAdmin vienen de configuración
-    /// (Seed:SuperAdminEmail / Seed:SuperAdminPassword), nunca hardcodeadas.
+    /// Las credenciales de SuperAdmin vienen de configuración
+    /// (Seed:SuperAdminEmail / Seed:SuperAdminPassword).
     /// </summary>
     public static class IdentitySeeder
     {

@@ -37,16 +37,13 @@ namespace ShipmentTracker.Services
             _transitionValidator = transitionValidator;
         }
 
-        // Regla de negocio compartida entre RegisterEventAsync y RegisterDeliveryAttemptAsync
-        // (research.md Decisión 10): el Employee, si se proporciona, debe existir y estar activo;
-        // cuando requireDriver es true, además es obligatorio y debe tener Role = Driver.
         private async Task<List<ValidationFailure>> ValidateEmployeeAsync(int? employeeId, bool requireDriver)
         {
             var failures = new List<ValidationFailure>();
 
             if (requireDriver && !employeeId.HasValue)
             {
-                failures.Add(new ValidationFailure(nameof(RegisterEventDto.EmployeeId), "EmployeeId is required for OutForDelivery events."));
+                failures.Add(new ValidationFailure(nameof(RegisterEventDto.EmployeeId), "El empleado es requerido para eventos OutForDelivery."));
                 return failures;
             }
 
@@ -58,11 +55,11 @@ namespace ShipmentTracker.Services
             var employee = await _unitOfWork.EmployeeRepository.SingleOrDefaultAsync(x => x.Id == employeeId.Value);
             if (employee == null || !employee.IsActive)
             {
-                failures.Add(new ValidationFailure(nameof(RegisterEventDto.EmployeeId), "The specified employee does not exist or is not active."));
+                failures.Add(new ValidationFailure(nameof(RegisterEventDto.EmployeeId), "El empleado especificado no existe o no está activo."));
             }
             else if (requireDriver && employee.Role != EmployeeRole.Driver)
             {
-                failures.Add(new ValidationFailure(nameof(RegisterEventDto.EmployeeId), "The specified employee must have the Driver role for OutForDelivery events."));
+                failures.Add(new ValidationFailure(nameof(RegisterEventDto.EmployeeId), "El empleado especificado debe tener el rol Driver para eventos OutForDelivery."));
             }
 
             return failures;
@@ -130,11 +127,9 @@ namespace ShipmentTracker.Services
 
             failures.AddRange(await ValidateEmployeeAsync(dto.EmployeeId, requireDriver: false));
 
-            // Comprobación de igualdad simple, no se enruta por el validador de transición: un
-            // intento de entrega nunca cambia el estado del Shipment (research.md Decisión 4).
             if (shipment.Status != ShipmentStatus.OutForDelivery)
             {
-                failures.Add(new ValidationFailure(nameof(Shipment.Status), "Only shipments that are currently out for delivery can have a delivery attempt logged."));
+                failures.Add(new ValidationFailure(nameof(Shipment.Status), "Solo los envíos que actualmente están en reparto pueden registrar un intento de entrega."));
             }
 
             if (failures.Any())
@@ -186,9 +181,7 @@ namespace ShipmentTracker.Services
             if (shipment == null)
                 return null;
 
-            // Gate de asignación (module 008, research.md Decisión 4): un Driver solo puede leer
-            // Shipments en los que haya registrado al menos un OutForDelivery/DeliveryAttempted.
-            // Igualdad simple, no es una transición de estado — InvalidOperationException.
+            // Un Driver solo puede leer Shipments en los que haya registrado al menos un OutForDelivery/DeliveryAttempted.
             if (callerRole == Roles.Driver)
             {
                 var isAssigned = await _unitOfWork.ShipmentEventRepository.CountAsync(
@@ -198,7 +191,7 @@ namespace ShipmentTracker.Services
 
                 if (!isAssigned)
                 {
-                    throw new InvalidOperationException("You are not assigned to this shipment.");
+                    throw new InvalidOperationException("No tienes asignado este envío.");
                 }
             }
 

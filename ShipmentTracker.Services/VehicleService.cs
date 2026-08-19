@@ -30,10 +30,6 @@ namespace ShipmentTracker.Services
             _createValidator = createValidator;
             _updateValidator = updateValidator;
         }
-
-        // Reglas dependientes de base de datos (sucursal activa + unicidad global de Plate,
-        // incluso contra registros inactivos) — compartidas entre Create y Update. currentId = 0
-        // en Create (nunca coincide con un id real), id real en Update.
         private async Task<List<ValidationFailure>> ValidateBusinessRulesAsync(int branchId, string plate, int currentId)
         {
             var failures = new List<ValidationFailure>();

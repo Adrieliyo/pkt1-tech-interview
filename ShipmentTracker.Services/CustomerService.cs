@@ -34,9 +34,6 @@ namespace ShipmentTracker.Services
             _createBusinessValidator = createBusinessValidator;
             _updateValidator = updateValidator;
         }
-
-        // Unicidad de Email a nivel compañía, contra todos los clientes (ambos tipos, activos e
-        // inactivos, research.md Decisión 7).
         private async Task<List<ValidationFailure>> ValidateEmailUniquenessAsync(string email, int currentId)
         {
             var failures = new List<ValidationFailure>();
@@ -50,7 +47,6 @@ namespace ShipmentTracker.Services
             return failures;
         }
 
-        // Unicidad de GovernmentId solo entre clientes Individual (activos e inactivos).
         private async Task<List<ValidationFailure>> ValidateGovernmentIdUniquenessAsync(string governmentId, int currentId)
         {
             var failures = new List<ValidationFailure>();
@@ -65,7 +61,6 @@ namespace ShipmentTracker.Services
             return failures;
         }
 
-        // Unicidad de TaxId solo entre clientes Business (activos e inactivos).
         private async Task<List<ValidationFailure>> ValidateTaxIdUniquenessAsync(string taxId, int currentId)
         {
             var failures = new List<ValidationFailure>();
@@ -229,10 +224,6 @@ namespace ShipmentTracker.Services
 
             failures.AddRange(await ValidateEmailUniquenessAsync(dto.Email, currentId: id));
 
-            // El tipo real ya persistido decide qué campos son requeridos/prohibidos — no hay
-            // campo Type en el DTO, así que un cambio de tipo es imposible por construcción
-            // (FR-004). Cross-type field rejection (FR-013) y completitud (FR-005) se resuelven
-            // aquí, no en el validador estructural (research.md Decisión 8).
             if (customer is IndividualCustomer individual)
             {
                 if (dto.BusinessName != null || dto.TaxId != null || dto.LegalRepresentative != null || dto.Industry != null || dto.CreditLimit.HasValue)

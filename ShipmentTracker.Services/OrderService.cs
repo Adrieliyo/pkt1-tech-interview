@@ -83,6 +83,7 @@ namespace ShipmentTracker.Services
             var result = _mapper.Map<OrderDto>(order);
             result.ShipmentsCount = 0;
             result.IsFulfilled = false;
+            result.OriginBranchName = await ResolveBranchNameAsync(order.OriginBranchId);
             return result;
         }
 
@@ -141,9 +142,12 @@ namespace ShipmentTracker.Services
 
             var totalCount = await _unitOfWork.OrderRepository.CountAsync(filter);
 
+            var orderDtos = orders.Select(o => _mapper.Map<OrderDto>(o)).ToList();
+            await AttachBranchNamesAsync(orderDtos);
+
             return new PagedResult<OrderDto>
             {
-                Items = orders.Select(o => _mapper.Map<OrderDto>(o)),
+                Items = orderDtos,
                 Page = page,
                 PageSize = effectivePageSize,
                 TotalCount = totalCount
@@ -179,7 +183,7 @@ namespace ShipmentTracker.Services
 
             if (order.Status != OrderStatus.Pending)
             {
-                throw new InvalidOperationException("Only pending orders can be edited.");
+                throw new InvalidOperationException("Solo las órdenes pendientes pueden editarse.");
             }
 
             TrimOrderStrings(dto);
@@ -228,7 +232,7 @@ namespace ShipmentTracker.Services
 
             if (order.Status != OrderStatus.Pending)
             {
-                throw new InvalidOperationException("Only pending orders can be confirmed.");
+                throw new InvalidOperationException("Solo las órdenes pendientes pueden confirmarse.");
             }
 
             order.Status = OrderStatus.Confirmed;
@@ -249,7 +253,7 @@ namespace ShipmentTracker.Services
 
             if (order.Status != OrderStatus.Pending)
             {
-                throw new InvalidOperationException("Only pending orders can be cancelled.");
+                throw new InvalidOperationException("Solo las órdenes pendientes pueden cancelarse.");
             }
 
             order.Status = OrderStatus.Cancelled;
@@ -270,7 +274,7 @@ namespace ShipmentTracker.Services
 
             if (order.Status != OrderStatus.Confirmed && order.Status != OrderStatus.Converted)
             {
-                throw new InvalidOperationException("Only confirmed orders can be converted to a shipment.");
+                throw new InvalidOperationException("Solo las órdenes confirmadas pueden convertirse en un envío.");
             }
 
             var shipment = new Shipment
@@ -340,7 +344,49 @@ namespace ShipmentTracker.Services
         {
             var dto = _mapper.Map<OrderDto>(order);
             (dto.ShipmentsCount, dto.IsFulfilled) = await ComputeFulfillmentAsync(order.Id);
+            dto.OriginBranchName = await ResolveBranchNameAsync(order.OriginBranchId);
             return dto;
+        }
+
+        /// <summary>
+        /// Resuelve el nombre de una Branch a partir de su id para un único OrderDto (create/update/
+        /// confirm/get-by-id/get-by-number). Devuelve null cuando branchId es null o la Branch ya no
+        /// existe (p. ej. referencia huérfana en datos legacy) — nunca lanza.
+        /// </summary>
+        private async Task<string?> ResolveBranchNameAsync(int? branchId)
+        {
+            if (!branchId.HasValue)
+                return null;
+
+            var branch = await _unitOfWork.BranchRepository.GetByIdAsync(branchId.Value);
+            return branch?.Name;
+        }
+
+        /// <summary>
+        /// Resuelve en lote el nombre de Branch para una página de OrderDto (GetOrdersAsync), con una
+        /// sola consulta por página en vez de una por orden — evita N+1 al listar.
+        /// </summary>
+        private async Task AttachBranchNamesAsync(List<OrderDto> orderDtos)
+        {
+            var branchIds = orderDtos
+                .Where(d => d.OriginBranchId.HasValue)
+                .Select(d => d.OriginBranchId!.Value)
+                .Distinct()
+                .ToList();
+
+            if (branchIds.Count == 0)
+                return;
+
+            var branches = await _unitOfWork.BranchRepository.GetAsync(filter: b => branchIds.Contains(b.Id));
+            var namesById = branches.ToDictionary(b => b.Id, b => b.Name);
+
+            foreach (var dto in orderDtos)
+            {
+                if (dto.OriginBranchId.HasValue && namesById.TryGetValue(dto.OriginBranchId.Value, out var name))
+                {
+                    dto.OriginBranchName = name;
+                }
+            }
         }
 
         /// <summary>
@@ -369,7 +415,7 @@ namespace ShipmentTracker.Services
             var customer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(x => x.Id == customerId);
             if (customer == null || !customer.IsActive)
             {
-                failures.Add(new ValidationFailure(nameof(Order.CustomerId), "The specified customer does not exist or is not active."));
+                failures.Add(new ValidationFailure(nameof(Order.CustomerId), "El cliente especificado no existe o no está activo."));
             }
 
             if (pickupType == PickupType.DropOff && originBranchId.HasValue)
@@ -377,7 +423,7 @@ namespace ShipmentTracker.Services
                 var branch = await _unitOfWork.BranchRepository.SingleOrDefaultAsync(x => x.Id == originBranchId.Value);
                 if (branch == null || !branch.IsActive)
                 {
-                    failures.Add(new ValidationFailure(nameof(Order.OriginBranchId), "The specified origin branch does not exist or is not active."));
+                    failures.Add(new ValidationFailure(nameof(Order.OriginBranchId), "La sucursal de origen especificada no existe o no está activa."));
                 }
             }
 

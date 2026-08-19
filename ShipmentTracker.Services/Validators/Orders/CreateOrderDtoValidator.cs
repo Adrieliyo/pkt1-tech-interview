@@ -15,50 +15,50 @@ namespace ShipmentTracker.Services.Validators.Orders
         public CreateOrderDtoValidator()
         {
             RuleFor(x => x.ServiceType)
-                .NotNull().WithMessage("ServiceType is required.")
-                .IsInEnum().WithMessage("ServiceType is not a valid service type.");
+                .NotNull().WithMessage("El tipo de servicio es requerido.")
+                .IsInEnum().WithMessage("El tipo de servicio no es válido.");
 
             RuleFor(x => x.PickupType)
-                .NotNull().WithMessage("PickupType is required.")
-                .IsInEnum().WithMessage("PickupType is not a valid pickup type.");
+                .NotNull().WithMessage("El tipo de recogida es requerido.")
+                .IsInEnum().WithMessage("El tipo de recogida no es válido.");
 
-            RuleFor(x => x.RecipientName).NotEmpty().WithMessage("RecipientName is required.");
-            RuleFor(x => x.RecipientPhone).NotEmpty().WithMessage("RecipientPhone is required.");
-            RuleFor(x => x.RecipientAddress).NotEmpty().WithMessage("RecipientAddress is required.");
-            RuleFor(x => x.RecipientCity).NotEmpty().WithMessage("RecipientCity is required.");
-            RuleFor(x => x.RecipientState).NotEmpty().WithMessage("RecipientState is required.");
-            RuleFor(x => x.RecipientZipCode).NotEmpty().WithMessage("RecipientZipCode is required.");
+            RuleFor(x => x.RecipientName).NotEmpty().WithMessage("El nombre del destinatario es requerido.");
+            RuleFor(x => x.RecipientPhone).NotEmpty().WithMessage("El teléfono del destinatario es requerido.");
+            RuleFor(x => x.RecipientAddress).NotEmpty().WithMessage("La dirección del destinatario es requerida.");
+            RuleFor(x => x.RecipientCity).NotEmpty().WithMessage("La ciudad del destinatario es requerida.");
+            RuleFor(x => x.RecipientState).NotEmpty().WithMessage("El estado del destinatario es requerido.");
+            RuleFor(x => x.RecipientZipCode).NotEmpty().WithMessage("El código postal del destinatario es requerido.");
 
-            RuleFor(x => x.DeclaredWeightKg).GreaterThan(0).WithMessage("DeclaredWeightKg must be greater than zero.");
-            RuleFor(x => x.DeclaredWidthCm).GreaterThan(0).WithMessage("DeclaredWidthCm must be greater than zero.");
-            RuleFor(x => x.DeclaredHeightCm).GreaterThan(0).WithMessage("DeclaredHeightCm must be greater than zero.");
-            RuleFor(x => x.DeclaredLengthCm).GreaterThan(0).WithMessage("DeclaredLengthCm must be greater than zero.");
+            RuleFor(x => x.DeclaredWeightKg).GreaterThan(0).WithMessage("El peso declarado (kg) debe ser mayor que cero.");
+            RuleFor(x => x.DeclaredWidthCm).GreaterThan(0).WithMessage("El ancho declarado (cm) debe ser mayor que cero.");
+            RuleFor(x => x.DeclaredHeightCm).GreaterThan(0).WithMessage("La altura declarada (cm) debe ser mayor que cero.");
+            RuleFor(x => x.DeclaredLengthCm).GreaterThan(0).WithMessage("El largo declarado (cm) debe ser mayor que cero.");
 
-            RuleFor(x => x.QuotedPrice).GreaterThanOrEqualTo(0).WithMessage("QuotedPrice must be greater than or equal to zero.");
+            RuleFor(x => x.QuotedPrice).GreaterThanOrEqualTo(0).WithMessage("El precio cotizado debe ser mayor o igual a cero.");
 
             RuleFor(x => x.PickupAddress)
-                .NotEmpty().WithMessage("PickupAddress is required for HomePickup orders.")
+                .NotEmpty().WithMessage("La dirección de recogida es requerida para órdenes de recogida a domicilio.")
                 .When(x => x.PickupType == PickupType.HomePickup);
 
             RuleFor(x => x.PickupScheduledAt)
-                .NotNull().WithMessage("PickupScheduledAt is required for HomePickup orders.")
-                .GreaterThan(DateTime.UtcNow).WithMessage("PickupScheduledAt must be in the future.")
+                .NotNull().WithMessage("La fecha programada de recogida es requerida para órdenes de recogida a domicilio.")
+                .GreaterThan(DateTime.UtcNow).WithMessage("La fecha programada de recogida debe ser en el futuro.")
                 .When(x => x.PickupType == PickupType.HomePickup);
 
             RuleFor(x => x.OriginBranchId)
-                .Null().WithMessage("OriginBranchId must not be provided for HomePickup orders.")
+                .Null().WithMessage("La sucursal de origen no debe proporcionarse para órdenes de recogida a domicilio.")
                 .When(x => x.PickupType == PickupType.HomePickup);
 
             RuleFor(x => x.OriginBranchId)
-                .NotNull().WithMessage("OriginBranchId is required for DropOff orders.")
+                .NotNull().WithMessage("La sucursal de origen es requerida para órdenes de entrega en sucursal.")
                 .When(x => x.PickupType == PickupType.DropOff);
 
             RuleFor(x => x.PickupAddress)
-                .Null().WithMessage("PickupAddress must not be provided for DropOff orders.")
+                .Null().WithMessage("La dirección de recogida no debe proporcionarse para órdenes de entrega en sucursal.")
                 .When(x => x.PickupType == PickupType.DropOff);
 
             RuleFor(x => x.PickupScheduledAt)
-                .Null().WithMessage("PickupScheduledAt must not be provided for DropOff orders.")
+                .Null().WithMessage("La fecha programada de recogida no debe proporcionarse para órdenes de entrega en sucursal.")
                 .When(x => x.PickupType == PickupType.DropOff);
         }
     }

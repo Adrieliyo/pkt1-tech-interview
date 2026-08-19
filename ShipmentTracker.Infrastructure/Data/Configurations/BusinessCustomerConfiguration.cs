@@ -18,8 +18,6 @@ namespace ShipmentTracker.Infrastructure.Data.Configurations
                    .IsRequired()
                    .HasMaxLength(12); // RFC persona moral
 
-            // Sin filtro por IsActive: la unicidad aplica siempre, incluso contra registros
-            // inactivos (spec.md, Clarifications).
             builder.HasIndex(x => x.TaxId)
                    .IsUnique();
 

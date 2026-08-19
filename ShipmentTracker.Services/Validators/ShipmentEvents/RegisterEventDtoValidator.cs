@@ -15,13 +15,13 @@ namespace ShipmentTracker.Services.Validators.ShipmentEvents
         public RegisterEventDtoValidator()
         {
             RuleFor(x => x.EventType)
-                .NotNull().WithMessage("EventType is required.")
-                .IsInEnum().WithMessage("EventType is not a valid event type.")
+                .NotNull().WithMessage("El tipo de evento es requerido.")
+                .IsInEnum().WithMessage("El tipo de evento no es válido.")
                 .Must(t => t != ShipmentEventType.DeliveryAttempted && t != ShipmentEventType.OrderConverted)
-                .WithMessage("EventType must not be DeliveryAttempted or OrderConverted — use their dedicated creation paths.");
+                .WithMessage("El tipo de evento no puede ser DeliveryAttempted ni OrderConverted — use sus rutas de creación dedicadas.");
 
             RuleFor(x => x.OccurredAt)
-                .LessThanOrEqualTo(_ => DateTime.UtcNow).WithMessage("OccurredAt must not be in the future.");
+                .LessThanOrEqualTo(_ => DateTime.UtcNow).WithMessage("La fecha del evento no debe ser en el futuro.");
         }
     }
 }

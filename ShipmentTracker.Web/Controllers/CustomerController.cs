@@ -9,8 +9,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
-    /// Controlador encargado de gestionar las operaciones relacionadas con los clientes (Customers &amp; Accounts).
-    /// Escritura restringida a BranchManager — Operator solo tiene lectura (spec 008 FR-013).
+    /// Controlador encargado de gestionar las operaciones relacionadas con los clientes.
     /// </summary>
     [Route("api/customers")]
     [ApiController]

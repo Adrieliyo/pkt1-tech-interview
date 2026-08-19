@@ -31,7 +31,6 @@ namespace ShipmentTracker.Core.Entities
 
         public DateTime CreatedAt { get; set; }
 
-        // Null hasta la primera actualización vía PUT
         public DateTime? UpdatedAt { get; set; }
 
         public Branch Branch { get; set; } = null!;

@@ -7,7 +7,7 @@ namespace ShipmentTracker.Infrastructure.Identity
 {
     /// <summary>
     /// Añade el claim "EmployeeId" al principal generado al iniciar sesión, para que esté
-    /// disponible en cada request sin una consulta extra a base de datos (research.md Decisión 10).
+    /// disponible en cada request sin una consulta extra a base de datos.
     /// Ausente para SuperAdmin (EmployeeId nulo).
     /// </summary>
     public class ApplicationUserClaimsPrincipalFactory

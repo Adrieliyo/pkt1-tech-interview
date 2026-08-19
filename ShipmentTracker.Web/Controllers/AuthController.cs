@@ -53,7 +53,7 @@ namespace ShipmentTracker.Web.Controllers
             if (user == null)
             {
                 // Mensaje genérico: no revela si el email o la contraseña fue el problema (FR-002).
-                return Unauthorized(new { message = "Invalid credentials." });
+                return Unauthorized(new { message = "Credenciales inválidas." });
             }
 
             var result = await _signInManager.PasswordSignInAsync(user, dto.Password, isPersistent: false, lockoutOnFailure: true);
@@ -61,12 +61,12 @@ namespace ShipmentTracker.Web.Controllers
             if (result.IsLockedOut)
             {
                 var lockoutEnd = await _userManager.GetLockoutEndDateAsync(user);
-                return StatusCode(StatusCodes.Status423Locked, new { message = $"Account locked. Try again after {lockoutEnd}." });
+                return StatusCode(StatusCodes.Status423Locked, new { message = $"Cuenta bloqueada. Intenta nuevamente después de {lockoutEnd}." });
             }
 
             if (!result.Succeeded)
             {
-                return Unauthorized(new { message = "Invalid credentials." });
+                return Unauthorized(new { message = "Credenciales inválidas." });
             }
 
             var sessionDto = await BuildUserSessionDtoAsync(user);

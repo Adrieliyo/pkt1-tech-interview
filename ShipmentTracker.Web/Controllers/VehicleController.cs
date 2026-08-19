@@ -9,7 +9,6 @@ namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
     /// Controlador encargado de gestionar las operaciones relacionadas con los vehículos.
-    /// Gestión de Vehicles restringida a BranchManager en su totalidad (spec 008 FR-013/FR-014/FR-015).
     /// </summary>
     [Route("api/vehicles")]
     [ApiController]

@@ -7,10 +7,7 @@ using ShipmentTracker.Core.Interfaces.Services;
 namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
-    /// Aprovisionamiento de cuentas de staff. Exclusivo de SuperAdmin — no se apoya en el bypass
-    /// automático de SuperAdminAuthorizationHandler para "abrirse" a otros roles, ya que ese
-    /// handler solo AGREGA acceso para SuperAdmin, nunca RETIRA acceso a otro rol; este es el único
-    /// endpoint del sistema que debe rechazar explícitamente a BranchManager (spec 008 Clarification 4 / FR-009a).
+    /// Aprovisionamiento de cuentas de staff. Exclusivo de SuperAdmin.
     /// </summary>
     [Route("api/users")]
     [ApiController]

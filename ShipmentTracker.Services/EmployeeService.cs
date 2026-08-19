@@ -36,9 +36,6 @@ namespace ShipmentTracker.Services
             _userManager = userManager;
         }
 
-        // LINQ síncrono sobre UserManager.Users (IQueryable respaldado por EF Core) — mismo patrón
-        // que UserService.CreateUserForEmployeeAsync, para no añadir una referencia a EF Core en
-        // Services.
         private bool HasAccount(int employeeId) =>
             _userManager.Users.Any(u => u.EmployeeId == employeeId);
 
@@ -48,9 +45,7 @@ namespace ShipmentTracker.Services
                 .Select(u => u.EmployeeId!.Value)
                 .ToHashSet();
 
-        // Reglas dependientes de base de datos (sucursal activa + unicidad global de Email/EmployeeNumber,
-        // incluso contra registros inactivos) — compartidas entre Create y Update. currentId = 0 en Create
-        // (nunca coincide con un id real, ya que la identity empieza en 1), id real en Update.
+
         private async Task<List<ValidationFailure>> ValidateBusinessRulesAsync(int branchId, string email, string employeeNumber, int currentId)
         {
             var failures = new List<ValidationFailure>();
@@ -111,7 +106,6 @@ namespace ShipmentTracker.Services
             await _unitOfWork.EmployeeRepository.AddAsync(employee);
             await _unitOfWork.CommitAsync();
 
-            // A newly created employee can never already have an account.
             var createdDto = _mapper.Map<EmployeeDto>(employee);
             createdDto.HasAccount = false;
             return createdDto;
@@ -232,12 +226,6 @@ namespace ShipmentTracker.Services
             return updatedDto;
         }
 
-        // Mantiene sincronizado el rol de Identity (AspNetUserRoles) con Employee.Role tras un cambio
-        // de rol en la edición. Sin esto, el rol de sesión (claims, [Authorize], sidebar) quedaba
-        // desactualizado indefinidamente: EmployeeSessionValidator detecta el desfase en cada request
-        // pero solo puede reconstruir el principal a partir de AspNetUserRoles, que nunca cambiaba. Es
-        // un no-op si el empleado no tiene cuenta vinculada (mismo patrón de HasAccount/lookup por
-        // EmployeeId).
         private async Task SyncAccountRoleAsync(int employeeId, EmployeeRole newRole)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.EmployeeId == employeeId);
@@ -271,8 +259,6 @@ namespace ShipmentTracker.Services
 
             if (employee.IsActive)
             {
-                // No se toca UpdatedAt: la desactivación es un cambio de estado, no una edición
-                // de datos (research.md Decisión — ver M2 de /speckit-analyze).
                 employee.IsActive = false;
                 await _unitOfWork.EmployeeRepository.Update(employee);
                 await _unitOfWork.CommitAsync();

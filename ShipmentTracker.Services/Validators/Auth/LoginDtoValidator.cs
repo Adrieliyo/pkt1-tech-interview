@@ -9,11 +9,11 @@ namespace ShipmentTracker.Services.Validators.Auth
         public LoginDtoValidator()
         {
             RuleFor(x => x.Email)
-                .NotEmpty().WithMessage("Email is required.")
-                .EmailAddress().WithMessage("Email is not a valid email address.");
+                .NotEmpty().WithMessage("El correo electrónico es requerido.")
+                .EmailAddress().WithMessage("El correo electrónico no tiene un formato válido.");
 
             RuleFor(x => x.Password)
-                .NotEmpty().WithMessage("Password is required.");
+                .NotEmpty().WithMessage("La contraseña es requerida.");
         }
     }
 }

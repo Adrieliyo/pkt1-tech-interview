@@ -14,14 +14,14 @@ namespace ShipmentTracker.Services.Validators.ShipmentEvents
         public RegisterDeliveryAttemptDtoValidator()
         {
             RuleFor(x => x.OccurredAt)
-                .LessThanOrEqualTo(_ => DateTime.UtcNow).WithMessage("OccurredAt must not be in the future.");
+                .LessThanOrEqualTo(_ => DateTime.UtcNow).WithMessage("La fecha del evento no debe ser en el futuro.");
 
             RuleFor(x => x.FailureReason)
-                .NotNull().WithMessage("FailureReason is required.")
-                .IsInEnum().WithMessage("FailureReason is not a valid failure reason.");
+                .NotNull().WithMessage("El motivo del fallo es requerido.")
+                .IsInEnum().WithMessage("El motivo del fallo no es válido.");
 
             RuleFor(x => x.NextAttemptAt)
-                .GreaterThan(x => x.OccurredAt).WithMessage("NextAttemptAt must be later than OccurredAt.")
+                .GreaterThan(x => x.OccurredAt).WithMessage("La fecha del próximo intento debe ser posterior a la fecha del evento.")
                 .When(x => x.NextAttemptAt.HasValue);
         }
     }

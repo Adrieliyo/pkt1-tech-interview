@@ -11,7 +11,8 @@ namespace ShipmentTracker.Services.Mappings
     {
         public OrderMappingProfile()
         {
-            CreateMap<Order, OrderDto>();
+            CreateMap<Order, OrderDto>()
+                .ForMember(d => d.OriginBranchName, opt => opt.Ignore());
         }
     }
 }

@@ -24,8 +24,6 @@ namespace ShipmentTracker.Infrastructure.Data.Configurations
                    .IsRequired()
                    .HasMaxLength(20);
 
-            // Sin filtro por IsActive: la unicidad aplica siempre, incluso contra registros
-            // inactivos (spec.md, Clarifications).
             builder.HasIndex(x => x.Plate)
                    .IsUnique();
 

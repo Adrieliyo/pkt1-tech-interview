@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
-    /// Controlador encargado de gestionar las operaciones relacionadas con las sucursales (Branches &amp; Hubs).
+    /// Controlador encargado de gestionar las operaciones relacionadas con las sucursales.
     /// </summary>
     [Route("api/branches")]
     [ApiController]

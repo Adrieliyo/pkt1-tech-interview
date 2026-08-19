@@ -9,11 +9,7 @@ namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
     /// Controlador encargado del registro y consulta de eventos de Shipment, incluidos los
-    /// intentos de entrega y la vista pública de tracking. WarehouseStaff tiene solo lectura sobre
-    /// los eventos (GetEventsByShipment) — no puede registrar eventos, exclusivo de
-    /// BranchManager/Operator/Driver. GetEventsByShipment aplica además un gate a nivel de Service
-    /// según el EmployeeId del caller (module 008, research.md Decisión 4): restricción de
-    /// asignación para Driver.
+    /// intentos de entrega y la vista pública de tracking. 
     /// </summary>
     [Route("api/shipments")]
     [ApiController]
@@ -119,11 +115,7 @@ namespace ShipmentTracker.Web.Controllers
 
         /// <summary>
         /// Obtiene la información pública de tracking de un Shipment por su número de guía: resumen
-        /// del envío más su línea de tiempo de eventos. Endpoint PÚBLICO — nunca incluye
-        /// <c>employeeId</c> ni ningún otro dato personal de empleados. Único endpoint, junto con
-        /// <c>POST /api/auth/login</c>, explícitamente exento de autenticación en todo el sistema
-        /// (module 008, spec FR-016) — [AllowAnonymous] es necesario aquí porque el resto de la API
-        /// ahora deniega por defecto (FallbackPolicy en Program.cs).
+        /// del envío más su línea de tiempo de eventos. 
         /// </summary>
         /// <param name="trackingNumber">El número de guía del Shipment.</param>
         /// <returns>El resumen público de tracking del Shipment.</returns>

@@ -35,15 +35,14 @@ namespace ShipmentTracker.Services
             var employee = await _unitOfWork.EmployeeRepository.SingleOrDefaultAsync(x => x.Id == dto.EmployeeId);
             if (employee == null || !employee.IsActive)
             {
-                throw new InvalidOperationException("The specified employee does not exist or is not active.");
+                throw new InvalidOperationException("El empleado especificado no existe o no está activo.");
             }
 
-            // LINQ síncrono (no EF Core async extensions) para no añadir una referencia a EF Core
-            // en Services — UserManager.Users es IQueryable, System.Linq basta sin ese paquete.
+
             var hasExistingUser = _userManager.Users.Any(x => x.EmployeeId == dto.EmployeeId);
             if (hasExistingUser)
             {
-                throw new InvalidOperationException("This employee already has a linked account.");
+                throw new InvalidOperationException("Este empleado ya tiene una cuenta vinculada.");
             }
 
             var user = new ApplicationUser

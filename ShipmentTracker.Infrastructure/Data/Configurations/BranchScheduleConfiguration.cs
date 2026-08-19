@@ -38,7 +38,6 @@ namespace ShipmentTracker.Infrastructure.Data.Configurations
                    .HasForeignKey(x => x.BranchId)
                    .IsRequired();
 
-            // Defensa en profundidad de FR-005 (sin días duplicados) a nivel de base de datos
             builder.HasIndex(x => new { x.BranchId, x.DayOfWeek })
                    .IsUnique();
         }

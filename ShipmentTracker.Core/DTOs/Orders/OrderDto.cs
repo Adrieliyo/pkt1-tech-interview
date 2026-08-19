@@ -30,6 +30,13 @@ namespace ShipmentTracker.Core.DTOs.Orders
         public int? OriginBranchId { get; set; }
 
         /// <summary>
+        /// Nombre de la Branch de origen (null cuando OriginBranchId es null). Resuelto por
+        /// OrderService a partir de OriginBranchId — no proviene de una navigation property en
+        /// Order, así que AutoMapper lo ignora explícitamente (ver OrderMappingProfile).
+        /// </summary>
+        public string? OriginBranchName { get; set; }
+
+        /// <summary>
         /// Estado actual de la orden (Pending, Confirmed, Converted, Cancelled).
         /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]

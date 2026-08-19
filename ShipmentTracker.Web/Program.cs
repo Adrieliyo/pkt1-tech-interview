@@ -54,7 +54,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(cfg => { }, typeof(Program).Assembly, typeof(ShipmentService).Assembly);
+builder.Services.AddAutoMapper(cfg => { }, typeof(ShipmentService).Assembly);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),

@@ -13,8 +13,6 @@ namespace ShipmentTracker.Web.Controllers
     /// <summary>
     /// Controlador encargado de gestionar el ciclo de vida de las órdenes de envío:
     /// creación, listado, consulta, actualización, confirmación, cancelación y conversión a Shipment.
-    /// BranchManager y Operator comparten todo salvo la conversión a Shipment, exclusiva de
-    /// BranchManager (spec 008 FR-012/FR-013).
     /// </summary>
     [Route("api/orders")]
     [ApiController]

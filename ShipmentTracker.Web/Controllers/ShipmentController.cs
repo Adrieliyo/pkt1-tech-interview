@@ -9,10 +9,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ShipmentTracker.Web.Controllers
 {
     /// <summary>
-    /// Controlador encargado de gestionar las operaciones relacionadas con los envíos. Lectura
-    /// abierta a BranchManager/Operator/WarehouseStaff; creación directa y cambio manual de estado
-    /// restringidos a BranchManager por defecto de mínimo privilegio, al no estar nombrados para
-    /// ningún otro rol (spec 008 FR-017, research.md Decisión 8).
+    /// Controlador encargado de gestionar las operaciones relacionadas con los envíos. 
     /// </summary>
     [Route("api/shipment")]
     [ApiController]
