@@ -12,8 +12,8 @@ using ShipmentTracker.Infrastructure.Data;
 namespace ShipmentTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260818154136_SeedAdditionalModules")]
-    partial class SeedAdditionalModules
+    [Migration("20260820000941_SeedSampleData")]
+    partial class SeedSampleData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -518,9 +518,7 @@ namespace ShipmentTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique()
-                        .HasFilter("[OrderId] IS NOT NULL");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("TrackingNumber")
                         .IsUnique();

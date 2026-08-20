@@ -6,17 +6,17 @@ namespace ShipmentTracker.Infrastructure.Migrations
 {
     /// <inheritdoc />
     /// <remarks>
-    /// Seedea 5 registros para cada uno de los módulos que ya existen para cuando esta migración
-    /// corre (Branches, Employees, Vehicles, Customers, Orders, Shipments, ShipmentEvents). Se crea
-    /// como migración NUEVA — no se edita <c>SeedInitialData</c> — porque esa migración corre antes
-    /// de que existan las tablas de estos módulos (fechada 2026-07-28, antes de los módulos 003-008);
-    /// insertar en ellas ahí rompería un `dotnet ef database update` sobre una base de datos nueva
-    /// con "Invalid object name".
-    /// Los IDs auto-generados (IDENTITY) se capturan con SCOPE_IDENTITY() y se encadenan como FKs
-    /// en un único batch T-SQL, en orden de dependencia: Branches → Employees/Vehicles → Customers
-    /// (TPT) → Orders → Shipments → ShipmentEvents.
+    /// Reemplaza a las antiguas SeedInitialData/SeedAdditionalModules (borradas): seedea 5 registros
+    /// para cada uno de los módulos de negocio (Branches, Employees, Vehicles, Customers, Orders,
+    /// Shipments, ShipmentEvents), acorde a la estructura ACTUAL de las tablas — incluye OrderId en
+    /// Shipments (módulo 006) y todo Shipment sembrado aquí referencia una Order del mismo seed.
+    /// La Order o5 tiene 4 Shipments (s2-s5) para ejercitar la relación 1:N habilitada por la migración
+    /// MakeShipmentOrderIdIndexNonUnique (múltiples Shipments por Order). Los IDs auto-generados
+    /// (IDENTITY) se capturan con SCOPE_IDENTITY() y se encadenan como FKs en un único batch T-SQL,
+    /// en orden de dependencia: Branches → Employees/Vehicles → Customers (TPT) → Orders → Shipments →
+    /// ShipmentEvents.
     /// </remarks>
-    public partial class SeedAdditionalModules : Migration
+    public partial class SeedSampleData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -121,64 +121,69 @@ VALUES (@c5, N'Distribuidora ABC SA de CV', 'DAB980202CD2', N'Fernanda Ortega', 
 DECLARE @o1 INT, @o2 INT, @o3 INT, @o4 INT, @o5 INT;
 
 -- ===== Orders (5) =====
+-- o1: Pending, sin Shipment todavia (orden recien creada, editable).
 INSERT INTO Orders (OrderNumber, CustomerId, OriginBranchId, Status, ServiceType, PickupType, PickupAddress, PickupScheduledAt, RecipientName, RecipientPhone, RecipientAddress, RecipientCity, RecipientState, RecipientZipCode, DeclaredWeightKg, DeclaredWidthCm, DeclaredHeightCm, DeclaredLengthCm, QuotedPrice, Notes, CreatedAt, UpdatedAt)
-VALUES ('ORD-SEED0001', @c1, NULL, 'Pending', 'Standard', 'HomePickup', N'Calle Insurgentes 12', '2026-08-05T10:00:00', N'Pedro Ramirez', '+52-55-4000-0001', N'Calle Juarez 22', N'Puebla', N'Puebla', '72000', 2.500, 20.00, 15.00, 30.00, 150.00, N'Entrega en horario de oficina.', '2026-08-01T11:00:00', NULL);
+VALUES ('ORD-SEED0001', @c1, NULL, 'Pending', 'Standard', 'HomePickup', N'Calle Insurgentes 12', '2026-08-25T10:00:00', N'Pedro Ramirez', '+52-55-4000-0001', N'Calle Juarez 22', N'Puebla', N'Puebla', '72000', 2.500, 20.00, 15.00, 30.00, 150.00, N'Entrega en horario de oficina.', '2026-08-01T11:00:00', NULL);
 SET @o1 = SCOPE_IDENTITY();
 
+-- o2: Confirmed, sin Shipment todavia (lista para /convert).
 INSERT INTO Orders (OrderNumber, CustomerId, OriginBranchId, Status, ServiceType, PickupType, PickupAddress, PickupScheduledAt, RecipientName, RecipientPhone, RecipientAddress, RecipientCity, RecipientState, RecipientZipCode, DeclaredWeightKg, DeclaredWidthCm, DeclaredHeightCm, DeclaredLengthCm, QuotedPrice, Notes, CreatedAt, UpdatedAt)
 VALUES ('ORD-SEED0002', @c2, @b1, 'Confirmed', 'Express', 'DropOff', NULL, NULL, N'Lucia Mendoza', '+52-55-4000-0002', N'Av. Universidad 500', N'Ciudad de Mexico', N'CDMX', '04510', 1.200, 10.00, 10.00, 20.00, 220.00, NULL, '2026-08-01T11:15:00', '2026-08-01T12:00:00');
 SET @o2 = SCOPE_IDENTITY();
 
+-- o3: Converted, con 1 Shipment (s1).
 INSERT INTO Orders (OrderNumber, CustomerId, OriginBranchId, Status, ServiceType, PickupType, PickupAddress, PickupScheduledAt, RecipientName, RecipientPhone, RecipientAddress, RecipientCity, RecipientState, RecipientZipCode, DeclaredWeightKg, DeclaredWidthCm, DeclaredHeightCm, DeclaredLengthCm, QuotedPrice, Notes, CreatedAt, UpdatedAt)
 VALUES ('ORD-SEED0003', @c3, NULL, 'Converted', 'Standard', 'HomePickup', N'Av. Chapultepec 89', '2026-08-02T09:00:00', N'Diego Castro', '+52-33-4000-0003', N'Calle Hidalgo 10', N'Guadalajara', N'Jalisco', '44200', 5.000, 30.00, 25.00, 40.00, 180.00, NULL, '2026-08-01T11:30:00', '2026-08-02T09:30:00');
 SET @o3 = SCOPE_IDENTITY();
 
+-- o4: Cancelled, sin Shipment (estado terminal antes de conversion).
 INSERT INTO Orders (OrderNumber, CustomerId, OriginBranchId, Status, ServiceType, PickupType, PickupAddress, PickupScheduledAt, RecipientName, RecipientPhone, RecipientAddress, RecipientCity, RecipientState, RecipientZipCode, DeclaredWeightKg, DeclaredWidthCm, DeclaredHeightCm, DeclaredLengthCm, QuotedPrice, Notes, CreatedAt, UpdatedAt)
-VALUES ('ORD-SEED0004', @c4, NULL, 'Cancelled', 'Economy', 'HomePickup', N'Av. Industria 300', '2026-08-03T14:00:00', N'Comercializadora Cliente Final', '+52-55-4000-0004', N'Calle Morelos 5', N'Toluca', N'Estado de Mexico', '50000', 15.000, 50.00, 40.00, 60.00, 300.00, N'Cliente canceló por cambio de fecha.', '2026-08-01T11:45:00', '2026-08-03T15:00:00');
+VALUES ('ORD-SEED0004', @c4, NULL, 'Cancelled', 'Economy', 'HomePickup', N'Av. Industria 300', '2026-08-03T14:00:00', N'Comercializadora Cliente Final', '+52-55-4000-0004', N'Calle Morelos 5', N'Toluca', N'Estado de Mexico', '50000', 15.000, 50.00, 40.00, 60.00, 300.00, N'Cliente cancelo por cambio de fecha.', '2026-08-01T11:45:00', '2026-08-03T15:00:00');
 SET @o4 = SCOPE_IDENTITY();
 
+-- o5: Converted, con 4 Shipments (s2-s5) -- ejercita la relacion 1:N Order->Shipments.
 INSERT INTO Orders (OrderNumber, CustomerId, OriginBranchId, Status, ServiceType, PickupType, PickupAddress, PickupScheduledAt, RecipientName, RecipientPhone, RecipientAddress, RecipientCity, RecipientState, RecipientZipCode, DeclaredWeightKg, DeclaredWidthCm, DeclaredHeightCm, DeclaredLengthCm, QuotedPrice, Notes, CreatedAt, UpdatedAt)
-VALUES ('ORD-SEED0005', @c5, @b2, 'Pending', 'Standard', 'DropOff', NULL, NULL, N'Empresa Receptora SA', '+52-81-4000-0005', N'Parque Industrial 200', N'Monterrey', N'Nuevo Leon', '64200', 25.000, 60.00, 50.00, 80.00, 450.00, NULL, '2026-08-01T12:00:00', NULL);
+VALUES ('ORD-SEED0005', @c5, @b2, 'Converted', 'Standard', 'DropOff', NULL, NULL, N'Empresa Receptora SA', '+52-81-4000-0005', N'Parque Industrial 200', N'Monterrey', N'Nuevo Leon', '64200', 25.000, 60.00, 50.00, 80.00, 450.00, N'Cliente recurrente: envios parciales del mismo pedido.', '2026-08-01T12:00:00', '2026-08-02T10:00:00');
 SET @o5 = SCOPE_IDENTITY();
 
 DECLARE @s1 INT, @s2 INT, @s3 INT, @s4 INT, @s5 INT;
 
--- ===== Shipments (5) =====
+-- ===== Shipments (5) -- todos con OrderId hacia una Order de este mismo seed =====
 INSERT INTO Shipments (TrackingNumber, Recipient, Status, CreatedAt, DeliveredAt, OrderId)
 VALUES ('TRK-SEED0001', N'Diego Castro', 'Collected', '2026-08-02T09:30:00', NULL, @o3);
 SET @s1 = SCOPE_IDENTITY();
 
 INSERT INTO Shipments (TrackingNumber, Recipient, Status, CreatedAt, DeliveredAt, OrderId)
-VALUES ('TRK-SEED0002', N'Lucia Mendoza', 'InTransit', '2026-08-02T10:00:00', NULL, NULL);
+VALUES ('TRK-SEED0002', N'Empresa Receptora SA', 'InTransit', '2026-08-02T10:30:00', NULL, @o5);
 SET @s2 = SCOPE_IDENTITY();
 
 INSERT INTO Shipments (TrackingNumber, Recipient, Status, CreatedAt, DeliveredAt, OrderId)
-VALUES ('TRK-SEED0003', N'Pedro Ramirez', 'OutForDelivery', '2026-08-02T11:00:00', NULL, NULL);
+VALUES ('TRK-SEED0003', N'Empresa Receptora SA', 'OutForDelivery', '2026-08-02T10:45:00', NULL, @o5);
 SET @s3 = SCOPE_IDENTITY();
 
 INSERT INTO Shipments (TrackingNumber, Recipient, Status, CreatedAt, DeliveredAt, OrderId)
-VALUES ('TRK-SEED0004', N'Empresa Receptora SA', 'Delivered', '2026-07-30T08:00:00', '2026-08-01T16:00:00', NULL);
+VALUES ('TRK-SEED0004', N'Empresa Receptora SA', 'Delivered', '2026-08-02T11:00:00', '2026-08-03T16:00:00', @o5);
 SET @s4 = SCOPE_IDENTITY();
 
 INSERT INTO Shipments (TrackingNumber, Recipient, Status, CreatedAt, DeliveredAt, OrderId)
-VALUES ('TRK-SEED0005', N'Cliente Cancelado', 'Cancelled', '2026-08-01T09:00:00', NULL, NULL);
+VALUES ('TRK-SEED0005', N'Empresa Receptora SA', 'Cancelled', '2026-08-02T11:15:00', NULL, @o5);
 SET @s5 = SCOPE_IDENTITY();
 
--- ===== ShipmentEvents (5) =====
+-- ===== ShipmentEvents (5, uno representativo por Shipment) =====
 INSERT INTO ShipmentEvents (ShipmentId, EventType, StatusSnapshot, OccurredAt, EmployeeId, LocationLabel, Notes, CreatedAt)
 VALUES (@s1, 'OrderConverted', 'Collected', '2026-08-02T09:30:00', NULL, N'Sucursal Sur', NULL, '2026-08-02T09:30:00');
 
 INSERT INTO ShipmentEvents (ShipmentId, EventType, StatusSnapshot, OccurredAt, EmployeeId, LocationLabel, Notes, CreatedAt)
-VALUES (@s2, 'InTransit', 'InTransit', '2026-08-02T12:00:00', @e4, N'Hub Norte', N'Salió en ruta hacia CDMX.', '2026-08-02T12:00:00');
+VALUES (@s2, 'InTransit', 'InTransit', '2026-08-02T13:00:00', @e4, N'Hub Norte', N'Salio en ruta hacia Monterrey centro.', '2026-08-02T13:00:00');
 
 INSERT INTO ShipmentEvents (ShipmentId, EventType, StatusSnapshot, OccurredAt, EmployeeId, LocationLabel, Notes, CreatedAt)
-VALUES (@s3, 'OutForDelivery', 'OutForDelivery', '2026-08-02T13:00:00', @e3, N'Sucursal Norte', NULL, '2026-08-02T13:00:00');
+VALUES (@s3, 'OutForDelivery', 'OutForDelivery', '2026-08-02T13:15:00', @e3, N'Sucursal Norte', NULL, '2026-08-02T13:15:00');
 
 INSERT INTO ShipmentEvents (ShipmentId, EventType, StatusSnapshot, OccurredAt, EmployeeId, LocationLabel, Notes, CreatedAt)
-VALUES (@s4, 'ReceivedAtBranch', 'Delivered', '2026-07-30T08:15:00', @e4, N'Sucursal Norte', N'Recibido en almacén antes de entrega final.', '2026-07-30T08:15:00');
+VALUES (@s4, 'ReceivedAtBranch', 'Delivered', '2026-08-03T15:45:00', @e4, N'Sucursal Norte', N'Recibido en almacen antes de entrega final.', '2026-08-03T15:45:00');
 
 INSERT INTO ShipmentEvents (ShipmentId, EventType, StatusSnapshot, OccurredAt, EmployeeId, LocationLabel, Notes, CreatedAt)
-VALUES (@s5, 'DepartedFromBranch', 'Cancelled', '2026-08-01T09:30:00', @e2, N'Sucursal Centro', N'Envío cancelado tras salida.', '2026-08-01T09:30:00');
+VALUES (@s5, 'DepartedFromBranch', 'Cancelled', '2026-08-02T13:30:00', @e2, N'Sucursal Centro', N'Envio cancelado tras salida.', '2026-08-02T13:30:00');
 "
             );
         }
